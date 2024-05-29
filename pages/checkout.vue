@@ -22,7 +22,7 @@
             type="password"
             autocomplete="new-password"
             name="private_key"
-            class="font-mono"
+            class="w-1/2 font-mono"
             v-model="privateKey"
           />
           <label for="private_key" class="text-xs opacity-70">
@@ -72,13 +72,15 @@
             >
             </textarea>
           </div>
+
+          <SkeletonLoader v-else-if="isLoading" />
         </div>
       </form>
 
       <!-- submit -->
       <div>
         <button
-          class="rounded bg-purple-950 px-4 py-1 text-white transition hover:bg-purple-900 active:scale-95"
+          class="rounded bg-purple-950 px-4 py-2 text-white transition hover:bg-purple-900 active:scale-95"
           @click="submitData"
         >
           Submit
@@ -93,7 +95,7 @@
 
   // states
   useUpdateTitle('Checkout')
-  const privateKey = ref('')
+  const privateKey = useState('privateKey', () => '')
   const dataParameters = useState('dataParameters', () => '')
   const defaultParams = [
     'type=api',
@@ -119,9 +121,13 @@
     'customer_billing_country=PH',
   ]
   dataParameters.value = defaultParams.join('\n')
+  const checkoutId = useState('checkoutId', () => '')
   const displayData = ref('')
 
-  const { execute, data, isFinished } = useAxios(
+  /**
+   *
+   */
+  const { execute, data, isLoading } = useAxios(
     '/api/checkout',
     {
       method: 'POST',
@@ -133,6 +139,8 @@
    *
    */
   const submitData = async () => {
+    data.value = ''
+
     try {
       await execute({
         data: {
@@ -140,6 +148,16 @@
           dataParameters: dataParameters.value,
         },
       })
+
+      // get checkoutId, display to front
+      if (data.value.checkout) {
+        if (data.value.checkout.checkout_id) {
+          checkoutId.value = data.value.checkout.checkout_id
+        }
+      } else {
+        checkoutId.value = ''
+      }
+
       displayData.value = JSON.stringify(data.value, undefined, 2)
 
       //

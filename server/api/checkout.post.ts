@@ -16,7 +16,6 @@ export default defineEventHandler(async (event) => {
       data: payload,
     })
 
-    console.info(data)
     return data
 
     //

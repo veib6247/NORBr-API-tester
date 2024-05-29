@@ -5,7 +5,10 @@
       <nav class="flex flex-col gap-1 p-6">
         <NavLink route-to="/"><IconHome /> Home</NavLink>
         <NavLink route-to="/checkout"><IconCart /> Checkout</NavLink>
-        <NavLink route-to="/order"><IconShoppingbag /> Order</NavLink>
+        <NavLink route-to="/hostedelements">
+          <IconShoppingbag /> Hosted Elements
+        </NavLink>
+        <NavLink route-to="/order"><IconCash /> Order</NavLink>
       </nav>
     </div>
 
