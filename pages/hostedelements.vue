@@ -205,7 +205,7 @@
   const selectedTokenType = ref(tokenTypes.value[0])
   const displayButtons = ref(true)
   const displayCardHolder = ref(true)
-  const displaySave = ref(true)
+  const displaySave = ref(false)
   const cardHolderValue = ref('')
   const hostedElementsResponse = ref('')
   const autoOrder = ref(false)
@@ -233,6 +233,9 @@
       displaySave: displaySave.value,
       CardHolderValue: cardHolderValue.value,
       onSubmit: () => {
+        // clear hostedElementsResponse before refill
+        hostedElementsResponse.value = ''
+
         if (autoOrder.value) {
           alert('This feature is still under development.')
         } else {

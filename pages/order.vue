@@ -100,7 +100,7 @@
   const privateKey = useState('privateKey')
   const dataParameters = ref('')
   const defaultParams = [
-    'operation_type=authorize',
+    'operation_type=direct_capture',
     'token=REPLACE_ME',
     'checkout_id=REPLACE_ME',
     'amount=11.30',
