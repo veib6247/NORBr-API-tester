@@ -197,7 +197,7 @@
   useUpdateTitle('Hosted Elements')
 
   // states
-  const privateKey = useState('privateKey', () => '')
+  const privateKey = useState('privateKey')
   const publicKey = ref('')
   const checkoutId = useState('checkoutId')
   const locale = ref('en')
@@ -234,7 +234,7 @@
       CardHolderValue: cardHolderValue.value,
       onSubmit: () => {
         if (autoOrder.value) {
-          alert('Weee...')
+          alert('This feature is still under development.')
         } else {
           hostedElementsResponse.value = JSON.stringify(norbr, undefined, 2)
         }

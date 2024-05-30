@@ -83,7 +83,7 @@
           class="rounded bg-purple-950 px-4 py-2 text-white transition hover:bg-purple-900 active:scale-95"
           @click="submitData"
         >
-          Submit
+          Create Checkout
         </button>
       </div>
     </div>
@@ -96,7 +96,7 @@
   // states
   useUpdateTitle('Checkout')
   const privateKey = useState('privateKey', () => '')
-  const dataParameters = useState('dataParameters', () => '')
+  const dataParameters = ref('')
   const defaultParams = [
     'type=api',
     'locale=en_EN',
