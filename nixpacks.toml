@@ -2,4 +2,4 @@
 cmds = ['bun run build']
 
 [start]
-cmd = 'node .output/server/index.mjs'
+cmd = 'bun .output/server/index.mjs'
