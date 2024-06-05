@@ -209,6 +209,7 @@
   const cardHolderValue = ref('')
   const hostedElementsResponse = ref('')
   const autoOrder = ref(false)
+  const paymentMethodsAvailable = useState('paymentMethodsAvailable')
 
   /**
    *
@@ -220,13 +221,7 @@
       environment: 'sandbox',
       tokentype: selectedTokenType.value,
       paymentmethods: JSON.stringify({
-        payment_methods_available: [
-          { name: 'visa', component_type: 'card' },
-          { name: 'mastercard', component_type: 'card' },
-          { name: 'amex', component_type: 'card' },
-          { name: 'diners', component_type: 'card' },
-          { name: 'jcb', component_type: 'card' },
-        ],
+        payment_methods_available: paymentMethodsAvailable.value,
       }),
       displayButtons: displayButtons.value,
       displayCardHolder: displayCardHolder.value,

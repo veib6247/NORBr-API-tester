@@ -106,23 +106,11 @@
     'token_type=oneshot',
     'payment_channel=e-commerce',
     'order_merchant_id=REPLACE_ME',
-    'customer_email=productsupport@payreto.com',
-    'customer_first_name=John',
-    'customer_last_name=Wick',
-    'customer_street_name=Penthouse A&D, Valero Tower 122 Valero St',
-    'customer_city=Makati',
-    'customer_zip_code=1227',
-    'customer_country=PH',
-    'customer_billing_first_name=John',
-    'customer_billing_last_name=Wick',
-    'customer_billing_street_name=Penthouse A&D, Valero Tower 122 Valero St',
-    'customer_billing_city=Makati',
-    'customer_billing_zip_code=1227',
-    'customer_billing_country=PH',
   ]
   dataParameters.value = defaultParams.join('\n')
   const checkoutId = useState('checkoutId', () => '')
   const displayData = ref('')
+  const paymentMethodsAvailable = useState('paymentMethodsAvailable', () => '')
 
   /**
    *
@@ -156,6 +144,16 @@
         }
       } else {
         checkoutId.value = ''
+      }
+
+      // get payment_methods_available
+      if (data.value.payment_methods) {
+        if (data.value.payment_methods.payment_methods_available) {
+          paymentMethodsAvailable.value =
+            data.value.payment_methods.payment_methods_available
+        }
+      } else {
+        paymentMethodsAvailable.value = ''
       }
 
       displayData.value = JSON.stringify(data.value, undefined, 2)
