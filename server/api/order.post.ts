@@ -5,6 +5,12 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   const payload = payloadBuilder(body.dataParameters)
 
+  const url = body.isOrderForRecurring
+    ? 'https://api-sandbox.norbr.io/order/create'
+    : 'https://api-sandbox.norbr.io/payment/order'
+
+  console.log(`Using URL: ${url}`)
+
   try {
     const { data } = await axios({
       method: 'POST',
@@ -12,7 +18,7 @@ export default defineEventHandler(async (event) => {
         'x-api-key': body.privateKey,
         version: '1.0.0',
       },
-      url: 'https://api-sandbox.norbr.io/payment/order',
+      url: url,
       data: payload,
     })
 

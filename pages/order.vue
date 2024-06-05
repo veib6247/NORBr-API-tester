@@ -31,6 +31,19 @@
           </label>
         </div>
 
+        <!-- wrapper: displayButtons -->
+        <div class="flex gap-2">
+          <label for="displayButtons" class="my-auto text-sm font-semibold">
+            Order for Recurring (Do not use, does not work yet)
+          </label>
+          <input
+            type="checkbox"
+            name="displayButtons"
+            class="my-auto"
+            v-model="isOrderForRecurring"
+          />
+        </div>
+
         <div class="flex gap-4">
           <!-- wrapper: data parameters -->
           <div class="flex w-1/2 flex-col gap-1">
@@ -114,6 +127,8 @@
   ]
   dataParameters.value = defaultParams.join('\n')
   const displayData = ref('')
+  const isOrderForRecurring = ref(false)
+  const orderId = useState('orderId', () => '')
 
   /**
    *
@@ -135,10 +150,17 @@
     try {
       await execute({
         data: {
+          isOrderForRecurring: isOrderForRecurring.value,
           privateKey: privateKey.value,
           dataParameters: dataParameters.value,
         },
       })
+
+      if (data.value.order_id) {
+        orderId.value = data.value.order_id
+      } else {
+        orderId.value = ''
+      }
 
       displayData.value = JSON.stringify(data.value, undefined, 2)
 

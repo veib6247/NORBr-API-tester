@@ -106,7 +106,7 @@
     'token_type=oneshot',
     'payment_channel=e-commerce',
     'order_merchant_id=REPLACE_ME',
-    'customer_email=john.wick@gmail.com',
+    'customer_email=productsupport@payreto.com',
     'customer_first_name=John',
     'customer_last_name=Wick',
     'customer_street_name=Penthouse A&D, Valero Tower 122 Valero St',

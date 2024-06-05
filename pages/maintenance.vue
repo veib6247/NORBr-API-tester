@@ -46,7 +46,7 @@
           </select>
         </div>
 
-        <!-- wrapper: checkout id -->
+        <!-- wrapper: orderId -->
         <div class="flex flex-col gap-1">
           <label for="checkoutId" class="text-sm font-semibold">
             Order ID
@@ -130,7 +130,7 @@
   const defaultParams = ['amount=11.30']
   dataParameters.value = defaultParams.join('\n')
   const displayData = ref('')
-  const orderId = ref('')
+  const orderId = useState('orderId')
   const maintenanceTypes = ref(['capture', 'refund', 'cancel'])
   const selectedmaintenanceType = ref(maintenanceTypes.value[0])
 
