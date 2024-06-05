@@ -33,10 +33,10 @@
 
         <!-- wrapper: Maintenance type -->
         <div class="flex flex-col gap-1">
-          <label for="checkoutId" class="text-sm font-semibold">
+          <label for="maintenanceType" class="text-sm font-semibold">
             Maintenance Type
           </label>
-          <select v-model="selectedmaintenanceType">
+          <select name="maintenanceType" v-model="selectedmaintenanceType">
             <option
               v-for="maintenanceType in maintenanceTypes"
               :value="maintenanceType"
@@ -48,9 +48,7 @@
 
         <!-- wrapper: orderId -->
         <div class="flex flex-col gap-1">
-          <label for="checkoutId" class="text-sm font-semibold">
-            Order ID
-          </label>
+          <label for="orderId" class="text-sm font-semibold"> Order ID </label>
           <input
             type="text"
             name="orderId"

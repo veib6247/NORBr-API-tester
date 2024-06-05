@@ -31,14 +31,14 @@
           </label>
         </div>
 
-        <!-- wrapper: displayButtons -->
+        <!-- wrapper: isOrderForRecurring -->
         <div class="flex gap-2">
           <label for="displayButtons" class="my-auto text-sm font-semibold">
             Order for Recurring (Do not use, does not work yet)
           </label>
           <input
             type="checkbox"
-            name="displayButtons"
+            name="isOrderForRecurring"
             class="my-auto"
             v-model="isOrderForRecurring"
           />
