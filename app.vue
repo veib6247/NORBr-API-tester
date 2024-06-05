@@ -9,6 +9,7 @@
           <IconShoppingbag /> Hosted Elements
         </NavLink>
         <NavLink route-to="/order"><IconCash /> Order</NavLink>
+        <NavLink route-to="/maintenance"><IconReload /> Maintenance</NavLink>
       </nav>
     </div>
 
