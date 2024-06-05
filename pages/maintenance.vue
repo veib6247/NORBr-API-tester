@@ -53,7 +53,7 @@
           </label>
           <input
             type="text"
-            name="checkoutId"
+            name="orderId"
             class="font-mono"
             v-model="orderId"
           />
