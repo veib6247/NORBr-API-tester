@@ -215,6 +215,8 @@
    *
    */
   const initNorbr = () => {
+    hostedElementsResponse.value = ''
+
     const configuration = {
       publicapikey: publicKey.value,
       locale: locale.value,
