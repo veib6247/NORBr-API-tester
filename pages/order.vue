@@ -45,7 +45,7 @@
         </div>
 
         <div class="flex gap-4">
-          <!-- wrapper: data parameters -->
+          <!-- wrapper: data parameters and submit button -->
           <div class="flex w-1/2 flex-col gap-1">
             <label for="data_parameters" class="text-sm font-semibold">
               Data Parameters
@@ -68,6 +68,16 @@
                 here
               </a>
             </label>
+
+            <!-- submit -->
+            <div class="mt-2">
+              <button
+                class="rounded bg-purple-950 px-4 py-2 text-white hover:bg-purple-900 active:scale-95"
+                @click="submitData"
+              >
+                Create Order
+              </button>
+            </div>
           </div>
 
           <!-- wrapper: response -->
@@ -84,21 +94,41 @@
               readonly
             >
             </textarea>
+
+            <div
+              class="mt-1 rounded bg-purple-100 px-4 py-2"
+              v-if="data.redirect_url"
+            >
+              <div class="flex gap-2 text-sm">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  class="my-auto size-4"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0ZM9 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM6.75 8a.75.75 0 0 0 0 1.5h.75v1.75a.75.75 0 0 0 1.5 0v-2.5A.75.75 0 0 0 8.25 8h-1.5Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+
+                3DS redirect URL detected,
+                <a
+                  :href="data.redirect_url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="underline"
+                  >click here</a
+                >
+                to open a new tab to the issuer's ACS page
+              </div>
+            </div>
           </div>
 
           <SkeletonLoader v-else-if="isLoading" />
         </div>
       </form>
-
-      <!-- submit -->
-      <div>
-        <button
-          class="rounded bg-purple-950 px-4 py-2 text-white hover:bg-purple-900 active:scale-95"
-          @click="submitData"
-        >
-          Create Order
-        </button>
-      </div>
     </div>
   </div>
 </template>
@@ -144,7 +174,9 @@
   /**
    *
    */
-  const submitData = async () => {
+  const submitData = async (event: Event) => {
+    event.preventDefault()
+
     data.value = ''
 
     try {
