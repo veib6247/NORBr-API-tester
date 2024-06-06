@@ -154,7 +154,7 @@
       <!-- submit -->
       <div class="flex gap-4">
         <button
-          class="rounded bg-purple-950 px-4 py-2 text-white transition hover:bg-purple-900 active:scale-95"
+          class="rounded bg-purple-950 px-4 py-2 text-white hover:bg-purple-900 active:scale-95"
           @click="initNorbr"
         >
           Initialize Payment Form
