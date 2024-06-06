@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-  const appName = useState('appName', () => 'NORBr Tester')
+  const appName = useState('appName', () => 'NORBr API Tester')
 
   useHead({
     title: appName.value,
