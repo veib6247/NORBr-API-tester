@@ -10,6 +10,7 @@
         </NavLink>
         <NavLink route-to="/order"><IconCash /> Order</NavLink>
         <NavLink route-to="/maintenance"><IconReload /> Maintenance</NavLink>
+        <NavLink route-to="/redirect"><IconRedirect /> Redirect</NavLink>
       </nav>
     </div>
 

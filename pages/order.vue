@@ -142,20 +142,11 @@
   // states
   const privateKey = useState('privateKey')
   const dataParameters = ref('')
-  const defaultParams = [
+  const defaultParams = ref([
     'operation_type=direct_capture',
     'token=REPLACE_ME',
     'checkout_id=REPLACE_ME',
-    'amount=11.30',
-    'currency=EUR',
-    'order_merchant_id=REPLACE_ME',
-    'payment_channel=e-commerce',
-    'accept_url=https://payreto.com',
-    'decline_url=https://payreto.com',
-    'pending_url=https://payreto.com',
-    'exception_url=https://payreto.com',
-  ]
-  dataParameters.value = defaultParams.join('\n')
+  ])
   const displayData = ref('')
   const isOrderForRecurring = ref(false)
   const orderId = useState('orderId', () => '')
@@ -201,4 +192,19 @@
       console.error(error)
     }
   }
+
+  /**
+   * fetches windows location on mount to set the right redirect URLs
+   */
+  onMounted(() => {
+    const urls = [
+      `accept_url=${window.location.origin}/redirect`,
+      `decline_url=${window.location.origin}/redirect`,
+      `pending_url=${window.location.origin}/redirect`,
+      `exception_url=${window.location.origin}/redirect`,
+    ]
+
+    defaultParams.value = [...defaultParams.value, ...urls]
+    dataParameters.value = defaultParams.value.join('\n')
+  })
 </script>
