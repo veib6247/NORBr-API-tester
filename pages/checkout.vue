@@ -35,47 +35,86 @@
         </div>
 
         <div class="flex gap-4">
-          <!-- wrapper: data parameters -->
-          <div class="flex w-1/2 flex-col gap-1">
-            <label :for="dataParamsID" class="text-sm font-semibold">
-              Data Parameters
-            </label>
-            <UTextarea
-              :id="dataParamsID"
-              class="font-mono"
-              spellcheck="false"
-              placeholder="Data parameters..."
-              :rows="25"
-              color="purple"
-              v-model="dataParameters"
-            />
-            <label :for="dataParamsID" class="text-xs opacity-70">
-              For a full list of parameters, check
-              <a
-                href="https://developer.norbr.io/#0268ead8-a489-414e-bba8-8508c002f05f"
-                target="_blank"
-                class="underline"
-                rel="noopener noreferrer"
-              >
-                here
-              </a>
-            </label>
+          <div class="flex w-1/2 flex-col gap-3">
+            <!-- wrapper: data parameters -->
+            <div class="flex flex-col gap-1">
+              <label :for="dataParamsID" class="text-sm font-semibold">
+                Data Parameters
+              </label>
+              <UTextarea
+                :id="dataParamsID"
+                class="font-mono"
+                spellcheck="false"
+                placeholder="Data parameters..."
+                :rows="25"
+                color="purple"
+                v-model="dataParameters"
+              />
+              <label :for="dataParamsID" class="text-xs opacity-70">
+                For a full list of parameters, check
+                <a
+                  href="https://developer.norbr.io/#0268ead8-a489-414e-bba8-8508c002f05f"
+                  target="_blank"
+                  class="underline"
+                  rel="noopener noreferrer"
+                >
+                  here
+                </a>
+              </label>
+            </div>
+
+            <!-- submit -->
+            <div>
+              <UButton
+                icon="i-heroicons-paper-airplane"
+                color="purple"
+                label="Create Checkout"
+                @click="submitData"
+              />
+            </div>
           </div>
 
           <!-- wrapper: response -->
-          <div class="flex w-1/2 flex-col gap-1" v-if="data">
-            <label :for="displayDataInputID" class="text-sm font-semibold">
-              Response Data
-            </label>
-            <UTextarea
-              :id="displayDataInputID"
-              class="font-mono"
-              spellcheck="false"
-              :rows="25"
+          <div class="flex w-1/2 flex-col gap-2" v-if="data">
+            <div class="gap-1">
+              <label :for="displayDataInputID" class="text-sm font-semibold">
+                Response Data
+              </label>
+              <UTextarea
+                :id="displayDataInputID"
+                class="font-mono"
+                spellcheck="false"
+                :rows="25"
+                color="purple"
+                v-model="displayData"
+                readonly
+              />
+            </div>
+
+            <!-- show alert if 3ds url is returned from the response -->
+            <UAlert
+              title="Heads up!"
               color="purple"
-              v-model="displayData"
-              readonly
-            />
+              icon="i-heroicons-information-circle"
+              v-if="data.redirect_url"
+            >
+              <template #title="{ title }">
+                <!-- eslint-disable-next-line vue/no-v-html -->
+                <span v-html="title" />
+              </template>
+
+              <template #description>
+                A redirect URL detected is detected,
+                <a
+                  :href="data.redirect_url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="underline"
+                  >click here</a
+                >
+                to open a new tab to view the page.
+              </template>
+            </UAlert>
           </div>
 
           <div class="w-1/2 space-y-1" v-else-if="isLoading">
@@ -86,16 +125,6 @@
           </div>
         </div>
       </form>
-
-      <!-- submit -->
-      <div>
-        <UButton
-          icon="i-heroicons-paper-airplane"
-          color="purple"
-          label="Create Checkout"
-          @click="submitData"
-        />
-      </div>
     </div>
   </div>
 </template>
