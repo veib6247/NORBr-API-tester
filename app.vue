@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-dvh bg-gray-50">
+  <div class="flex h-dvh">
     <!-- nav -->
     <div class="h-dvh w-72 bg-purple-950">
       <nav class="flex flex-col gap-1 p-6">
@@ -23,6 +23,10 @@
 
 <script setup lang="ts">
   const appName = useState('appName', () => 'NORBr API Tester')
+
+  // just be light mode dammit!
+  const colorMode = useColorMode()
+  colorMode.value = 'light'
 
   useHead({
     title: appName.value,

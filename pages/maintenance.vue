@@ -8,51 +8,59 @@
     <div class="flex flex-col gap-4">
       <form class="flex flex-col gap-2">
         <!-- wrapper: private key -->
-        <div class="flex flex-col gap-1">
+        <div class="flex w-1/2 flex-col gap-1">
           <input
             type="text"
             autocomplete="username"
             name="dummy_username"
             class="hidden"
           />
-          <label for="private_key" class="text-sm font-semibold">
+          <label :for="privateKeyInputID" class="text-sm font-semibold">
             Private Key
           </label>
-          <input
+          <UInput
+            :id="privateKeyInputID"
+            icon="i-heroicons-key"
             type="password"
-            autocomplete="new-password"
-            name="private_key"
-            class="font-mono"
+            color="purple"
+            placeholder="Private Key"
             v-model="privateKey"
+            autocomplete="new-password"
           />
-          <label for="private_key" class="text-xs opacity-70">
+
+          <label :for="privateKeyInputID" class="text-xs opacity-70">
             In general practice, the private key should not be exposed to the
             frontend. This is only for testing purposes
           </label>
         </div>
 
         <!-- wrapper: Maintenance type -->
-        <div class="flex flex-col gap-1">
-          <label for="maintenanceType" class="text-sm font-semibold">
+        <div class="flex w-1/2 flex-col gap-1">
+          <label
+            :for="selectedmaintenanceTypeInputID"
+            class="text-sm font-semibold"
+          >
             Maintenance Type
           </label>
-          <select name="maintenanceType" v-model="selectedmaintenanceType">
-            <option
-              v-for="maintenanceType in maintenanceTypes"
-              :value="maintenanceType"
-            >
-              {{ maintenanceType }}
-            </option>
-          </select>
+          <USelect
+            :id="selectedmaintenanceTypeInputID"
+            icon="i-heroicons-briefcase"
+            color="purple"
+            v-model="selectedmaintenanceType"
+            :options="maintenanceTypes"
+          />
         </div>
 
         <!-- wrapper: orderId -->
-        <div class="flex flex-col gap-1">
-          <label for="orderId" class="text-sm font-semibold"> Order ID </label>
-          <input
-            type="text"
-            name="orderId"
-            class="font-mono"
+        <div class="flex w-1/2 flex-col gap-1">
+          <label :for="orderIdInputID" class="text-sm font-semibold">
+            Order ID
+          </label>
+          <UInput
+            :id="orderIdInputID"
+            icon="i-heroicons-identification"
+            color="purple"
+            placeholder="Order ID"
             v-model="orderId"
           />
         </div>
@@ -60,17 +68,19 @@
         <div class="flex gap-4">
           <!-- wrapper: data parameters -->
           <div class="flex w-1/2 flex-col gap-1">
-            <label for="data_parameters" class="text-sm font-semibold">
+            <label :for="dataParametersInputID" class="text-sm font-semibold">
               Data Parameters
             </label>
-            <textarea
-              name="data_parameters"
-              rows="25"
-              class="font-mono text-sm"
+            <UTextarea
+              :id="dataParametersInputID"
+              class="font-mono"
               spellcheck="false"
+              placeholder="Data parameters..."
+              :rows="25"
+              color="purple"
               v-model="dataParameters"
-            ></textarea>
-            <label for="data_parameters" class="text-xs opacity-70">
+            />
+            <label :for="dataParametersInputID" class="text-xs opacity-70">
               For a full list of parameters, check
               <a
                 href="https://developer.norbr.io/#acd2a805-dab1-4d5c-8651-5a423bd8c7b9"
@@ -85,32 +95,37 @@
 
           <!-- wrapper: response -->
           <div class="flex w-1/2 flex-col gap-1" v-if="data">
-            <label for="data_parameters" class="text-sm font-semibold">
+            <label :for="displayDataInputID" class="text-sm font-semibold">
               Response Data
             </label>
-            <textarea
-              name="response_data"
-              rows="25"
-              class="font-mono text-sm"
+            <UTextarea
+              :id="displayDataInputID"
+              class="font-mono"
               spellcheck="false"
+              :rows="25"
+              color="purple"
               v-model="displayData"
               readonly
-            >
-            </textarea>
+            />
           </div>
 
-          <SkeletonLoader v-else-if="isLoading" />
+          <div class="w-1/2 space-y-1" v-else-if="isLoading">
+            <label class="text-sm font-semibold"> Loading... </label>
+            <USkeleton class="h-4 w-full" />
+            <USkeleton class="h-4 w-full" />
+            <USkeleton class="h-4 w-full" />
+          </div>
         </div>
       </form>
 
       <!-- submit -->
       <div>
-        <button
-          class="rounded bg-purple-950 px-4 py-2 text-white hover:bg-purple-900 active:scale-95"
+        <UButton
+          icon="i-heroicons-paper-airplane"
+          color="purple"
+          :label="`Submit ${selectedmaintenanceType}`"
           @click="submitData"
-        >
-          Submit {{ selectedmaintenanceType }}
-        </button>
+        />
       </div>
     </div>
   </div>
@@ -124,13 +139,18 @@
 
   // states
   const privateKey = useState('privateKey')
+  const privateKeyInputID = useId()
   const dataParameters = ref('')
+  const dataParametersInputID = useId()
   const defaultParams = ['amount=11.30']
   dataParameters.value = defaultParams.join('\n')
   const displayData = ref('')
+  const displayDataInputID = useId()
   const orderId = useState('orderId')
+  const orderIdInputID = useId()
   const maintenanceTypes = ref(['capture', 'refund', 'cancel'])
   const selectedmaintenanceType = ref(maintenanceTypes.value[0])
+  const selectedmaintenanceTypeInputID = useId()
 
   /**
    *

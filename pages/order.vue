@@ -8,56 +8,55 @@
     <div class="flex flex-col gap-4">
       <form class="flex flex-col gap-2">
         <!-- wrapper: private key -->
-        <div class="flex flex-col gap-1">
+        <div class="flex w-1/2 flex-col gap-1">
           <input
             type="text"
             autocomplete="username"
             name="dummy_username"
             class="hidden"
           />
-          <label for="private_key" class="text-sm font-semibold">
+          <label :for="privateKeyInputID" class="text-sm font-semibold">
             Private Key
           </label>
-          <input
+          <UInput
+            :id="privateKeyInputID"
+            icon="i-heroicons-key"
             type="password"
-            autocomplete="new-password"
-            name="private_key"
-            class="font-mono"
+            color="purple"
+            placeholder="Private Key"
             v-model="privateKey"
+            autocomplete="new-password"
           />
-          <label for="private_key" class="text-xs opacity-70">
+
+          <label :for="privateKeyInputID" class="text-xs opacity-70">
             In general practice, the private key should not be exposed to the
             frontend. This is only for testing purposes
           </label>
         </div>
 
         <!-- wrapper: isOrderForRecurring -->
-        <div class="flex gap-2">
-          <label for="displayButtons" class="my-auto text-sm font-semibold">
-            Order for Recurring (Do not use, does not work yet)
-          </label>
-          <input
-            type="checkbox"
-            name="isOrderForRecurring"
-            class="my-auto"
-            v-model="isOrderForRecurring"
-          />
-        </div>
+        <UCheckbox
+          color="purple"
+          name="isOrderForRecurring"
+          label="Order for Recurring (DO NOT USE, does not work yet)"
+          v-model="isOrderForRecurring"
+        />
 
         <div class="flex gap-4">
           <!-- wrapper: data parameters and submit button -->
           <div class="flex w-1/2 flex-col gap-1">
-            <label for="data_parameters" class="text-sm font-semibold">
+            <label :for="dataParametersInputID" class="text-sm font-semibold">
               Data Parameters
             </label>
-            <textarea
-              name="data_parameters"
-              rows="25"
-              class="font-mono text-sm"
+            <UTextarea
+              :id="dataParametersInputID"
+              class="font-mono"
               spellcheck="false"
+              :rows="25"
+              color="purple"
               v-model="dataParameters"
-            ></textarea>
-            <label for="data_parameters" class="text-xs opacity-70">
+            />
+            <label :for="dataParametersInputID" class="text-xs opacity-70">
               For a full list of parameters, check
               <a
                 href="https://developer.norbr.io/#08bfab4b-45a8-4734-87d8-b46df76eb4f8"
@@ -71,48 +70,45 @@
 
             <!-- submit -->
             <div class="mt-2">
-              <button
-                class="rounded bg-purple-950 px-4 py-2 text-white hover:bg-purple-900 active:scale-95"
+              <UButton
+                icon="i-heroicons-paper-airplane"
+                color="purple"
+                label="Submit Order"
                 @click="submitData"
-              >
-                Create Order
-              </button>
+              />
             </div>
           </div>
 
           <!-- wrapper: response -->
-          <div class="flex w-1/2 flex-col gap-1" v-if="data">
-            <label for="data_parameters" class="text-sm font-semibold">
-              Response Data
-            </label>
-            <textarea
-              name="response_data"
-              rows="25"
-              class="font-mono text-sm"
-              spellcheck="false"
-              v-model="displayData"
-              readonly
-            >
-            </textarea>
+          <div class="flex w-1/2 flex-col gap-2" v-if="data">
+            <div>
+              <label :for="displayDataInputID" class="text-sm font-semibold">
+                Response Data
+              </label>
+              <UTextarea
+                :id="displayDataInputID"
+                class="font-mono"
+                spellcheck="false"
+                :rows="25"
+                color="purple"
+                v-model="displayData"
+                readonly
+              />
+            </div>
 
-            <div
-              class="mt-1 rounded bg-purple-100 px-4 py-2"
+            <!-- show alert if 3ds url is returned from the response -->
+            <UAlert
+              title="Heads up!"
+              color="purple"
+              icon="i-heroicons-information-circle"
               v-if="data.redirect_url"
             >
-              <div class="flex gap-2 text-sm">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                  class="my-auto size-4"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0ZM9 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM6.75 8a.75.75 0 0 0 0 1.5h.75v1.75a.75.75 0 0 0 1.5 0v-2.5A.75.75 0 0 0 8.25 8h-1.5Z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
+              <template #title="{ title }">
+                <!-- eslint-disable-next-line vue/no-v-html -->
+                <span v-html="title" />
+              </template>
 
+              <template #description>
                 3DS redirect URL detected,
                 <a
                   :href="data.redirect_url"
@@ -122,11 +118,16 @@
                   >click here</a
                 >
                 to open a new tab to the issuer's ACS page
-              </div>
-            </div>
+              </template>
+            </UAlert>
           </div>
 
-          <SkeletonLoader v-else-if="isLoading" />
+          <div class="w-1/2 space-y-1" v-else-if="isLoading">
+            <label class="text-sm font-semibold"> Loading... </label>
+            <USkeleton class="h-4 w-full" />
+            <USkeleton class="h-4 w-full" />
+            <USkeleton class="h-4 w-full" />
+          </div>
         </div>
       </form>
     </div>
@@ -141,13 +142,16 @@
 
   // states
   const privateKey = useState('privateKey')
+  const privateKeyInputID = useId()
   const dataParameters = ref('')
+  const dataParametersInputID = useId()
   const defaultParams = ref([
     'operation_type=direct_capture',
     'token=REPLACE_ME',
     'checkout_id=REPLACE_ME',
   ])
   const displayData = ref('')
+  const displayDataInputID = useId()
   const isOrderForRecurring = ref(false)
   const orderId = useState('orderId', () => '')
 
