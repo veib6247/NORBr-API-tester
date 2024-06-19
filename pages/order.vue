@@ -146,7 +146,6 @@
   const dataParameters = ref('')
   const dataParametersInputID = useId()
   const defaultParams = ref([
-    'operation_type=direct_capture',
     'token=REPLACE_ME',
     'checkout_id=REPLACE_ME',
   ])
