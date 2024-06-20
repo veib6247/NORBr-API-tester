@@ -3,14 +3,14 @@
  * @param dataParameters
  */
 export default function (dataParameters: string) {
-  const payloadArray = dataParameters.split('\n')
+	const payloadArray = dataParameters.split("\n");
 
-  const payload: any = {}
+	const payload = {};
 
-  payloadArray.forEach((item: string) => {
-    const itemArr = item.split('=')
-    payload[itemArr[0]] = itemArr[1]
-  })
+	payloadArray.forEach((item: string) => {
+		const itemArr = item.split("=");
+		payload[itemArr[0]] = itemArr[1];
+	});
 
-  return payload
+	return payload;
 }
