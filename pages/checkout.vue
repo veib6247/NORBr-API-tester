@@ -69,6 +69,7 @@
                 icon="i-heroicons-paper-airplane"
                 color="purple"
                 label="Create Checkout"
+                :loading="isLoading"
                 @click="submitData"
               />
             </div>

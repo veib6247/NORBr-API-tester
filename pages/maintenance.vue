@@ -123,6 +123,7 @@
         <UButton
           icon="i-heroicons-paper-airplane"
           color="purple"
+          :loading="isLoading"
           :label="`Submit ${selectedmaintenanceType}`"
           @click="submitData"
         />

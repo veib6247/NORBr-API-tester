@@ -74,6 +74,7 @@
                 icon="i-heroicons-paper-airplane"
                 color="purple"
                 label="Submit Order"
+                :loading="isLoading"
                 @click="submitData"
               />
             </div>
@@ -145,10 +146,7 @@
   const privateKeyInputID = useId()
   const dataParameters = ref('')
   const dataParametersInputID = useId()
-  const defaultParams = ref([
-    'token=REPLACE_ME',
-    'checkout_id=REPLACE_ME',
-  ])
+  const defaultParams = ref(['token=REPLACE_ME', 'checkout_id=REPLACE_ME'])
   const displayData = ref('')
   const displayDataInputID = useId()
   const isOrderForRecurring = ref(false)
