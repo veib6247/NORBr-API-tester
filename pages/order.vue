@@ -34,14 +34,6 @@
           </label>
         </div>
 
-        <!-- wrapper: isOrderForRecurring -->
-        <UCheckbox
-          color="purple"
-          name="isOrderForRecurring"
-          label="Order for Recurring (DO NOT USE, does not work yet)"
-          v-model="isOrderForRecurring"
-        />
-
         <div class="flex gap-4">
           <!-- wrapper: data parameters and submit button -->
           <div class="flex w-1/2 flex-col gap-1">
@@ -149,7 +141,6 @@
   const defaultParams = ref(['token=REPLACE_ME', 'checkout_id=REPLACE_ME'])
   const displayData = ref('')
   const displayDataInputID = useId()
-  const isOrderForRecurring = ref(false)
   const orderId = useState('orderId', () => '')
 
   /**
@@ -174,7 +165,6 @@
     try {
       await execute({
         data: {
-          isOrderForRecurring: isOrderForRecurring.value,
           privateKey: privateKey.value,
           dataParameters: dataParameters.value,
         },

@@ -5,11 +5,7 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   const payload = payloadBuilder(body.dataParameters)
 
-  const url = body.isOrderForRecurring
-    ? 'https://api-sandbox.norbr.io/order/create'
-    : 'https://api-sandbox.norbr.io/payment/order'
-
-  console.log(`Using URL: ${url}`)
+  const url = 'https://api-sandbox.norbr.io/payment/order'
 
   try {
     const { data } = await axios({
