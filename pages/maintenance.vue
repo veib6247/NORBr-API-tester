@@ -144,7 +144,6 @@
   const dataParameters = ref('')
   const dataParametersInputID = useId()
   const defaultParams = ['amount=11.30']
-  dataParameters.value = defaultParams.join('\n')
   const displayData = ref('')
   const displayDataInputID = useId()
   const orderId = useState('orderId')
@@ -187,4 +186,11 @@
       console.error(error)
     }
   }
+
+  /**
+   *
+   */
+  onMounted(() => {
+    dataParameters.value = defaultParams.join('\n')
+  })
 </script>
