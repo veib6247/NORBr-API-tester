@@ -108,7 +108,6 @@
                 A redirect URL detected is detected,
                 <a
                   :href="data.redirect_url"
-                  target="_blank"
                   rel="noopener noreferrer"
                   class="underline"
                   >click here</a
@@ -131,13 +130,15 @@
 </template>
 
 <script lang="ts" setup>
+  // libs
   import { useAxios } from '@vueuse/integrations/useAxios'
+  import { useStorage } from '@vueuse/core'
 
   // states
   useUpdateTitle('Checkout')
   const privateKeyInputID = useId()
   const dataParamsID = useId()
-  const privateKey = useState('privateKey', () => '')
+  const privateKey = useState<string>('privateKey')
   const dataParameters = ref('')
   const defaultParams = [
     'type=api',
@@ -154,10 +155,6 @@
   const displayData = ref('')
   const displayDataInputID = useId()
   const paymentMethodsAvailable = useState('paymentMethodsAvailable', () => '')
-
-  /**
-   *
-   */
   const { execute, data, isLoading } = useAxios(
     '/api/checkout',
     {
@@ -165,12 +162,13 @@
     },
     { immediate: false }
   )
+  const storageprivateKey = useState('storageprivateKey')
 
   /**
    *
    */
   const submitData = async () => {
-    data.value = ''
+    storageprivateKey.value = privateKey.value
 
     try {
       await execute({

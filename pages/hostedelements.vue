@@ -194,6 +194,7 @@
   // states
   const privateKey = useState('privateKey')
   const privateKeyInputID = useId()
+  const storageprivateKey = useState('storageprivateKey')
   const checkoutId = useState('checkoutId')
   const checkoutIdInputID = useId()
   const publicKey = ref('')
@@ -217,6 +218,7 @@
    *
    */
   const initNorbr = () => {
+    storageprivateKey.value = privateKey.value
     hostedElementsResponse.value = ''
 
     const configuration = {

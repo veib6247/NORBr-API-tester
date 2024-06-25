@@ -22,13 +22,30 @@
 </template>
 
 <script setup lang="ts">
-  const appName = useState('appName', () => 'NORBr API Tester')
+  // libs
+  import { useStorage } from '@vueuse/core'
 
-  // just be light mode dammit!
+  // states
+  const appName = useState('appName', () => 'NORBr API Tester')
   const colorMode = useColorMode()
+  const privateKey = useState('privateKey', () => '')
   colorMode.value = 'light'
 
+  // composables
   useHead({
     title: appName.value,
+  })
+
+  /**
+   *
+   */
+  onMounted(() => {
+    const storagePrivateKey = useState('storageprivateKey', () => {
+      return useStorage('privateKey', '', sessionStorage, {
+        mergeDefaults: true,
+      })
+    })
+
+    privateKey.value = storagePrivateKey.value
   })
 </script>

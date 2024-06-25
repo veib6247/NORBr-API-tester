@@ -105,7 +105,6 @@
                 3DS redirect URL detected,
                 <a
                   :href="data.redirect_url"
-                  target="_blank"
                   rel="noopener noreferrer"
                   class="underline"
                   >click here</a
@@ -136,16 +135,13 @@
   // states
   const privateKey = useState('privateKey')
   const privateKeyInputID = useId()
+  const storageprivateKey = useState('storageprivateKey')
   const dataParameters = ref('')
   const dataParametersInputID = useId()
   const defaultParams = ref(['token=REPLACE_ME', 'checkout_id=REPLACE_ME'])
   const displayData = ref('')
   const displayDataInputID = useId()
   const orderId = useState('orderId', () => '')
-
-  /**
-   *
-   */
   const { execute, data, isLoading } = useAxios(
     '/api/order',
     {
@@ -158,6 +154,7 @@
    *
    */
   const submitData = async (event: Event) => {
+    storageprivateKey.value = privateKey.value
     event.preventDefault()
 
     data.value = ''

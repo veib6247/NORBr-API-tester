@@ -113,14 +113,11 @@
   // states
   const privateKey = useState('privateKey')
   const privateKeyInputID = useId()
+  const storageprivateKey = useState('storageprivateKey')
   const orderId = useState('orderId')
   const orderIdInputID = useId()
   const displayData = ref('')
   const displayDataInputID = useId()
-
-  /**
-   *
-   */
   const { execute, data, isLoading } = useAxios(
     '/api/orderDetail',
     {
@@ -133,6 +130,7 @@
    *
    */
   const submitData = async () => {
+    storageprivateKey.value = privateKey.value
     data.value = ''
 
     try {

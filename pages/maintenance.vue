@@ -141,6 +141,7 @@
   // states
   const privateKey = useState('privateKey')
   const privateKeyInputID = useId()
+  const storageprivateKey = useState('storageprivateKey')
   const dataParameters = ref('')
   const dataParametersInputID = useId()
   const defaultParams = ['amount=11.30']
@@ -151,10 +152,6 @@
   const maintenanceTypes = ref(['capture', 'refund', 'cancel'])
   const selectedmaintenanceType = ref(maintenanceTypes.value[0])
   const selectedmaintenanceTypeInputID = useId()
-
-  /**
-   *
-   */
   const { execute, data, isLoading } = useAxios(
     '/api/maintenance',
     {
@@ -167,6 +164,7 @@
    *
    */
   const submitData = async () => {
+    storageprivateKey.value = privateKey.value
     data.value = ''
 
     try {
