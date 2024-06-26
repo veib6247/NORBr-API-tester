@@ -105,14 +105,14 @@
               </template>
 
               <template #description>
-                A redirect URL detected is detected,
+                A redirect URL is detected,
                 <a
                   :href="data.redirect_url"
                   rel="noopener noreferrer"
                   class="underline"
                   >click here</a
                 >
-                to open a new tab to view the page.
+                to view the page.
               </template>
             </UAlert>
           </div>

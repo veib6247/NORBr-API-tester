@@ -102,14 +102,14 @@
               </template>
 
               <template #description>
-                3DS redirect URL detected,
+                A redirect URL is detected,
                 <a
                   :href="data.redirect_url"
                   rel="noopener noreferrer"
                   class="underline"
                   >click here</a
                 >
-                to open a new tab to the issuer's ACS page
+                to view the page.
               </template>
             </UAlert>
           </div>
