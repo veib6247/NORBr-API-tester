@@ -116,8 +116,8 @@
             <!-- show alert if the payment_methods_available exists but is an empty array -->
             <UAlert
               title="Checkout does not have any 'Payment Methods Available'"
-              color="purple"
-              icon="i-heroicons-information-circle"
+              color="red"
+              icon="i-heroicons-exclaimation-triangle"
               v-if="data.payment_methods && paymentMethodsAvailable.length < 1"
             >
               <template #title="{ title }">
