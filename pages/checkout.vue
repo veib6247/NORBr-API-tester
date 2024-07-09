@@ -204,7 +204,6 @@
     { immediate: false }
   )
   const storageprivateKey = useState('storageprivateKey')
-  const isPaymentMethodsAvailable = ref(false)
 
   /**
    *
