@@ -174,7 +174,6 @@
 <script lang="ts" setup>
   // libs
   import { useAxios } from '@vueuse/integrations/useAxios'
-  import { useStorage } from '@vueuse/core'
   import { nanoid } from 'nanoid'
 
   // states
