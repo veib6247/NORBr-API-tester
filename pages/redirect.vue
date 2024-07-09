@@ -15,8 +15,14 @@
       </template>
 
       <template #description>
-        This is a generic redirect page, you can query the order status below or
-        just check the transaction details in the gateway.
+        <p>This is a generic redirect page.</p>
+
+        <p>
+          If you already have the
+          <kbd class="font-bold">Order ID</kbd>, you can query the order status
+          below, otherwise, you can check the transaction details in the
+          gateway.
+        </p>
       </template>
     </UAlert>
 

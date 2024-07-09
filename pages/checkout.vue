@@ -133,6 +133,7 @@
   // libs
   import { useAxios } from '@vueuse/integrations/useAxios'
   import { useStorage } from '@vueuse/core'
+  import { nanoid } from 'nanoid'
 
   // states
   useUpdateTitle('Checkout')
@@ -148,7 +149,7 @@
     'currency=EUR',
     'token_type=oneshot',
     'payment_channel=e-commerce',
-    'order_merchant_id=REPLACE_ME',
+    `order_merchant_id=bidhb-${nanoid()}`,
   ]
   dataParameters.value = defaultParams.join('\n')
   const checkoutId = useState('checkoutId', () => '')
