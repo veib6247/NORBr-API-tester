@@ -1,5 +1,5 @@
 <template>
-  <div class="container flex flex-col gap-4">
+  <div class="container mx-auto flex flex-col gap-4">
     <div>
       <h1 class="text-xl font-semibold">Welcome</h1>
       <p class="text-sm">
