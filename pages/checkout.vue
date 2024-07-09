@@ -51,7 +51,10 @@
                 v-model="dataParameters"
               />
               <label :for="dataParamsID" class="text-xs opacity-70">
-                For a full list of parameters, check
+                The system generates a new value for the
+                <kbd class="font-bold">order_merchant_id</kbd> parameter on
+                every page load, you may replace it as needed. For a full list
+                of all the available parameters, check
                 <a
                   href="https://developer.norbr.io/#0268ead8-a489-414e-bba8-8508c002f05f"
                   target="_blank"
@@ -91,6 +94,45 @@
                 readonly
               />
             </div>
+
+            <!-- show alert if the payment_methods_available exists in the response-->
+            <UAlert
+              title="'Payment Methods Available' has been detected"
+              color="purple"
+              icon="i-heroicons-information-circle"
+              v-if="paymentMethodsAvailable.length > 0"
+            >
+              <template #title="{ title }">
+                <!-- eslint-disable-next-line vue/no-v-html -->
+                <span v-html="title" />
+              </template>
+              <template #description>
+                The system will use the items found in the
+                <kbd>payment_methods_available</kbd> array as values for the
+                Hosted Elements' <kbd class="font-bold">paymentmethods</kbd>.
+              </template>
+            </UAlert>
+
+            <!-- show alert if the payment_methods_available exists but is an empty array -->
+            <UAlert
+              title="Checkout does not have any 'Payment Methods Available'"
+              color="purple"
+              icon="i-heroicons-information-circle"
+              v-if="data.payment_methods && paymentMethodsAvailable.length < 1"
+            >
+              <template #title="{ title }">
+                <!-- eslint-disable-next-line vue/no-v-html -->
+                <span v-html="title" />
+              </template>
+              <template #description>
+                A checkout has been created but the merchant entity does not
+                have any payment methods for the Hosted Elements to use. Ensure
+                that the <span class="font-bold">operation</span>,
+                <span class="font-bold">token type</span>, and/or
+                <span class="font-bold">currency</span> is supported for this
+                merchant.
+              </template>
+            </UAlert>
 
             <!-- show alert if 3ds url is returned from the response -->
             <UAlert
@@ -149,9 +191,7 @@
     'currency=EUR',
     'token_type=oneshot',
     'payment_channel=e-commerce',
-    `order_merchant_id=bidhb-${nanoid()}`,
   ]
-  dataParameters.value = defaultParams.join('\n')
   const checkoutId = useState('checkoutId', () => '')
   const displayData = ref('')
   const displayDataInputID = useId()
@@ -164,6 +204,7 @@
     { immediate: false }
   )
   const storageprivateKey = useState('storageprivateKey')
+  const isPaymentMethodsAvailable = ref(false)
 
   /**
    *
@@ -205,4 +246,12 @@
       console.error(error)
     }
   }
+
+  /**
+   * do some param formatter once mounted
+   */
+  onMounted(() => {
+    defaultParams.push(`order_merchant_id=bidhb-${nanoid(10)}`)
+    dataParameters.value = defaultParams.join('\n')
+  })
 </script>
