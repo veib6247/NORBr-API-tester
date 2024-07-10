@@ -3,6 +3,9 @@
     <!-- nav -->
     <div class="h-dvh w-72 bg-purple-950">
       <nav class="flex flex-col gap-1 p-6">
+        <h1 class="text-sm font-semibold uppercase text-white opacity-60">
+          NORBr
+        </h1>
         <NavLink route-to="/"><IconHome /> Home</NavLink>
         <NavLink route-to="/checkout"><IconCart /> Checkout</NavLink>
         <NavLink route-to="/hostedelements">
@@ -11,6 +14,12 @@
         <NavLink route-to="/order"><IconCash /> Order</NavLink>
         <NavLink route-to="/maintenance"><IconReload /> Maintenance</NavLink>
         <NavLink route-to="/redirect"><IconRedirect /> Redirect</NavLink>
+      </nav>
+
+      <nav class="flex flex-col gap-1 p-6">
+        <h1 class="text-sm font-semibold uppercase text-white opacity-60">
+          Nethone
+        </h1>
       </nav>
     </div>
 
