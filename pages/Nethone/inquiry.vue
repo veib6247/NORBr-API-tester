@@ -2,6 +2,7 @@
   <div class="container mx-auto flex flex-col gap-4">
     <div>
       <h1 class="text-xl font-semibold">Inquiry</h1>
+      <p>Work in progress...</p>
     </div>
 
     <!-- forms and parameters -->

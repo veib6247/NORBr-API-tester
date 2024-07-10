@@ -23,7 +23,9 @@
         <NavLink route-to="/NORBr/maintenance"
           ><IconReload /> Maintenance</NavLink
         >
-        <NavLink route-to="/NORBr/redirect"><IconRedirect /> Redirect</NavLink>
+        <NavLink route-to="/NORBr/redirect?status=accept"
+          ><IconRedirect /> Redirect</NavLink
+        >
       </nav>
 
       <!-- nav for Nethone -->

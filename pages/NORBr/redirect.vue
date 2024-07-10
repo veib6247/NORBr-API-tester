@@ -1,7 +1,10 @@
 <template>
   <div class="container mx-auto flex flex-col gap-4">
     <div>
-      <h1 class="text-xl font-semibold">Redirect</h1>
+      <h1 class="text-xl font-semibold">
+        Redirected with
+        <span class="font-bold">{{ route.query.status }}</span> status
+      </h1>
     </div>
 
     <UAlert
@@ -131,6 +134,7 @@
     },
     { immediate: false }
   )
+  const route = useRoute()
 
   /**
    *

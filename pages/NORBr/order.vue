@@ -186,10 +186,10 @@
    */
   onMounted(() => {
     const urls = [
-      `accept_url=${window.location.origin}/NORBr/redirect`,
-      `decline_url=${window.location.origin}/NORBr/redirect`,
-      `pending_url=${window.location.origin}/NORBr/redirect`,
-      `exception_url=${window.location.origin}/NORBr/redirect`,
+      `accept_url=${window.location.origin}/NORBr/redirect?status=accept`,
+      `decline_url=${window.location.origin}/NORBr/redirect?status=decline`,
+      `pending_url=${window.location.origin}/NORBr/redirect?status=pending`,
+      `exception_url=${window.location.origin}/NORBr/redirect?status=exception`,
     ]
 
     defaultParams.value = [...defaultParams.value, ...urls]
