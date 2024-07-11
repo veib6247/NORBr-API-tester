@@ -251,7 +251,10 @@
   /**
    *
    */
-  onMounted(() => {
+  onMounted(async () => {
+    // init Nethone and run profiling
+    await useInitNethone()
+
     customerData.value = JSON.stringify(
       {
         attempt_reference: nethoneAttemptReference.value,

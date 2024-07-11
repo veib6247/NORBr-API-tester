@@ -85,8 +85,5 @@
       })
     })
     privateKey.value = storagePrivateKey.value
-
-    // init Nethone and run profiling
-    await useInitNethone()
   })
 </script>
