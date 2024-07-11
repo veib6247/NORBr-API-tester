@@ -1,8 +1,9 @@
 /**
  * nethone init code for profiling
  */
-export const useInitNethone = () => {
+export const useInitNethone = async () => {
   const nethoneAttemptReference = useState<string>('nethoneAttemptReference')
+  const isProfilingComplete = useState<boolean>('isProfilingComplete')
 
   // set behavioral data parameters
   const options = {
@@ -22,18 +23,18 @@ export const useInitNethone = () => {
     // @ts-ignore
     dftp.init(options)
 
-    // TODO: delete this else block later on since we can guarantee that the script will be ready/loaded by the time we call `dftp.init()`
-  } else {
-    const el = document.getElementById('nethone_script')
-    if (el) {
-      el.addEventListener('load', () => {
-        // @ts-ignore
-        dftp.init(options)
-      })
-    } else {
-      console.error(
-        "Unable to find Nethone script tag with id 'nethone_script'"
-      )
+    try {
+      // @ts-ignore
+      await dftp.profileCompleted()
+      isProfilingComplete.value = true
+
+      //
+    } catch (err) {
+      console.error(`Profiling failed with err: ${err}`)
     }
+  } else {
+    alert(
+      'Unable to initialize Nethone profiling script, please reload the page.'
+    )
   }
 }

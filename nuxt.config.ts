@@ -29,7 +29,7 @@ export default defineNuxtConfig({
           type: 'text/javascript',
           id: 'nethone_script',
           crossorigin: 'use-credentials',
-          src: 'https://provided_name/s/${merchant_id}/dNfsXe.js',
+          src: 'https://d2g3ekl4mwm40k.cloudfront.net/s/182619/digcSw.js',
           async: 'true',
         },
       ],

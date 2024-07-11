@@ -54,8 +54,17 @@
   const colorMode = useColorMode()
   const privateKey = useState('privateKey', () => '')
   colorMode.value = 'light'
+
   useState<string>('nethoneAttemptReference', () => {
-    return nanoid()
+    return `bidhb-${nanoid()}`
+  })
+
+  useState<string>('nethoneProfilingReference', () => {
+    return `bidhb-${nanoid()}`
+  })
+
+  useState<boolean>('isProfilingComplete', () => {
+    return false
   })
 
   // composables
@@ -66,7 +75,7 @@
   /**
    * run these once browser is ready to read stuff
    */
-  onMounted(() => {
+  onMounted(async () => {
     /**
      * init storage for private key
      */
@@ -77,7 +86,7 @@
     })
     privateKey.value = storagePrivateKey.value
 
-    // init Nethone profiling
-    useInitNethone()
+    // init Nethone and run profiling
+    await useInitNethone()
   })
 </script>
