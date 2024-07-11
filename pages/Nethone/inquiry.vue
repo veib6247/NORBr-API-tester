@@ -5,7 +5,7 @@
     </div>
 
     <UAlert
-      title="This is a dummy form!"
+      title="There is a dummy form below"
       color="red"
       icon="i-heroicons-exclaimation-triangle"
     >
@@ -23,7 +23,9 @@
 
         <p>
           Modify your customer data and submit the inquiry, Nethone will respond
-          with the recommendation on what to do next.
+          with the recommendation on what to do next. Do not edit the values for
+          <kbd class="font-bold">attempt_reference</kbd> and
+          <kbd class="font-bold">profiling_reference</kbd>.
         </p>
       </template>
     </UAlert>
@@ -44,8 +46,65 @@
       <div v-else class="flex flex-row gap-4">
         <!-- left -->
         <div class="flex w-1/2 flex-col gap-2">
-          <h1 class="text-sm">Dummy store checkout page</h1>
+          <!-- customer data -->
+          <div class="flex flex-col gap-2">
+            <label :for="customerDataFormId" class="text-sm font-semibold">
+              Customer Data
+            </label>
+            <UTextarea
+              :id="customerDataFormId"
+              class="font-mono"
+              spellcheck="false"
+              :rows="25"
+              color="purple"
+              v-model="customerData"
+            />
 
+            <div>
+              <UButton
+                color="purple"
+                variant="solid"
+                @click="submitCustomerData"
+                :loading="isLoading"
+              >
+                Send Inquiry to Nethone
+              </UButton>
+            </div>
+          </div>
+        </div>
+
+        <!-- right -->
+        <div class="flex w-1/2 flex-col gap-2">
+          <div class="w-full space-y-1" v-if="isLoading">
+            <label class="text-sm font-semibold">
+              Fetching recommendation...
+            </label>
+            <USkeleton class="h-4 w-full" />
+            <USkeleton class="h-4 w-full" />
+            <USkeleton class="h-4 w-full" />
+          </div>
+
+          <div class="gap-1" v-if="displayData && !isLoading">
+            <label :for="displayDataInputID" class="text-sm font-semibold">
+              Response Data
+            </label>
+            <UTextarea
+              :id="displayDataInputID"
+              class="font-mono"
+              spellcheck="false"
+              :rows="25"
+              color="purple"
+              v-model="displayData"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="flex">
+        <!-- dummy checkout page -->
+        <div class="w-1/3">
+          <h1 class="text-sm">Dummy store checkout page</h1>
           <div
             class="flex flex-col gap-2 rounded border border-black/20 p-6 shadow"
           >
@@ -126,72 +185,6 @@
                 </UTooltip>
               </div>
             </form>
-          </div>
-
-          <div class="flex flex-col gap-2">
-            <UAlert
-              title="Heads up!"
-              color="purple"
-              icon="i-heroicons-information-circle"
-            >
-              <template #title="{ title }">
-                <!-- eslint-disable-next-line vue/no-v-html -->
-                <span v-html="title" />
-              </template>
-              <template #description>
-                Do not edit the values for
-                <kbd class="font-bold">attempt_reference</kbd> and
-                <kbd class="font-bold">profiling_reference</kbd>.
-              </template>
-            </UAlert>
-
-            <h1 class="text-sm">Modify customer data here:</h1>
-
-            <UTextarea
-              :id="customerDataFormId"
-              class="font-mono"
-              spellcheck="false"
-              :rows="25"
-              color="purple"
-              v-model="customerData"
-            />
-
-            <div>
-              <UButton
-                color="purple"
-                variant="solid"
-                @click="submitCustomerData"
-              >
-                Send Inquiry to Nethone
-              </UButton>
-            </div>
-          </div>
-        </div>
-
-        <!-- right -->
-        <div class="flex w-1/2 flex-col gap-2">
-          <div class="w-full space-y-1" v-if="isLoading">
-            <label class="text-sm font-semibold">
-              Fetching recommendation...
-            </label>
-            <USkeleton class="h-4 w-full" />
-            <USkeleton class="h-4 w-full" />
-            <USkeleton class="h-4 w-full" />
-          </div>
-
-          <div class="gap-1" v-if="displayData && !isLoading">
-            <label :for="displayDataInputID" class="text-sm font-semibold">
-              Response Data
-            </label>
-            <UTextarea
-              :id="displayDataInputID"
-              class="font-mono"
-              spellcheck="false"
-              :rows="25"
-              color="purple"
-              v-model="displayData"
-              readonly
-            />
           </div>
         </div>
       </div>
