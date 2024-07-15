@@ -1,10 +1,12 @@
+type JsonPayload = { [key: string]: string }
+
 /**
  * make himay to conver to object as payload for Axios
  * @param dataParameters
  */
 export default function (dataParameters: string) {
   const payloadArray = dataParameters.split('\n')
-  const payload: { [key: string]: string } = {}
+  const payload: JsonPayload = {}
 
   for (const item of payloadArray) {
     // split only on the first instance of the "=" sign
