@@ -84,7 +84,7 @@
             <USkeleton class="h-4 w-full" />
           </div>
 
-          <div class="gap-1" v-if="displayData && !isLoading">
+          <div class="flex flex-col gap-2" v-if="displayData && !isLoading">
             <label :for="displayDataInputID" class="text-sm font-semibold">
               Response Data
             </label>
