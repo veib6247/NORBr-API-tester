@@ -196,6 +196,8 @@
   // libs
   import { useAxios } from '@vueuse/integrations/useAxios'
 
+  useUpdateTitle('Inquiry')
+
   // states
   const isProfilingComplete = useState<boolean>('isProfilingComplete')
   const ccNumberId = useId()

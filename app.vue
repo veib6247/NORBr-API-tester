@@ -15,17 +15,17 @@
         <h1 class="text-xs font-semibold uppercase text-white opacity-60">
           NORBr
         </h1>
-        <NavLink route-to="/NORBr/checkout"><IconCart /> Checkout</NavLink>
+        <NavLink route-to="/NORBr/checkout"><IconCart />Checkout</NavLink>
         <NavLink route-to="/NORBr/hostedelements">
-          <IconShoppingbag /> Hosted Elements
+          <IconShoppingbag />Hosted Elements
         </NavLink>
-        <NavLink route-to="/NORBr/order"><IconCash /> Order</NavLink>
-        <NavLink route-to="/NORBr/maintenance"
-          ><IconReload /> Maintenance</NavLink
-        >
-        <NavLink route-to="/NORBr/redirect?status=accept"
-          ><IconRedirect /> Redirect</NavLink
-        >
+        <NavLink route-to="/NORBr/order"> <IconCash />Order </NavLink>
+        <NavLink route-to="/NORBr/maintenance">
+          <IconReload />Maintenance
+        </NavLink>
+        <NavLink route-to="/NORBr/redirect?status=accept">
+          <IconRedirect />Redirect
+        </NavLink>
       </nav>
 
       <!-- nav for Nethone -->
@@ -33,7 +33,10 @@
         <h1 class="text-xs font-semibold uppercase text-white opacity-60">
           Nethone
         </h1>
-        <NavLink route-to="/Nethone/inquiry"><IconInfo /> Inquiry</NavLink>
+        <NavLink route-to="/Nethone/inquiry"><IconInfo />Inquiry</NavLink>
+        <NavLink route-to="/Nethone/transaction">
+          <IconCard />Transaction
+        </NavLink>
       </nav>
     </div>
 
@@ -65,6 +68,14 @@
 
   useState<boolean>('isProfilingComplete', () => {
     return false
+  })
+
+  useState<string>('nethoneTransactionReference', () => {
+    return `bidhb-${nanoid()}`
+  })
+
+  useState<string>('nethoneMerchantReference', () => {
+    return `bidhb-${nanoid()}`
   })
 
   // composables
