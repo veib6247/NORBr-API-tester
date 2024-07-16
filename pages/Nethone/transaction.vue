@@ -145,32 +145,7 @@
    *
    */
   onMounted(async () => {
-    customerData.value = JSON.stringify(
-      {
-        reference: nethoneTransactionReference.value,
-        merchant_reference: nethoneMerchantReference.value,
-        payment_method: 'card',
-        user_reference: 'PUT_DUMMY_USER_REFERENCE_HERE',
-        profiling_reference: nethoneProfilingReference.value,
-        timestamp: `${buildTimestamp()}`,
-        currency: 'USD',
-        amount: '599.99',
-        card_token: 'PUT_DUMMY_CARD_TOKEN_HERE',
-        extra_data: {},
-        flags: [
-          {
-            timestamp: `${buildTimestamp()}`,
-            name: 'accepted',
-            value: true,
-            extra_data: {},
-            comment: '',
-          },
-        ],
-        inquiry_id: 'PUT_INQUIRY_ID_HERE',
-      },
-      undefined,
-      2
-    )
+    customerData.value = buildDefaultPayload()
   })
 
   /**
@@ -197,5 +172,37 @@
     }
 
     return `${digit}`
+  }
+
+  /**
+   *
+   */
+  const buildDefaultPayload = (): string => {
+    return JSON.stringify(
+      {
+        reference: nethoneTransactionReference.value,
+        merchant_reference: nethoneMerchantReference.value,
+        payment_method: 'card',
+        user_reference: 'PUT_DUMMY_USER_REFERENCE_HERE',
+        profiling_reference: nethoneProfilingReference.value,
+        timestamp: `${buildTimestamp()}`,
+        currency: 'EUR',
+        amount: '11.30',
+        card_token: 'PUT_DUMMY_CARD_TOKEN_HERE',
+        extra_data: {},
+        flags: [
+          {
+            timestamp: `${buildTimestamp()}`,
+            name: 'accepted',
+            value: true,
+            extra_data: {},
+            comment: '',
+          },
+        ],
+        inquiry_id: 'PUT_INQUIRY_ID_HERE',
+      },
+      undefined,
+      2
+    )
   }
 </script>

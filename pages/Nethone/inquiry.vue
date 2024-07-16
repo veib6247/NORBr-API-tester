@@ -250,63 +250,70 @@
     // init Nethone and run profiling
     await useInitNethone()
 
-    customerData.value = JSON.stringify(
+    customerData.value = buildDefaultPayload()
+  })
+
+  /**
+   *
+   */
+  const buildDefaultPayload = (): string => {
+    return JSON.stringify(
       {
         attempt_reference: nethoneAttemptReference.value,
         profiling_reference: nethoneProfilingReference.value,
         customer: {
           first_name: 'John',
-          last_name: 'Seagram',
-          email: 'john.seagram@example.com',
+          last_name: 'Doe',
+          email: 'john.doe@example.com',
           gender: 'male',
           nationality: 'US',
           billing_address: {
-            city: 'New York',
-            name: 'John Seagram',
-            region: 'US-NY',
-            street: '375 Park Avenue',
+            city: 'Stockton',
+            name: 'John Doe',
+            region: 'US-CA',
+            street: '5756 Pacific Ave #95',
             country: 'US',
-            postal_code: '10152',
+            postal_code: '95207',
           },
           delivery_address: {
-            city: 'New York',
-            name: 'John Seagram',
-            region: 'US-NY',
-            street: '375 Park Avenue',
+            city: 'Stockton',
+            name: 'John Doe',
+            region: 'US-CA',
+            street: '5756 Pacific Ave #95',
             country: 'US',
-            postal_code: '10152',
+            postal_code: '95207',
           },
         },
         payment_methods: [
           {
             method: 'card',
-            card_bin_number: '411111',
-            card_expiry_year: 2022,
-            card_expiry_month: 9,
+            card_bin_number: '424242',
+            card_expiry_year: 2030,
+            card_expiry_month: 12,
             value: {
-              amount: '599.99',
-              currency: 'USD',
+              amount: '11.30',
+              currency: 'EUR',
             },
           },
         ],
-        transaction_currency: 'USD',
-        transaction_amount: '599.99',
+        transaction_currency: 'EUR',
+        transaction_amount: '11.30',
         items: [
           {
             type: 'generic',
-            id: '13811876',
+            id: 'DUMMY_PRODUCT_ID_001',
             price: {
-              amount: '599.99',
-              currency: 'USD',
+              amount: '11.30',
+              currency: 'EUR',
             },
             quantity: 1,
-            brand: 'VALENTINO',
-            category: 'Trainers',
+            brand: 'DUMMY_BRAND_NAME',
+            category: 'DUMMY_CATEGORY',
           },
         ],
       },
       undefined,
       2
     )
-  })
+  }
 </script>
