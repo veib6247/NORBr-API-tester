@@ -246,16 +246,6 @@
   /**
    *
    */
-  onMounted(async () => {
-    // init Nethone and run profiling
-    await useInitNethone()
-
-    customerData.value = buildDefaultPayload()
-  })
-
-  /**
-   *
-   */
   const buildDefaultPayload = (): string => {
     return JSON.stringify(
       {
@@ -316,4 +306,14 @@
       2
     )
   }
+
+  /**
+   *
+   */
+  onMounted(async () => {
+    // init Nethone and run profiling
+    await useInitNethone()
+
+    customerData.value = buildDefaultPayload()
+  })
 </script>

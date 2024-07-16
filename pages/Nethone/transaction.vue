@@ -144,13 +144,6 @@
   /**
    *
    */
-  onMounted(async () => {
-    customerData.value = buildDefaultPayload()
-  })
-
-  /**
-   *
-   */
   const buildTimestamp = (): string => {
     const currentDate = new Date()
     const month = zeroPad(currentDate.getMonth() + 1)
@@ -205,4 +198,11 @@
       2
     )
   }
+
+  /**
+   *
+   */
+  onMounted(async () => {
+    customerData.value = buildDefaultPayload()
+  })
 </script>
