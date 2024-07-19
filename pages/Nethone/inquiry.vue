@@ -239,7 +239,7 @@
 
       //
     } catch (error) {
-      alert('Invalid JSON format, please check your customer data.')
+      alert(`Invalid JSON format, please check your customer data.\n\n${error}`)
     }
   }
 
