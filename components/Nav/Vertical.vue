@@ -33,6 +33,18 @@
         }"
       />
     </div>
+
+    <div class="space-y-2">
+      <h1 class="text-xs font-semibold uppercase text-white opacity-60">
+        SEON
+      </h1>
+      <UVerticalNavigation
+        :links="seonLinks"
+        :ui="{
+          inactive: 'text-white/80',
+        }"
+      />
+    </div>
   </div>
 </template>
 
@@ -83,6 +95,14 @@
       label: 'Transaction',
       icon: 'i-heroicons-credit-card',
       to: '/Nethone/transaction',
+    },
+  ]
+
+  const seonLinks = [
+    {
+      label: 'Fraud API',
+      icon: 'i-heroicons-shield-exclamation',
+      to: '/Seon/fraud-api',
     },
   ]
 </script>
