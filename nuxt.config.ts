@@ -32,6 +32,20 @@ export default defineNuxtConfig({
           src: 'https://d2g3ekl4mwm40k.cloudfront.net/s/182619/digcSw.js',
           async: 'true',
         },
+
+        // SEON JS
+        {
+          type: 'text/javascript',
+          src: 'https://cdn.seondf.com/js/v6/agent.umd.js',
+        },
+        {
+          type: 'text/javascript',
+          src: 'https://cdn.deviceinf.com/js/v6/agent.umd.js',
+        },
+        {
+          type: 'text/javascript',
+          src: 'https://cdn.seonintelligence.com/js/v6/agent.umd.js',
+        },
       ],
     },
 
