@@ -120,10 +120,10 @@
   useUpdateTitle('Redirect')
 
   // states
-  const privateKey = useState('privateKey')
+  const privateKey = useState<string>('privateKey')
   const privateKeyInputID = useId()
   const storageprivateKey = useState('storageprivateKey')
-  const orderId = useState('orderId')
+  const orderId = useState<string>('orderId')
   const orderIdInputID = useId()
   const displayData = ref('')
   const displayDataInputID = useId()

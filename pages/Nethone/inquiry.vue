@@ -1,8 +1,6 @@
 <template>
   <div class="container mx-auto flex flex-col gap-4">
-    <div>
-      <h1 class="text-xl font-semibold">Inquiry</h1>
-    </div>
+    <AppPageTitle> Inquiry </AppPageTitle>
 
     <UAlert
       title="There is a dummy form below"

@@ -1,8 +1,6 @@
 <template>
   <div class="container mx-auto flex flex-col gap-4">
-    <div>
-      <h1 class="text-xl font-semibold">Hosted Elements</h1>
-    </div>
+    <AppPageTitle> Hosted Elements </AppPageTitle>
 
     <div class="flex flex-col gap-4">
       <div class="flex gap-4">
@@ -192,10 +190,10 @@
   useUpdateTitle('Hosted Elements')
 
   // states
-  const privateKey = useState('privateKey')
+  const privateKey = useState<string>('privateKey')
   const privateKeyInputID = useId()
   const storageprivateKey = useState('storageprivateKey')
-  const checkoutId = useState('checkoutId')
+  const checkoutId = useState<string>('checkoutId')
   const checkoutIdInputID = useId()
   const publicKey = ref('')
   const publicKeyInputID = useId()

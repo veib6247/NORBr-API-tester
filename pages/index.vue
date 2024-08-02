@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto flex flex-col gap-4">
     <div class="flex flex-col gap-3">
-      <h1 class="text-xl font-semibold">Welcome</h1>
+      <AppPageTitle> Welcome </AppPageTitle>
 
       <div class="flex flex-col gap-3">
         <p class="text-sm">

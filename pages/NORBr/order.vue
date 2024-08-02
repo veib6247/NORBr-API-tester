@@ -1,8 +1,6 @@
 <template>
   <div class="container mx-auto flex flex-col gap-4">
-    <div>
-      <h1 class="text-xl font-semibold">Order</h1>
-    </div>
+    <AppPageTitle> Order </AppPageTitle>
 
     <!-- forms and parameters -->
     <div class="flex flex-col gap-4">
@@ -133,7 +131,7 @@
   useUpdateTitle('Order')
 
   // states
-  const privateKey = useState('privateKey')
+  const privateKey = useState<string>('privateKey')
   const privateKeyInputID = useId()
   const storageprivateKey = useState('storageprivateKey')
   const dataParameters = ref('')

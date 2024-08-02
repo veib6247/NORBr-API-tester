@@ -1,8 +1,6 @@
 <template>
   <div class="container mx-auto flex flex-col gap-4">
-    <div>
-      <h1 class="text-xl font-semibold">Checkout</h1>
-    </div>
+    <AppPageTitle> Checkout </AppPageTitle>
 
     <!-- forms and parameters -->
     <div class="flex flex-col gap-4">

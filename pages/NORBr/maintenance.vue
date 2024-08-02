@@ -1,8 +1,6 @@
 <template>
   <div class="container mx-auto flex flex-col gap-4">
-    <div>
-      <h1 class="text-xl font-semibold">Maintenance</h1>
-    </div>
+    <AppPageTitle> Maintenance </AppPageTitle>
 
     <!-- forms and parameters -->
     <div class="flex flex-col gap-4">
@@ -139,7 +137,7 @@
   useUpdateTitle('Maintenance')
 
   // states
-  const privateKey = useState('privateKey')
+  const privateKey = useState<string>('privateKey')
   const privateKeyInputID = useId()
   const storageprivateKey = useState('storageprivateKey')
   const dataParameters = ref('')
@@ -147,7 +145,7 @@
   const defaultParams = ['amount=11.30']
   const displayData = ref('')
   const displayDataInputID = useId()
-  const orderId = useState('orderId')
+  const orderId = useState<string>('orderId')
   const orderIdInputID = useId()
   const maintenanceTypes = ref(['capture', 'refund', 'cancel'])
   const selectedmaintenanceType = ref(maintenanceTypes.value[0])

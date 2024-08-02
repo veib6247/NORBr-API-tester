@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto flex flex-col gap-4">
     <div>
-      <h1 class="text-xl font-semibold">Transaction</h1>
+      <AppPageTitle> Transaction </AppPageTitle>
       <p class="text-sm">
         Transactions API is designed to give you the possibility to inform our
         system about the status of transactions (i.e money tranfser, card
