@@ -180,7 +180,7 @@
     billing_phone: '0642161361',
     discount_code: 'shoppee_payday_12_30',
     gift: true,
-    gift_message: 'happy birthday!!!',
+    gift_message: false,
     merchant_id: 'Dummy Merchant A',
     details_url: 'https://nike.com/items/item_001',
     custom_fields: {},
