@@ -33,7 +33,12 @@
         </UFormGroup>
 
         <div v-if="!isTextAreaLoading">
-          <UButton color="purple" variant="solid" @click="submitData">
+          <UButton
+            color="purple"
+            variant="solid"
+            @click="submitData"
+            :loading="isLoading"
+          >
             Send Data
           </UButton>
         </div>
@@ -185,13 +190,27 @@
    *
    */
   const submitData = async () => {
+    responseData.value = ''
+
     try {
-      await execute()
-      responseData.value = data.value
+      const parsedPayload = JSON.parse(defaultParams.value)
+
+      try {
+        await execute({
+          data: parsedPayload,
+        })
+
+        responseData.value = JSON.stringify(data.value, undefined, 2)
+
+        //
+      } catch (error) {
+        console.error(error)
+      }
 
       //
     } catch (error) {
       console.error(error)
+      alert(`Invalid JSON format, please check your customer data.\n\n${error}`)
     }
   }
 
