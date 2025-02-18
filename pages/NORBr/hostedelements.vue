@@ -17,15 +17,23 @@
             <label :for="privateKeyInputID" class="text-sm font-semibold">
               Private Key
             </label>
-            <UInput
-              :id="privateKeyInputID"
-              icon="i-heroicons-key"
-              type="password"
-              color="purple"
-              placeholder="Private Key"
-              v-model="privateKey"
-              autocomplete="new-password"
-            />
+            <UTooltip
+              text="Submit - Initialize Payment Form"
+              :shortcuts="['ctrl', 'Enter']"
+              :popper="{ placement: 'top' }"
+            >
+              <UInput
+                :id="privateKeyInputID"
+                class="w-full"
+                icon="i-heroicons-key"
+                type="password"
+                color="purple"
+                placeholder="Private Key"
+                v-model="privateKey"
+                autocomplete="new-password"
+                @keyup.ctrl.enter="initNorbr"
+              />
+            </UTooltip>
 
             <label :for="privateKeyInputID" class="text-xs opacity-70">
               In general practice, the private key should not be exposed to the
@@ -38,13 +46,21 @@
             <label :for="publicKeyInputID" class="text-sm font-semibold">
               Public Key
             </label>
-            <UInput
-              :id="publicKeyInputID"
-              icon="i-heroicons-key"
-              color="purple"
-              placeholder="Public Key"
-              v-model="publicKey"
-            />
+            <UTooltip
+              text="Submit - Initialize Payment Form"
+              :shortcuts="['ctrl', 'Enter']"
+              :popper="{ placement: 'top' }"
+            >
+              <UInput
+                :id="publicKeyInputID"
+                class="w-full"
+                icon="i-heroicons-key"
+                color="purple"
+                placeholder="Public Key"
+                v-model="publicKey"
+                @keyup.ctrl.enter="initNorbr"
+              />
+            </UTooltip>
             <label :for="publicKeyInputID" class="text-xs opacity-70">
               This is used by NORBr's frontend Javascript lib to authorize the
               use for their Hosted Solution
@@ -56,13 +72,21 @@
             <label :for="checkoutIdInputID" class="text-sm font-semibold">
               Checkout ID
             </label>
-            <UInput
-              :id="checkoutIdInputID"
-              icon="i-heroicons-identification"
-              color="purple"
-              placeholder="Checkout ID"
-              v-model="checkoutId"
-            />
+            <UTooltip
+              text="Submit - Initialize Payment Form"
+              :shortcuts="['ctrl', 'Enter']"
+              :popper="{ placement: 'top' }"
+            >
+              <UInput
+                :id="checkoutIdInputID"
+                class="w-full"
+                icon="i-heroicons-identification"
+                color="purple"
+                placeholder="Checkout ID"
+                v-model="checkoutId"
+                @keyup.ctrl.enter="initNorbr"
+              />
+            </UTooltip>
           </div>
 
           <!-- wrapper: locale -->
@@ -70,13 +94,21 @@
             <label :for="localeInputId" class="text-sm font-semibold">
               Locale
             </label>
-            <UInput
-              :id="localeInputId"
-              icon="i-heroicons-language"
-              color="purple"
-              placeholder="Checkout ID"
-              v-model="locale"
-            />
+            <UTooltip
+              text="Submit - Initialize Payment Form"
+              :shortcuts="['ctrl', 'Enter']"
+              :popper="{ placement: 'top' }"
+            >
+              <UInput
+                :id="localeInputId"
+                class="w-full"
+                icon="i-heroicons-language"
+                color="purple"
+                placeholder="Checkout ID"
+                v-model="locale"
+                @keyup.ctrl.enter="initNorbr"
+              />
+            </UTooltip>
           </div>
 
           <!-- wrapper: token type -->
@@ -98,13 +130,21 @@
             <label :for="cardHolderValueInputID" class="text-sm font-semibold">
               Cardholder Value
             </label>
-            <UInput
-              :id="cardHolderValueInputID"
-              icon="i-heroicons-user"
-              color="purple"
-              placeholder="Cardholder Value"
-              v-model="cardHolderValue"
-            />
+            <UTooltip
+              text="Submit - Initialize Payment Form"
+              :shortcuts="['ctrl', 'Enter']"
+              :popper="{ placement: 'top' }"
+            >
+              <UInput
+                :id="cardHolderValueInputID"
+                class="w-full"
+                icon="i-heroicons-user"
+                color="purple"
+                placeholder="Cardholder Value"
+                v-model="cardHolderValue"
+                @keyup.ctrl.enter="initNorbr"
+              />
+            </UTooltip>
           </div>
 
           <!-- wrapper for checkboxes -->

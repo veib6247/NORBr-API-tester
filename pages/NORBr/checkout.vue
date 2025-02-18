@@ -16,15 +16,23 @@
           <label :for="privateKeyInputID" class="text-sm font-semibold">
             Private Key
           </label>
-          <UInput
-            :id="privateKeyInputID"
-            icon="i-heroicons-key"
-            type="password"
-            color="purple"
-            placeholder="Private Key"
-            v-model="privateKey"
-            autocomplete="new-password"
-          />
+          <UTooltip
+            text="Submit - Create Checkout"
+            :shortcuts="['ctrl', 'Enter']"
+            :popper="{ placement: 'top' }"
+          >
+            <UInput
+              :id="privateKeyInputID"
+              class="w-full"
+              icon="i-heroicons-key"
+              type="password"
+              color="purple"
+              placeholder="Private Key"
+              v-model="privateKey"
+              autocomplete="new-password"
+              @keyup.ctrl.enter="submitData"
+            />
+          </UTooltip>
 
           <label :for="privateKeyInputID" class="text-xs opacity-70">
             In general practice, the private key should not be exposed to the
@@ -39,15 +47,22 @@
               <label :for="dataParamsID" class="text-sm font-semibold">
                 Data Parameters
               </label>
-              <UTextarea
-                :id="dataParamsID"
-                class="font-mono"
-                spellcheck="false"
-                placeholder="Data parameters..."
-                :rows="25"
-                color="purple"
-                v-model="dataParameters"
-              />
+              <UTooltip
+                text="Submit - Create Checkout"
+                :shortcuts="['ctrl', 'Enter']"
+                :popper="{ placement: 'top' }"
+              >
+                <UTextarea
+                  :id="dataParamsID"
+                  class="w-full font-mono"
+                  spellcheck="false"
+                  placeholder="Data parameters..."
+                  :rows="25"
+                  color="purple"
+                  v-model="dataParameters"
+                  @keyup.ctrl.enter="submitData"
+                />
+              </UTooltip>
               <label :for="dataParamsID" class="text-xs opacity-70">
                 The system generates a new value for the
                 <kbd class="font-bold">order_merchant_id</kbd> parameter on

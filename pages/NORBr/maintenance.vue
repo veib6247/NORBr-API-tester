@@ -16,15 +16,23 @@
           <label :for="privateKeyInputID" class="text-sm font-semibold">
             Private Key
           </label>
-          <UInput
-            :id="privateKeyInputID"
-            icon="i-heroicons-key"
-            type="password"
-            color="purple"
-            placeholder="Private Key"
-            v-model="privateKey"
-            autocomplete="new-password"
-          />
+          <UTooltip
+            :text="`Submit ${selectedmaintenanceType}`"
+            :shortcuts="['ctrl', 'Enter']"
+            :popper="{ placement: 'top' }"
+          >
+            <UInput
+              :id="privateKeyInputID"
+              class="w-full"
+              icon="i-heroicons-key"
+              type="password"
+              color="purple"
+              placeholder="Private Key"
+              v-model="privateKey"
+              autocomplete="new-password"
+              @keyup.ctrl.enter="submitData"
+            />
+          </UTooltip>
 
           <label :for="privateKeyInputID" class="text-xs opacity-70">
             In general practice, the private key should not be exposed to the
@@ -54,13 +62,21 @@
           <label :for="orderIdInputID" class="text-sm font-semibold">
             Order ID
           </label>
-          <UInput
-            :id="orderIdInputID"
-            icon="i-heroicons-identification"
-            color="purple"
-            placeholder="Order ID"
-            v-model="orderId"
-          />
+          <UTooltip
+            :text="`Submit ${selectedmaintenanceType}`"
+            :shortcuts="['ctrl', 'Enter']"
+            :popper="{ placement: 'top' }"
+          >
+            <UInput
+              :id="orderIdInputID"
+              class="w-full"
+              icon="i-heroicons-identification"
+              color="purple"
+              placeholder="Order ID"
+              v-model="orderId"
+              @keyup.ctrl.enter="submitData"
+            />
+          </UTooltip>
         </div>
 
         <div class="flex gap-4">
@@ -69,15 +85,22 @@
             <label :for="dataParametersInputID" class="text-sm font-semibold">
               Data Parameters
             </label>
-            <UTextarea
-              :id="dataParametersInputID"
-              class="font-mono"
-              spellcheck="false"
-              placeholder="Data parameters..."
-              :rows="25"
-              color="purple"
-              v-model="dataParameters"
-            />
+            <UTooltip
+              :text="`Submit ${selectedmaintenanceType}`"
+              :shortcuts="['ctrl', 'Enter']"
+              :popper="{ placement: 'top' }"
+            >
+              <UTextarea
+                :id="dataParametersInputID"
+                class="w-full font-mono"
+                spellcheck="false"
+                placeholder="Data parameters..."
+                :rows="25"
+                color="purple"
+                v-model="dataParameters"
+                @keyup.ctrl.enter="submitData"
+              />
+            </UTooltip>
             <label :for="dataParametersInputID" class="text-xs opacity-70">
               For a full list of parameters, check
               <a
