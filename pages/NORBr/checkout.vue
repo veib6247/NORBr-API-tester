@@ -92,7 +92,7 @@
           </div>
 
           <!-- wrapper: response -->
-          <div class="flex w-1/2 flex-col gap-2" v-if="data">
+          <div class="flex w-1/2 flex-col gap-2" v-if="data && !isLoading">
             <div class="gap-1">
               <label :for="displayDataInputID" class="text-sm font-semibold">
                 Response Data
