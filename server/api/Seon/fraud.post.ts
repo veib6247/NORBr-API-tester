@@ -1,19 +1,24 @@
 import axios from 'axios'
-import payloadBuilder from '../utils/payloadBuilder'
+
+declare const process: {
+  env: {
+    SEON_KEY: string
+  }
+}
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
-  const payload = payloadBuilder(body.dataParameters)
 
   try {
     const { data } = await axios({
       method: 'POST',
       headers: {
-        'x-api-key': body.privateKey,
-        version: '1.0.0',
+        'X-API-KEY': process.env.SEON_KEY,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
-      url: `https://api-sandbox.norbr.io/payment/maintenance/${body.maintenanceType}/${body.orderId}`,
-      data: payload,
+      url: 'https://api.us-east-1-main.seon.io/SeonRestService/fraud-api/v2/',
+      data: body,
     })
 
     return data

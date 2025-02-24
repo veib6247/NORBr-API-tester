@@ -19,10 +19,12 @@ export default defineEventHandler(async (event) => {
     return data
 
     //
-  } catch (error: any) {
-    if (error.response) {
-      console.error(error.response.data)
-      return error.response.data
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        console.error(error.response.data)
+        return error.response.data
+      }
     }
   }
 })

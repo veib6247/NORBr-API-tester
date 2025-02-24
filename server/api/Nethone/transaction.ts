@@ -1,19 +1,28 @@
 import axios from 'axios'
-import payloadBuilder from '../utils/payloadBuilder'
+
+declare const process: {
+  env: {
+    NETHONE_USERNAME: string
+    NETHONE_KEY: string
+  }
+}
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
-  const payload = payloadBuilder(body.dataParameters)
 
   try {
     const { data } = await axios({
       method: 'POST',
-      headers: {
-        'x-api-key': body.privateKey,
-        version: '1.0.0',
+      auth: {
+        username: process.env.NETHONE_USERNAME,
+        password: process.env.NETHONE_KEY,
       },
-      url: `https://api-sandbox.norbr.io/payment/maintenance/${body.maintenanceType}/${body.orderId}`,
-      data: payload,
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      url: 'https://api.nethone.io/v1/transactions',
+      data: body,
     })
 
     return data

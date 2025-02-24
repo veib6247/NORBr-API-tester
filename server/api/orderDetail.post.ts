@@ -1,19 +1,17 @@
 import axios from 'axios'
-import payloadBuilder from '../utils/payloadBuilder'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
-  const payload = payloadBuilder(body.dataParameters)
+  const url = `https://api-sandbox.norbr.io/payment/order/${body.orderId}`
 
   try {
     const { data } = await axios({
-      method: 'POST',
+      method: 'GET',
       headers: {
         'x-api-key': body.privateKey,
         version: '1.0.0',
       },
-      url: `https://api-sandbox.norbr.io/payment/maintenance/${body.maintenanceType}/${body.orderId}`,
-      data: payload,
+      url: url,
     })
 
     return data
