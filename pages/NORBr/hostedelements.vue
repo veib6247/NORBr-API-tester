@@ -258,6 +258,7 @@
   const initNorbr = () => {
     storageprivateKey.value = privateKey.value
     hostedElementsResponse.value = ''
+    let dataParameters = ''
 
     const configuration = {
       publicapikey: publicKey.value,
@@ -271,12 +272,32 @@
       displayCardHolder: displayCardHolder.value,
       displaySave: displaySave.value,
       CardHolderValue: cardHolderValue.value,
-      onSubmit: () => {
+      onSubmit: async () => {
         // clear hostedElementsResponse before refill
         hostedElementsResponse.value = ''
 
         if (autoOrder.value) {
-          alert('This feature is still under development.')
+          // if autoOrder is checked, build the data and submit the order
+          const token = norbr.token
+          dataParameters = `token=${token}\ncheckout_id=${checkoutId.value}`
+          const urls = [
+            `accept_url=${window.location.origin}/NORBr/redirect?status=accept`,
+            `decline_url=${window.location.origin}/NORBr/redirect?status=decline`,
+            `pending_url=${window.location.origin}/NORBr/redirect?status=pending`,
+            `exception_url=${window.location.origin}/NORBr/redirect?status=exception`,
+          ]
+          for (const url of urls) {
+            dataParameters += `\n${url}`
+          }
+
+          const res = await $fetch('/api/order', {
+            method: 'POST',
+            body: JSON.stringify({
+              privateKey: privateKey.value,
+              dataParameters: dataParameters,
+            }),
+          })
+          hostedElementsResponse.value = JSON.stringify(res, undefined, 2)
         } else {
           hostedElementsResponse.value = JSON.stringify(norbr, undefined, 2)
         }
