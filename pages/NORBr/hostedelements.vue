@@ -224,7 +224,7 @@
             title="Heads up!"
             color="purple"
             icon="i-heroicons-information-circle"
-            v-if="orderResponse.redirect_url"
+            v-if="redirectUrl"
           >
             <template #title="{ title }">
               <!-- eslint-disable-next-line vue/no-v-html -->
@@ -234,7 +234,7 @@
             <template #description>
               A redirect URL is detected,
               <a
-                :href="orderResponse.redirect_url"
+                :href="redirectUrl"
                 rel="noopener noreferrer"
                 class="underline"
               >
@@ -275,14 +275,8 @@
   const hostedElementsResponseInputID = useId()
   const autoOrder = ref(false)
   const paymentMethodsAvailable = useState('paymentMethodsAvailable')
-
-  type OrderResponse = {
-    redirect_url?: string
-  }
-
-  const orderResponse = ref<OrderResponse>({
-    redirect_url: '',
-  })
+  const orderResponse = ref()
+  const redirectUrl = ref('')
 
   /**
    *
@@ -329,6 +323,10 @@
               dataParameters: dataParameters,
             }),
           })
+
+          if (orderResponse.value.redirect_url) {
+            redirectUrl.value = orderResponse.value.redirect_url
+          }
 
           hostedElementsResponse.value = JSON.stringify(
             orderResponse.value,
