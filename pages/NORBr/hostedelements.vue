@@ -219,6 +219,30 @@
             v-model="hostedElementsResponse"
             readonly
           />
+
+          <UAlert
+            title="Heads up!"
+            color="purple"
+            icon="i-heroicons-information-circle"
+            v-if="orderResponse.redirect_url"
+          >
+            <template #title="{ title }">
+              <!-- eslint-disable-next-line vue/no-v-html -->
+              <span v-html="title" />
+            </template>
+
+            <template #description>
+              A redirect URL is detected,
+              <a
+                :href="orderResponse.redirect_url"
+                rel="noopener noreferrer"
+                class="underline"
+              >
+                click here
+              </a>
+              to view the page.
+            </template>
+          </UAlert>
         </div>
       </div>
     </div>
@@ -251,6 +275,14 @@
   const hostedElementsResponseInputID = useId()
   const autoOrder = ref(false)
   const paymentMethodsAvailable = useState('paymentMethodsAvailable')
+
+  type OrderResponse = {
+    redirect_url?: string
+  }
+
+  const orderResponse = ref<OrderResponse>({
+    redirect_url: '',
+  })
 
   /**
    *
@@ -290,14 +322,19 @@
             dataParameters += `\n${url}`
           }
 
-          const res = await $fetch('/api/order', {
+          orderResponse.value = await $fetch('/api/order', {
             method: 'POST',
             body: JSON.stringify({
               privateKey: privateKey.value,
               dataParameters: dataParameters,
             }),
           })
-          hostedElementsResponse.value = JSON.stringify(res, undefined, 2)
+
+          hostedElementsResponse.value = JSON.stringify(
+            orderResponse.value,
+            undefined,
+            2
+          )
         } else {
           hostedElementsResponse.value = JSON.stringify(norbr, undefined, 2)
         }
