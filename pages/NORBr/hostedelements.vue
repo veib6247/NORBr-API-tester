@@ -277,6 +277,7 @@
   const paymentMethodsAvailable = useState('paymentMethodsAvailable')
   const orderResponse = ref()
   const redirectUrl = ref('')
+  const storageOrderId = useState('storageOrderId')
 
   /**
    *
@@ -324,9 +325,8 @@
             }),
           })
 
-          if (orderResponse.value.redirect_url) {
-            redirectUrl.value = orderResponse.value.redirect_url
-          }
+          storageOrderId.value = orderResponse.value.order_id || ''
+          redirectUrl.value = orderResponse.value.redirect_url || ''
 
           hostedElementsResponse.value = JSON.stringify(
             orderResponse.value,
