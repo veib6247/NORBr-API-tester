@@ -140,7 +140,6 @@
   const privateKeyInputID = useId()
   const storageprivateKey = useState('storageprivateKey')
   const storageOrderId = useState<string>('storageOrderId')
-  const orderId = useState<string>('orderId')
   const orderIdInputID = useId()
   const displayData = ref('')
   const displayDataInputID = useId()
@@ -163,7 +162,7 @@
     try {
       await execute({
         data: {
-          orderId: orderId.value,
+          orderId: storageOrderId.value,
           privateKey: privateKey.value,
         },
       })
