@@ -219,6 +219,30 @@
             v-model="hostedElementsResponse"
             readonly
           />
+
+          <UAlert
+            title="Heads up!"
+            color="purple"
+            icon="i-heroicons-information-circle"
+            v-if="redirectUrl"
+          >
+            <template #title="{ title }">
+              <!-- eslint-disable-next-line vue/no-v-html -->
+              <span v-html="title" />
+            </template>
+
+            <template #description>
+              A redirect URL is detected,
+              <a
+                :href="redirectUrl"
+                rel="noopener noreferrer"
+                class="underline"
+              >
+                click here
+              </a>
+              to view the page.
+            </template>
+          </UAlert>
         </div>
       </div>
     </div>
@@ -251,6 +275,9 @@
   const hostedElementsResponseInputID = useId()
   const autoOrder = ref(false)
   const paymentMethodsAvailable = useState('paymentMethodsAvailable')
+  const orderResponse = ref()
+  const redirectUrl = ref('')
+  const storageOrderId = useState('storageOrderId')
 
   /**
    *
@@ -258,6 +285,7 @@
   const initNorbr = () => {
     storageprivateKey.value = privateKey.value
     hostedElementsResponse.value = ''
+    let dataParameters = ''
 
     const configuration = {
       publicapikey: publicKey.value,
@@ -271,12 +299,40 @@
       displayCardHolder: displayCardHolder.value,
       displaySave: displaySave.value,
       CardHolderValue: cardHolderValue.value,
-      onSubmit: () => {
+      onSubmit: async () => {
         // clear hostedElementsResponse before refill
         hostedElementsResponse.value = ''
 
         if (autoOrder.value) {
-          alert('This feature is still under development.')
+          // if autoOrder is checked, build the data and submit the order
+          const token = norbr.token
+          dataParameters = `token=${token}\ncheckout_id=${checkoutId.value}`
+          const urls = [
+            `accept_url=${window.location.origin}/NORBr/redirect?status=accept`,
+            `decline_url=${window.location.origin}/NORBr/redirect?status=decline`,
+            `pending_url=${window.location.origin}/NORBr/redirect?status=pending`,
+            `exception_url=${window.location.origin}/NORBr/redirect?status=exception`,
+          ]
+          for (const url of urls) {
+            dataParameters += `\n${url}`
+          }
+
+          orderResponse.value = await $fetch('/api/order', {
+            method: 'POST',
+            body: JSON.stringify({
+              privateKey: privateKey.value,
+              dataParameters: dataParameters,
+            }),
+          })
+
+          storageOrderId.value = orderResponse.value.order_id || ''
+          redirectUrl.value = orderResponse.value.redirect_url || ''
+
+          hostedElementsResponse.value = JSON.stringify(
+            orderResponse.value,
+            undefined,
+            2
+          )
         } else {
           hostedElementsResponse.value = JSON.stringify(norbr, undefined, 2)
         }
