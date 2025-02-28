@@ -120,8 +120,9 @@
                   :href="data.redirect_url"
                   rel="noopener noreferrer"
                   class="underline"
-                  >click here</a
                 >
+                  click here
+                </a>
                 to view the page.
               </template>
             </UAlert>
@@ -154,7 +155,7 @@
   const defaultParams = ref(['token=REPLACE_ME', 'checkout_id=REPLACE_ME'])
   const displayData = ref('')
   const displayDataInputID = useId()
-  const orderId = useState('orderId', () => '')
+  const storateOrderId = useState('storageOrderId')
   const { execute, data, isLoading } = useAxios(
     '/api/order',
     {
@@ -180,12 +181,8 @@
         },
       })
 
-      if (data.value.order_id) {
-        orderId.value = data.value.order_id
-      } else {
-        orderId.value = ''
-      }
-
+      // store the order Id in session storage
+      storateOrderId.value = data.value.order_id || ''
       displayData.value = JSON.stringify(data.value, undefined, 2)
 
       //

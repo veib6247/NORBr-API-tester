@@ -60,6 +60,13 @@
         mergeDefaults: true,
       })
     })
+
     privateKey.value = storagePrivateKey.value
+
+    useState('storageOrderId', () => {
+      return useStorage('orderId', '', sessionStorage, {
+        mergeDefaults: true,
+      })
+    })
   })
 </script>
