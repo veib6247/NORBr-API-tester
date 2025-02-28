@@ -73,7 +73,7 @@
               icon="i-heroicons-identification"
               color="purple"
               placeholder="Order ID"
-              v-model="orderId"
+              v-model="storageOrderId"
               @keyup.ctrl.enter="submitData"
             />
           </UTooltip>
@@ -168,7 +168,7 @@
   const defaultParams = ['amount=11.30']
   const displayData = ref('')
   const displayDataInputID = useId()
-  const orderId = useState<string>('orderId')
+  const storageOrderId = useState<string>('storageOrderId')
   const orderIdInputID = useId()
   const maintenanceTypes = ref(['capture', 'refund', 'cancel'])
   const selectedmaintenanceType = ref(maintenanceTypes.value[0])
@@ -191,7 +191,7 @@
     try {
       await execute({
         data: {
-          orderId: orderId.value,
+          orderId: storageOrderId.value,
           maintenanceType: selectedmaintenanceType.value,
           privateKey: privateKey.value,
           dataParameters: dataParameters.value,
