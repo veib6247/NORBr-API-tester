@@ -216,12 +216,14 @@
     { immediate: false }
   )
   const storageprivateKey = useState('storageprivateKey')
+  const storageOrderId = useState('storageOrderId')
 
   /**
    *
    */
   const submitData = async () => {
     storageprivateKey.value = privateKey.value
+    storageOrderId.value = ''
 
     try {
       await execute({
