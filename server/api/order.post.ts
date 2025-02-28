@@ -4,7 +4,11 @@ import payloadBuilder from '../utils/payloadBuilder'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
-  const payload = payloadBuilder(body.dataParameters)
+  const isJsonPayload = body.isJsonPayload
+
+  const payload = isJsonPayload
+    ? JSON.parse(body.jsonParameters)
+    : payloadBuilder(body.dataParameters)
 
   try {
     const res = await $fetch('https://api-sandbox.norbr.io/payment/order', {

@@ -43,9 +43,14 @@
         <div class="flex gap-4">
           <!-- wrapper: data parameters and submit button -->
           <div class="flex w-1/2 flex-col gap-1">
+            <UFormGroup label="Use JSON Payload">
+              <UToggle color="purple" size="sm" v-model="isJsonPayload" />
+            </UFormGroup>
+
             <label :for="dataParametersInputID" class="text-sm font-semibold">
               Data Parameters
             </label>
+
             <UTooltip
               text="Submit Order"
               :shortcuts="['ctrl', 'Enter']"
@@ -59,6 +64,18 @@
                 color="purple"
                 v-model="dataParameters"
                 @keyup.ctrl.enter="submitData"
+                v-if="!isJsonPayload"
+              />
+
+              <UTextarea
+                :id="dataParametersInputID"
+                class="w-full font-mono"
+                spellcheck="false"
+                :rows="25"
+                color="purple"
+                v-model="jsonParameters"
+                @keyup.ctrl.enter="submitData"
+                v-else
               />
             </UTooltip>
             <label :for="dataParametersInputID" class="text-xs opacity-70">
@@ -156,6 +173,8 @@
   const displayData = ref('')
   const displayDataInputID = useId()
   const storateOrderId = useState('storageOrderId')
+  const isJsonPayload = ref(false)
+  const jsonParameters = ref('')
   const { execute, data, isLoading } = useAxios(
     '/api/order',
     {
@@ -168,6 +187,16 @@
    *
    */
   const submitData = async (event: Event) => {
+    // validate JSON string
+    try {
+      JSON.parse(jsonParameters.value)
+    } catch (error) {
+      console.error(error)
+      alert('Invalid JSON string!')
+
+      return
+    }
+
     storageprivateKey.value = privateKey.value
     event.preventDefault()
 
@@ -176,6 +205,8 @@
     try {
       await execute({
         data: {
+          isJsonPayload: isJsonPayload.value,
+          jsonParameters: jsonParameters.value,
           privateKey: privateKey.value,
           dataParameters: dataParameters.value,
         },
@@ -204,5 +235,16 @@
 
     defaultParams.value = [...defaultParams.value, ...urls]
     dataParameters.value = defaultParams.value.join('\n')
+
+    const defaultJsonPayload = {
+      token: 'REPLACE_ME',
+      checkout_id: 'REPLACE_ME',
+      accept_url: `${window.location.origin}/NORBr/redirect?status=accept`,
+      decline_url: `${window.location.origin}/NORBr/redirect?status=decline`,
+      pending_url: `${window.location.origin}/NORBr/redirect?status=pending`,
+      exception_url: `${window.location.origin}/NORBr/redirect?status=exception`,
+    }
+
+    jsonParameters.value = JSON.stringify(defaultJsonPayload, undefined, 2)
   })
 </script>
