@@ -40,10 +40,6 @@ export default defineEventHandler(async (event) => {
       error: errorData,
     })
 
-    // Send an appropriate error response
-    event.node.res.statusCode = status
-    console.info('statusCode:', status)
-
     return {
       success: false,
       error: {

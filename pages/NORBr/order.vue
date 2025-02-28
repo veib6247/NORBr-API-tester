@@ -40,13 +40,13 @@
           </label>
         </div>
 
+        <UFormGroup label="Use JSON Payload">
+          <UToggle color="purple" size="sm" v-model="isJsonPayload" />
+        </UFormGroup>
+
         <div class="flex gap-4">
           <!-- wrapper: data parameters and submit button -->
           <div class="flex w-1/2 flex-col gap-1">
-            <UFormGroup label="Use JSON Payload">
-              <UToggle color="purple" size="sm" v-model="isJsonPayload" />
-            </UFormGroup>
-
             <label :for="dataParametersInputID" class="text-sm font-semibold">
               Data Parameters
             </label>
