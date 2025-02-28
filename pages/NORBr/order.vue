@@ -156,6 +156,7 @@
   const displayData = ref('')
   const displayDataInputID = useId()
   const orderId = useState('orderId')
+  const storateOrderId = useState('storageOrderId')
   const { execute, data, isLoading } = useAxios(
     '/api/order',
     {
@@ -181,11 +182,8 @@
         },
       })
 
-      if (data.value.order_id) {
-        orderId.value = data.value.order_id
-      } else {
-        orderId.value = ''
-      }
+      console.info('orderId', data.value.order_id)
+      storateOrderId.value = data.value.order_id || ''
 
       displayData.value = JSON.stringify(data.value, undefined, 2)
 

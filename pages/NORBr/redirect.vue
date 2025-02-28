@@ -83,7 +83,7 @@
               icon="i-heroicons-identification"
               color="purple"
               placeholder="Order ID"
-              v-model="orderId"
+              v-model="storageOrderId"
               @keyup.ctrl.enter="submitData"
             />
           </UTooltip>
@@ -139,6 +139,7 @@
   const privateKey = useState<string>('privateKey')
   const privateKeyInputID = useId()
   const storageprivateKey = useState('storageprivateKey')
+  const storageOrderId = useState<string>('storageOrderId')
   const orderId = useState<string>('orderId')
   const orderIdInputID = useId()
   const displayData = ref('')
