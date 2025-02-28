@@ -120,8 +120,9 @@
                   :href="data.redirect_url"
                   rel="noopener noreferrer"
                   class="underline"
-                  >click here</a
                 >
+                  click here
+                </a>
                 to view the page.
               </template>
             </UAlert>
@@ -154,7 +155,7 @@
   const defaultParams = ref(['token=REPLACE_ME', 'checkout_id=REPLACE_ME'])
   const displayData = ref('')
   const displayDataInputID = useId()
-  const orderId = useState('orderId', () => '')
+  const orderId = useState('orderId')
   const { execute, data, isLoading } = useAxios(
     '/api/order',
     {

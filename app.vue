@@ -21,6 +21,7 @@
   const appName = useState('appName', () => 'NORBr API Tester')
   const colorMode = useColorMode()
   const privateKey = useState('privateKey', () => '')
+  const orderId = useState('orderId', () => '')
   colorMode.value = 'light'
 
   useState<string>('nethoneAttemptReference', () => {
@@ -60,6 +61,15 @@
         mergeDefaults: true,
       })
     })
+
     privateKey.value = storagePrivateKey.value
+
+    const storageOrderId = useState('storageOrderId', () => {
+      return useStorage('orderId', '', sessionStorage, {
+        mergeDefaults: true,
+      })
+    })
+
+    orderId.value = storageOrderId.value
   })
 </script>
