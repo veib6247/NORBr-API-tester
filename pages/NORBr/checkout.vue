@@ -57,7 +57,7 @@
                 :popper="{ placement: 'top' }"
               >
                 <UTextarea
-                  :id="dataParamsID"
+                  :id="jsonParamsId"
                   class="w-full font-mono"
                   spellcheck="false"
                   placeholder="Data parameters..."
@@ -204,15 +204,14 @@
 <script lang="ts" setup>
   // libs
   import { useAxios } from '@vueuse/integrations/useAxios'
-  import { nanoid } from 'nanoid'
 
   // states
   useUpdateTitle('Checkout')
   const privateKeyInputID = useId()
-  const dataParamsID = useId()
   const privateKey = useState<string>('privateKey')
 
   // data parameters
+  const dataParamsID = useId()
   const dataParameters = ref('')
   const defaultParams = [
     'type=api',
@@ -222,12 +221,13 @@
     'currency=EUR',
     'token_type=oneshot',
     'payment_channel=e-commerce',
+    'order_merchant_id=REPLACE_ME',
   ]
-  defaultParams.push(`order_merchant_id=bidhb-${nanoid(10)}`)
   dataParameters.value = defaultParams.join('\n')
 
   // JSON Parameters
-  const isJsonPayload = ref(true)
+  const jsonParamsId = useId()
+  const isJsonPayload = ref(false)
   const jsonParameters = ref('')
   jsonParameters.value = JSON.stringify(
     {
@@ -238,7 +238,7 @@
       currency: 'EUR',
       token_type: 'oneshot',
       payment_channel: 'e-commerce',
-      order_merchant_id: nanoid(10),
+      order_merchant_id: 'REPLACE_ME',
       merchant_data: [
         {
           key: 'internal_reference_1',
@@ -299,19 +299,11 @@
       })
 
       // get checkoutId, display to front
-      if (data.value.checkout) {
-        checkoutId.value = data.value.checkout.checkout_id || ''
-      } else {
-        checkoutId.value = ''
-      }
+      checkoutId.value = data.value?.checkout?.checkout_id || ''
 
       // get payment_methods_available
-      if (data.value.payment_methods) {
-        paymentMethodsAvailable.value =
-          data.value.payment_methods.payment_methods_available || ''
-      } else {
-        paymentMethodsAvailable.value = ''
-      }
+      paymentMethodsAvailable.value =
+        data.value?.payment_methods?.payment_methods_available || ''
 
       displayData.value = JSON.stringify(data.value, undefined, 2)
 
