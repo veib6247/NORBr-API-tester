@@ -57,7 +57,7 @@
                 :popper="{ placement: 'top' }"
               >
                 <UTextarea
-                  :id="dataParamsID"
+                  :id="jsonParamsId"
                   class="w-full font-mono"
                   spellcheck="false"
                   placeholder="Data parameters..."
@@ -204,13 +204,14 @@
 <script lang="ts" setup>
   // libs
   import { useAxios } from '@vueuse/integrations/useAxios'
-  import { nanoid } from 'nanoid'
 
   // states
   useUpdateTitle('Checkout')
   const privateKeyInputID = useId()
-  const dataParamsID = useId()
   const privateKey = useState<string>('privateKey')
+
+  // data parameters
+  const dataParamsID = useId()
   const dataParameters = ref('')
   const defaultParams = [
     'type=api',
@@ -220,9 +221,42 @@
     'currency=EUR',
     'token_type=oneshot',
     'payment_channel=e-commerce',
+    'order_merchant_id=REPLACE_ME',
   ]
-  const isJsonPayload = ref(true)
+  dataParameters.value = defaultParams.join('\n')
+
+  // JSON Parameters
+  const jsonParamsId = useId()
+  const isJsonPayload = ref(false)
   const jsonParameters = ref('')
+  jsonParameters.value = JSON.stringify(
+    {
+      type: 'api',
+      locale: 'en_EN',
+      operation_type: 'direct_capture',
+      amount: 11.3,
+      currency: 'EUR',
+      token_type: 'oneshot',
+      payment_channel: 'e-commerce',
+      order_merchant_id: 'REPLACE_ME',
+      merchant_data: [
+        {
+          key: 'internal_reference_1',
+          type: 'string',
+          value: '906530204612289666',
+          is_personal_data: false,
+        },
+        {
+          key: 'customer_rate',
+          type: 'number',
+          value: '3',
+          is_personal_data: false,
+        },
+      ],
+    },
+    undefined,
+    2
+  )
   const checkoutId = useState('checkoutId', () => '')
   const displayData = ref('')
   const displayDataInputID = useId()
@@ -265,23 +299,11 @@
       })
 
       // get checkoutId, display to front
-      if (data.value.checkout) {
-        if (data.value.checkout.checkout_id) {
-          checkoutId.value = data.value.checkout.checkout_id
-        }
-      } else {
-        checkoutId.value = ''
-      }
+      checkoutId.value = data.value?.checkout?.checkout_id || ''
 
       // get payment_methods_available
-      if (data.value.payment_methods) {
-        if (data.value.payment_methods.payment_methods_available) {
-          paymentMethodsAvailable.value =
-            data.value.payment_methods.payment_methods_available
-        }
-      } else {
-        paymentMethodsAvailable.value = ''
-      }
+      paymentMethodsAvailable.value =
+        data.value?.payment_methods?.payment_methods_available || ''
 
       displayData.value = JSON.stringify(data.value, undefined, 2)
 
@@ -290,39 +312,4 @@
       console.error(error)
     }
   }
-
-  /**
-   * do some param formatter once mounted
-   */
-  onMounted(() => {
-    defaultParams.push(`order_merchant_id=bidhb-${nanoid(10)}`)
-    dataParameters.value = defaultParams.join('\n')
-
-    const defaultJsonPayload = {
-      type: 'api',
-      locale: 'en_EN',
-      operation_type: 'direct_capture',
-      amount: 11.3,
-      currency: 'EUR',
-      token_type: 'oneshot',
-      payment_channel: 'e-commerce',
-      order_merchant_id: nanoid(10),
-      merchant_data: [
-        {
-          key: 'internal_reference_1',
-          type: 'string',
-          value: '906530204612289666',
-          is_personal_data: false,
-        },
-        {
-          key: 'customer_rate',
-          type: 'number',
-          value: '3',
-          is_personal_data: false,
-        },
-      ],
-    }
-
-    jsonParameters.value = JSON.stringify(defaultJsonPayload, undefined, 2)
-  })
 </script>
