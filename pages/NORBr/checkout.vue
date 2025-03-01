@@ -275,6 +275,8 @@
       if (data.value.payment_methods) {
         paymentMethodsAvailable.value =
           data.value.payment_methods.payment_methods_available || ''
+      } else {
+        paymentMethodsAvailable.value = ''
       }
 
       displayData.value = JSON.stringify(data.value, undefined, 2)
