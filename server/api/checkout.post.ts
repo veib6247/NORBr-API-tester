@@ -3,7 +3,11 @@ import payloadBuilder from '../utils/payloadBuilder'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
-  const payload = payloadBuilder(body.dataParameters)
+  const isJsonPayload = body.isJsonPayload
+
+  const payload = isJsonPayload
+    ? JSON.parse(body.jsonParameters)
+    : payloadBuilder(body.dataParameters)
 
   try {
     const { data } = await axios({

@@ -173,7 +173,7 @@
   const displayData = ref('')
   const displayDataInputID = useId()
   const storateOrderId = useState('storageOrderId')
-  const isJsonPayload = ref(false)
+  const isJsonPayload = ref(true)
   const jsonParameters = ref('')
   const { execute, data, isLoading } = useAxios(
     '/api/order',

@@ -40,6 +40,10 @@
           </label>
         </div>
 
+        <UFormGroup label="Use JSON Payload">
+          <UToggle color="purple" size="sm" v-model="isJsonPayload" />
+        </UFormGroup>
+
         <div class="flex gap-4">
           <div class="flex w-1/2 flex-col gap-3">
             <!-- wrapper: data parameters -->
@@ -59,7 +63,20 @@
                   placeholder="Data parameters..."
                   :rows="25"
                   color="purple"
+                  v-model="jsonParameters"
+                  v-if="isJsonPayload"
+                  @keyup.ctrl.enter="submitData"
+                />
+
+                <UTextarea
+                  :id="dataParamsID"
+                  class="w-full font-mono"
+                  spellcheck="false"
+                  placeholder="Data parameters..."
+                  :rows="25"
+                  color="purple"
                   v-model="dataParameters"
+                  v-else
                   @keyup.ctrl.enter="submitData"
                 />
               </UTooltip>
@@ -204,6 +221,8 @@
     'token_type=oneshot',
     'payment_channel=e-commerce',
   ]
+  const isJsonPayload = ref(true)
+  const jsonParameters = ref('')
   const checkoutId = useState('checkoutId', () => '')
   const displayData = ref('')
   const displayDataInputID = useId()
@@ -222,12 +241,24 @@
    *
    */
   const submitData = async () => {
+    // validate JSON string
+    try {
+      JSON.parse(jsonParameters.value)
+    } catch (error) {
+      console.error(error)
+      alert('Invalid JSON string!')
+
+      return
+    }
+
     storageprivateKey.value = privateKey.value
     storageOrderId.value = ''
 
     try {
       await execute({
         data: {
+          isJsonPayload: isJsonPayload.value,
+          jsonParameters: jsonParameters.value,
           privateKey: privateKey.value,
           dataParameters: dataParameters.value,
         },
@@ -266,5 +297,32 @@
   onMounted(() => {
     defaultParams.push(`order_merchant_id=bidhb-${nanoid(10)}`)
     dataParameters.value = defaultParams.join('\n')
+
+    const defaultJsonPayload = {
+      type: 'api',
+      locale: 'en_EN',
+      operation_type: 'direct_capture',
+      amount: 11.3,
+      currency: 'EUR',
+      token_type: 'oneshot',
+      payment_channel: 'e-commerce',
+      order_merchant_id: nanoid(10),
+      merchant_data: [
+        {
+          key: 'internal_reference_1',
+          type: 'string',
+          value: '906530204612289666',
+          is_personal_data: false,
+        },
+        {
+          key: 'customer_rate',
+          type: 'number',
+          value: '3',
+          is_personal_data: false,
+        },
+      ],
+    }
+
+    jsonParameters.value = JSON.stringify(defaultJsonPayload, undefined, 2)
   })
 </script>
