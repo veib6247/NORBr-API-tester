@@ -37,16 +37,11 @@ export default defineEventHandler(async (event) => {
     // Log the error on server
     console.error('API request failed:', {
       status,
-      error: errorData,
+      statusText,
+      error: JSON.stringify(errorData),
     })
 
-    return {
-      success: false,
-      error: {
-        status,
-        message: statusText,
-        details: errorData,
-      },
-    }
+    // Return the error to the client for display
+    return errorData
   }
 })
