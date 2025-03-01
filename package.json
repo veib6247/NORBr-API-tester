@@ -14,7 +14,7 @@
     "@vueuse/core": "^10.11.0",
     "@vueuse/integrations": "^10.10.0",
     "@vueuse/nuxt": "^10.11.0",
-    "axios": "1",
+    "axios": "^1.8.1",
     "caniuse-lite": "^1.0.30001701",
     "nanoid": "^5.0.7",
     "nuxt": "^3.11.2",
