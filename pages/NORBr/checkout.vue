@@ -266,21 +266,15 @@
 
       // get checkoutId, display to front
       if (data.value.checkout) {
-        if (data.value.checkout.checkout_id) {
-          checkoutId.value = data.value.checkout.checkout_id
-        }
+        checkoutId.value = data.value.checkout.checkout_id || ''
       } else {
         checkoutId.value = ''
       }
 
       // get payment_methods_available
       if (data.value.payment_methods) {
-        if (data.value.payment_methods.payment_methods_available) {
-          paymentMethodsAvailable.value =
-            data.value.payment_methods.payment_methods_available
-        }
-      } else {
-        paymentMethodsAvailable.value = ''
+        paymentMethodsAvailable.value =
+          data.value.payment_methods.payment_methods_available || ''
       }
 
       displayData.value = JSON.stringify(data.value, undefined, 2)
