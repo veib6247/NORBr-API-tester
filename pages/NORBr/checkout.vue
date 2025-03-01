@@ -227,7 +227,7 @@
 
   // JSON Parameters
   const jsonParamsId = useId()
-  const isJsonPayload = ref(false)
+  const isJsonPayload = ref(true)
   const jsonParameters = ref('')
   jsonParameters.value = JSON.stringify(
     {
