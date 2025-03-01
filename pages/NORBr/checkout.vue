@@ -211,6 +211,8 @@
   const privateKeyInputID = useId()
   const dataParamsID = useId()
   const privateKey = useState<string>('privateKey')
+
+  // data parameters
   const dataParameters = ref('')
   const defaultParams = [
     'type=api',
@@ -221,8 +223,40 @@
     'token_type=oneshot',
     'payment_channel=e-commerce',
   ]
+  defaultParams.push(`order_merchant_id=bidhb-${nanoid(10)}`)
+  dataParameters.value = defaultParams.join('\n')
+
+  // JSON Parameters
   const isJsonPayload = ref(true)
   const jsonParameters = ref('')
+  jsonParameters.value = JSON.stringify(
+    {
+      type: 'api',
+      locale: 'en_EN',
+      operation_type: 'direct_capture',
+      amount: 11.3,
+      currency: 'EUR',
+      token_type: 'oneshot',
+      payment_channel: 'e-commerce',
+      order_merchant_id: nanoid(10),
+      merchant_data: [
+        {
+          key: 'internal_reference_1',
+          type: 'string',
+          value: '906530204612289666',
+          is_personal_data: false,
+        },
+        {
+          key: 'customer_rate',
+          type: 'number',
+          value: '3',
+          is_personal_data: false,
+        },
+      ],
+    },
+    undefined,
+    2
+  )
   const checkoutId = useState('checkoutId', () => '')
   const displayData = ref('')
   const displayDataInputID = useId()
@@ -286,39 +320,4 @@
       console.error(error)
     }
   }
-
-  /**
-   * do some param formatter once mounted
-   */
-  onMounted(() => {
-    defaultParams.push(`order_merchant_id=bidhb-${nanoid(10)}`)
-    dataParameters.value = defaultParams.join('\n')
-
-    const defaultJsonPayload = {
-      type: 'api',
-      locale: 'en_EN',
-      operation_type: 'direct_capture',
-      amount: 11.3,
-      currency: 'EUR',
-      token_type: 'oneshot',
-      payment_channel: 'e-commerce',
-      order_merchant_id: nanoid(10),
-      merchant_data: [
-        {
-          key: 'internal_reference_1',
-          type: 'string',
-          value: '906530204612289666',
-          is_personal_data: false,
-        },
-        {
-          key: 'customer_rate',
-          type: 'number',
-          value: '3',
-          is_personal_data: false,
-        },
-      ],
-    }
-
-    jsonParameters.value = JSON.stringify(defaultJsonPayload, undefined, 2)
-  })
 </script>
