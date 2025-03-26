@@ -1,3 +1,0 @@
-# Iz anodah one
-
-weee.....
