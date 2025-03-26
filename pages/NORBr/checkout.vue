@@ -204,6 +204,7 @@
 <script lang="ts" setup>
   // libs
   import { useAxios } from '@vueuse/integrations/useAxios'
+  import { nanoid } from 'nanoid'
 
   // states
   useUpdateTitle('Checkout')
@@ -229,34 +230,32 @@
   const jsonParamsId = useId()
   const isJsonPayload = ref(true)
   const jsonParameters = ref('')
-  jsonParameters.value = JSON.stringify(
-    {
-      type: 'api',
-      locale: 'en_EN',
-      operation_type: 'direct_capture',
-      amount: 11.3,
-      currency: 'EUR',
-      token_type: 'oneshot',
-      payment_channel: 'e-commerce',
-      order_merchant_id: 'REPLACE_ME',
-      merchant_data: [
-        {
-          key: 'internal_reference_1',
-          type: 'string',
-          value: '906530204612289666',
-          is_personal_data: false,
-        },
-        {
-          key: 'customer_rate',
-          type: 'number',
-          value: '3',
-          is_personal_data: false,
-        },
-      ],
-    },
-    undefined,
-    2
-  )
+  const jsonParametersData = {
+    type: 'api',
+    locale: 'en_EN',
+    operation_type: 'direct_capture',
+    amount: 11.3,
+    currency: 'EUR',
+    token_type: 'oneshot',
+    payment_channel: 'e-commerce',
+    order_merchant_id: 'REPLACE_ME',
+    merchant_data: [
+      {
+        key: 'internal_reference_1',
+        type: 'string',
+        value: '906530204612289666',
+        is_personal_data: false,
+      },
+      {
+        key: 'customer_rate',
+        type: 'number',
+        value: '3',
+        is_personal_data: false,
+      },
+    ],
+  }
+  jsonParametersData.order_merchant_id = nanoid()
+  jsonParameters.value = JSON.stringify(jsonParametersData, undefined, 2)
   const checkoutId = useState('checkoutId', () => '')
   const displayData = ref('')
   const displayDataInputID = useId()
