@@ -22,9 +22,7 @@ COPY package.json bun.lockb ./
 RUN bun install --production
 
 # Copy built files from builder stage
-COPY --from=builder /app/dist /app/dist
-# If you have other build outputs, add them here
-# COPY --from=builder /app/public /app/public
+COPY --from=builder /app/.output /app/.output
 
 EXPOSE 3000
 CMD ["bun", "run", "start"]
