@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-dvh">
     <!-- nav -->
-    <div class="flex h-dvh w-72 flex-col overflow-auto bg-purple-900">
+    <div class="flex h-dvh w-72 flex-col overflow-auto">
       <NavVertical />
     </div>
 
