@@ -195,11 +195,31 @@
         </form>
 
         <!-- NORBr hosted solution -->
-        <div
-          class="flex w-1/2 bg-purple-100 p-4"
-          v-if="!hostedElementsResponse"
-        >
-          <div id="norbr-payment-container" class="m-auto"></div>
+        <div class="flex w-1/2 flex-col gap-2">
+          <!-- CSS disclaimer -->
+          <UAlert
+            title="Heads up!"
+            color="purple"
+            icon="i-heroicons-exclaimation-triangle"
+          >
+            <template #title="{ title }">
+              <!-- eslint-disable-next-line vue/no-v-html -->
+              <span v-html="title" />
+            </template>
+            <template #description>
+              The payment form below is intentionally left <b>unstyled</b> in
+              order to show the default look before a merchant applies their own
+              CSS. NORBr also prefers to closely work with them when styling the
+              form to prevent any unintended issues.
+            </template>
+          </UAlert>
+
+          <div
+            class="flex flex-col bg-white p-8"
+            v-if="!hostedElementsResponse"
+          >
+            <div id="norbr-payment-container" class="no-tailwind"></div>
+          </div>
         </div>
 
         <!-- wrapper: response -->
@@ -343,3 +363,13 @@
     const norbr = new Norbr(configuration)
   }
 </script>
+
+<style scoped>
+  .no-tailwind {
+    all: unset; /* Reset all styles */
+  }
+
+  .no-tailwind * {
+    all: unset; /* Reset styles for all child elements */
+  }
+</style>
