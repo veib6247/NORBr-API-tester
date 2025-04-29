@@ -1,5 +1,7 @@
 <template>
   <div>
-    <h1 class="text-xl font-extrabold text-purple-900"><slot /></h1>
+    <h1 class="text-2xl font-extrabold opacity-70">
+      <slot />
+    </h1>
   </div>
 </template>
