@@ -52,6 +52,6 @@ export default defineNuxtConfig({
     keepalive: true,
   },
   colorMode: {
-    preference: 'light',
+    preference: 'dark',
   },
 })

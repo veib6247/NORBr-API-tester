@@ -2,48 +2,28 @@
   <div class="flex flex-col gap-8 p-6">
     <div class="space-y-2">
       <h1 class="text-xs font-semibold uppercase text-white opacity-60">App</h1>
-      <UVerticalNavigation
-        :links="generalLinks"
-        :ui="{
-          inactive: 'text-white/80',
-        }"
-      />
+      <UVerticalNavigation :links="generalLinks" />
     </div>
 
     <div class="space-y-2">
       <h1 class="text-xs font-semibold uppercase text-white opacity-60">
         NORBr
       </h1>
-      <UVerticalNavigation
-        :links="norbrLinks"
-        :ui="{
-          inactive: 'text-white/80',
-        }"
-      />
+      <UVerticalNavigation :links="norbrLinks" />
     </div>
 
     <div class="space-y-2">
       <h1 class="text-xs font-semibold uppercase text-white opacity-60">
         Nethone
       </h1>
-      <UVerticalNavigation
-        :links="nethoneLinks"
-        :ui="{
-          inactive: 'text-white/80',
-        }"
-      />
+      <UVerticalNavigation :links="nethoneLinks" />
     </div>
 
     <div class="space-y-2">
       <h1 class="text-xs font-semibold uppercase text-white opacity-60">
         SEON
       </h1>
-      <UVerticalNavigation
-        :links="seonLinks"
-        :ui="{
-          inactive: 'text-white/80',
-        }"
-      />
+      <UVerticalNavigation :links="seonLinks" />
     </div>
   </div>
 </template>

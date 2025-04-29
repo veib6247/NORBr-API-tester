@@ -1,0 +1,6 @@
+services:
+  app:
+    image: norbr-api-tester:1.1
+    container_name: norbr-api-tester
+    ports:
+      - '3000:3000'
