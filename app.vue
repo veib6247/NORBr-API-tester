@@ -21,7 +21,7 @@
   const appName = useState('appName', () => 'NORBr API Tester')
   const colorMode = useColorMode()
   const privateKey = useState('privateKey', () => '')
-  colorMode.value = 'light'
+  colorMode.value = 'dark'
 
   useState<string>('nethoneAttemptReference', () => {
     return `bidhb-${nanoid()}`
