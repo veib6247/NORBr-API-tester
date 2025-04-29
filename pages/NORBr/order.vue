@@ -80,14 +80,10 @@
             </UTooltip>
             <label :for="dataParametersInputID" class="text-xs opacity-70">
               For a full list of parameters, check
-              <a
-                href="https://developer.norbr.io/#08bfab4b-45a8-4734-87d8-b46df76eb4f8"
-                target="_blank"
-                class="underline"
-                rel="noopener noreferrer"
-              >
-                here
-              </a>
+              <AppLink
+                to="https://developer.norbr.io/#08bfab4b-45a8-4734-87d8-b46df76eb4f8"
+                label="here"
+              />.
             </label>
 
             <!-- submit -->

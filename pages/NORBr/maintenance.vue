@@ -36,7 +36,7 @@
 
           <label :for="privateKeyInputID" class="text-xs opacity-70">
             In general practice, the private key should not be exposed to the
-            frontend. This is only for testing purposes
+            frontend. This is only for testing purposes.
           </label>
         </div>
 
@@ -103,14 +103,10 @@
             </UTooltip>
             <label :for="dataParametersInputID" class="text-xs opacity-70">
               For a full list of parameters, check
-              <a
-                href="https://developer.norbr.io/#acd2a805-dab1-4d5c-8651-5a423bd8c7b9"
-                target="_blank"
-                class="underline"
-                rel="noopener noreferrer"
-              >
-                here
-              </a>
+              <AppLink
+                to="https://developer.norbr.io/#acd2a805-dab1-4d5c-8651-5a423bd8c7b9"
+                label="here"
+              />.
             </label>
           </div>
 

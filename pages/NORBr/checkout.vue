@@ -85,14 +85,10 @@
                 <kbd class="font-bold">order_merchant_id</kbd> parameter on
                 every page load, you may replace it as needed. For a full list
                 of all the available parameters, check
-                <a
-                  href="https://developer.norbr.io/#0268ead8-a489-414e-bba8-8508c002f05f"
-                  target="_blank"
-                  class="underline"
-                  rel="noopener noreferrer"
-                >
-                  here
-                </a>
+                <AppLink
+                  to="https://developer.norbr.io/#0268ead8-a489-414e-bba8-8508c002f05f"
+                  label="here"
+                />.
               </label>
             </div>
 
