@@ -100,7 +100,7 @@
                   class="w-full font-mono"
                   spellcheck="false"
                   placeholder="Data parameters..."
-                  :rows="25"
+                  :rows="16"
                   color="purple"
                   v-model="dataParameters"
                   @keyup.ctrl.enter="submitData"
