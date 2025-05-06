@@ -29,7 +29,7 @@
 </script>
 
 <template>
-  <div class="h-full px-8">
+  <div class="h-full p-4">
     <UVerticalNavigation :links="norbrLinks" />
   </div>
 </template>

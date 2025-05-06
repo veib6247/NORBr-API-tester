@@ -1,38 +1,36 @@
 <template>
-  <div class="flex">
-    <div class="w-2/12">
+  <div class="flex h-full">
+    <div class="h-full max-h-full w-2/12">
       <NavNethone />
     </div>
 
-    <div class="container mx-auto flex w-10/12 flex-col gap-4">
+    <div class="container flex w-10/12 flex-col gap-4 overflow-auto pb-16 pt-4">
       <AppPageTitle> Inquiry </AppPageTitle>
 
-      <UAlert
-        title="There is a dummy form below"
-        color="red"
-        icon="i-heroicons-exclaimation-triangle"
-      >
-        <template #title="{ title }">
-          <!-- eslint-disable-next-line vue/no-v-html -->
-          <span v-html="title" />
-        </template>
-        <template #description>
-          <p>
-            Do not put any real card information on the form below, this is only
-            to simulate an ecommerce checkout page with a dummy payment form
-            that Nethone will scan. Nethone will profile the page to check for
-            any possible fraud signals.
-          </p>
-
-          <p>
-            Modify your customer data and submit the inquiry, Nethone will
-            respond with the recommendation on what to do next. Do not edit the
-            values for
-            <kbd class="font-bold">attempt_reference</kbd> and
-            <kbd class="font-bold">profiling_reference</kbd>.
-          </p>
-        </template>
-      </UAlert>
+      <div>
+        <UAlert
+          title="There is a dummy form below"
+          color="red"
+          icon="i-heroicons-exclaimation-triangle"
+        >
+          <template #title="{ title }">
+            <!-- eslint-disable-next-line vue/no-v-html -->
+            <span v-html="title" />
+          </template>
+          <template #description>
+            <p>
+              Do not put any real card information on the form below, this is
+              only to simulate an ecommerce checkout page with a dummy payment
+              form that Nethone will scan. Nethone will profile the page to
+              check for any possible fraud signals. Modify your customer data
+              and submit the inquiry, Nethone will respond with the
+              recommendation on what to do next. Do not edit the values for
+              <kbd class="font-bold">attempt_reference</kbd> and
+              <kbd class="font-bold">profiling_reference</kbd>.
+            </p>
+          </template>
+        </UAlert>
+      </div>
 
       <!-- forms and parameters -->
       <div class="flex flex-col gap-4">

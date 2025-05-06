@@ -1,10 +1,10 @@
 <template>
-  <div class="flex">
-    <div class="w-2/12">
+  <div class="flex h-full">
+    <div class="h-full max-h-full w-2/12">
       <NavSeon />
     </div>
 
-    <div class="container mx-auto flex flex-col gap-4">
+    <div class="container flex w-10/12 flex-col gap-4 overflow-auto pb-16 pt-4">
       <AppPageTitle> Fraud API </AppPageTitle>
       <p class="text-sm">
         SEON's proprietary API combines our email, phone number, IP, and AML

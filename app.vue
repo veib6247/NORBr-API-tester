@@ -1,15 +1,11 @@
 <template>
-  <div class="flex h-dvh max-h-dvh flex-col">
-    <!-- nav -->
-    <div class="h-14 w-full">
-      <NavHorizontal />
-    </div>
+  <div class="flex h-dvh max-h-dvh flex-col overflow-hidden">
+    <!-- top nav bar -->
+    <NavHorizontal />
 
     <!-- content -->
-    <div class="flex h-full w-full flex-col overflow-auto">
-      <div class="mb-2 mt-2">
-        <NuxtPage />
-      </div>
+    <div class="flex h-full max-h-full w-full flex-col">
+      <NuxtPage />
     </div>
   </div>
 </template>
