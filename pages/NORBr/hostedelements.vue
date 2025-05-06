@@ -4,7 +4,7 @@
       <NavNorbr />
     </div>
 
-    <div class="container flex w-10/12 flex-col gap-4 overflow-auto pb-16 pt-4">
+    <div class="flex w-10/12 flex-col gap-4 overflow-auto px-10 pb-20 pt-4">
       <AppPageTitle> Hosted Elements </AppPageTitle>
 
       <div class="flex flex-col gap-4">
