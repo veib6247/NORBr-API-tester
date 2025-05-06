@@ -29,8 +29,7 @@
 </script>
 
 <template>
-  <div class="h-full px-8">
-    <h1 class="text-xs font-semibold uppercase text-white opacity-60">NORBr</h1>
+  <div class="h-full p-4">
     <UVerticalNavigation :links="norbrLinks" />
   </div>
 </template>

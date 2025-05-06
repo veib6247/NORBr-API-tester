@@ -1,5 +1,7 @@
 <template>
-  <div class="container mx-auto flex flex-col gap-4">
+  <div
+    class="mx-auto flex w-10/12 flex-col gap-4 overflow-auto px-10 pb-20 pt-4"
+  >
     <div class="flex flex-col gap-3">
       <AppPageTitle> Welcome </AppPageTitle>
 

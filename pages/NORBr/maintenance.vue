@@ -1,10 +1,10 @@
 <template>
-  <div class="flex">
-    <div class="w-2/12">
+  <div class="flex h-full">
+    <div class="h-full max-h-full w-2/12">
       <NavNorbr />
     </div>
 
-    <div class="container mx-auto flex w-10/12 flex-col gap-4">
+    <div class="flex w-10/12 flex-col gap-4 overflow-auto px-10 pb-20 pt-4">
       <AppPageTitle> Maintenance </AppPageTitle>
 
       <!-- forms and parameters -->
@@ -100,7 +100,7 @@
                   class="w-full font-mono"
                   spellcheck="false"
                   placeholder="Data parameters..."
-                  :rows="25"
+                  :rows="16"
                   color="purple"
                   v-model="dataParameters"
                   @keyup.ctrl.enter="submitData"
