@@ -6,17 +6,17 @@
       to: '/',
     },
     {
-      label: 'NORBr API',
+      label: 'NORBr',
       icon: 'i-heroicons-command-line',
       to: '/NORBr/checkout',
     },
     {
-      label: 'Nethone API',
+      label: 'Nethone',
       icon: 'i-heroicons-shield-check',
       to: '/Nethone/inquiry',
     },
     {
-      label: 'SEON API',
+      label: 'SEON',
       icon: 'i-heroicons-lock-closed',
       to: '/Seon/fraud-api',
     },

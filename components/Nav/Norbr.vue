@@ -30,7 +30,6 @@
 
 <template>
   <div class="h-full px-8">
-    <h1 class="text-xs font-semibold uppercase text-white opacity-60">NORBr</h1>
     <UVerticalNavigation :links="norbrLinks" />
   </div>
 </template>

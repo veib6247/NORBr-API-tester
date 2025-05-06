@@ -15,9 +15,6 @@
 
 <template>
   <div class="h-full px-8">
-    <h1 class="text-xs font-semibold uppercase text-white opacity-60">
-      Nethone
-    </h1>
     <UVerticalNavigation :links="nethoneLinks" />
   </div>
 </template>
