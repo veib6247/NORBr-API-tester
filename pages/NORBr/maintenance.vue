@@ -1,153 +1,155 @@
 <template>
-  <div class="container mx-auto flex flex-col gap-4">
-    <AppPageTitle> Maintenance </AppPageTitle>
+  <div class="flex">
+    <div class="w-2/12">
+      <NavNorbr />
+    </div>
 
-    <!-- forms and parameters -->
-    <div class="flex flex-col gap-4">
-      <form class="flex flex-col gap-2">
-        <!-- wrapper: private key -->
-        <div class="flex w-1/2 flex-col gap-1">
-          <input
-            type="text"
-            autocomplete="username"
-            name="dummy_username"
-            class="hidden"
-          />
-          <label :for="privateKeyInputID" class="text-sm font-semibold">
-            Private Key
-          </label>
-          <UTooltip
-            :text="`Submit ${selectedmaintenanceType}`"
-            :shortcuts="['ctrl', 'Enter']"
-            :popper="{ placement: 'top' }"
-          >
-            <UInput
-              :id="privateKeyInputID"
-              class="w-full"
-              icon="i-heroicons-key"
-              type="password"
-              color="purple"
-              placeholder="Private Key"
-              v-model="privateKey"
-              autocomplete="new-password"
-              @keyup.ctrl.enter="submitData"
-            />
-          </UTooltip>
+    <div class="container mx-auto flex w-10/12 flex-col gap-4">
+      <AppPageTitle> Maintenance </AppPageTitle>
 
-          <label :for="privateKeyInputID" class="text-xs opacity-70">
-            In general practice, the private key should not be exposed to the
-            frontend. This is only for testing purposes
-          </label>
-        </div>
-
-        <!-- wrapper: Maintenance type -->
-        <div class="flex w-1/2 flex-col gap-1">
-          <label
-            :for="selectedmaintenanceTypeInputID"
-            class="text-sm font-semibold"
-          >
-            Maintenance Type
-          </label>
-          <USelect
-            :id="selectedmaintenanceTypeInputID"
-            icon="i-heroicons-briefcase"
-            color="purple"
-            v-model="selectedmaintenanceType"
-            :options="maintenanceTypes"
-          />
-        </div>
-
-        <!-- wrapper: orderId -->
-        <div class="flex w-1/2 flex-col gap-1">
-          <label :for="orderIdInputID" class="text-sm font-semibold">
-            Order ID
-          </label>
-          <UTooltip
-            :text="`Submit ${selectedmaintenanceType}`"
-            :shortcuts="['ctrl', 'Enter']"
-            :popper="{ placement: 'top' }"
-          >
-            <UInput
-              :id="orderIdInputID"
-              class="w-full"
-              icon="i-heroicons-identification"
-              color="purple"
-              placeholder="Order ID"
-              v-model="storageOrderId"
-              @keyup.ctrl.enter="submitData"
-            />
-          </UTooltip>
-        </div>
-
-        <div class="flex gap-4">
-          <!-- wrapper: data parameters -->
+      <!-- forms and parameters -->
+      <div class="flex flex-col gap-4">
+        <form class="flex flex-col gap-2">
+          <!-- wrapper: private key -->
           <div class="flex w-1/2 flex-col gap-1">
-            <label :for="dataParametersInputID" class="text-sm font-semibold">
-              Data Parameters
+            <input
+              type="text"
+              autocomplete="username"
+              name="dummy_username"
+              class="hidden"
+            />
+            <label :for="privateKeyInputID" class="text-sm font-semibold">
+              Private Key
             </label>
             <UTooltip
               :text="`Submit ${selectedmaintenanceType}`"
               :shortcuts="['ctrl', 'Enter']"
               :popper="{ placement: 'top' }"
             >
-              <UTextarea
-                :id="dataParametersInputID"
-                class="w-full font-mono"
-                spellcheck="false"
-                placeholder="Data parameters..."
-                :rows="25"
+              <UInput
+                :id="privateKeyInputID"
+                class="w-full"
+                icon="i-heroicons-key"
+                type="password"
                 color="purple"
-                v-model="dataParameters"
+                placeholder="Private Key"
+                v-model="privateKey"
+                autocomplete="new-password"
                 @keyup.ctrl.enter="submitData"
               />
             </UTooltip>
-            <label :for="dataParametersInputID" class="text-xs opacity-70">
-              For a full list of parameters, check
-              <a
-                href="https://developer.norbr.io/#acd2a805-dab1-4d5c-8651-5a423bd8c7b9"
-                target="_blank"
-                class="underline"
-                rel="noopener noreferrer"
-              >
-                here
-              </a>
+
+            <label :for="privateKeyInputID" class="text-xs opacity-70">
+              In general practice, the private key should not be exposed to the
+              frontend. This is only for testing purposes.
             </label>
           </div>
 
-          <!-- wrapper: response -->
-          <div class="flex w-1/2 flex-col gap-1" v-if="data">
-            <label :for="displayDataInputID" class="text-sm font-semibold">
-              Response Data
+          <!-- wrapper: Maintenance type -->
+          <div class="flex w-1/2 flex-col gap-1">
+            <label
+              :for="selectedmaintenanceTypeInputID"
+              class="text-sm font-semibold"
+            >
+              Maintenance Type
             </label>
-            <UTextarea
-              :id="displayDataInputID"
-              class="font-mono"
-              spellcheck="false"
-              :rows="25"
+            <USelect
+              :id="selectedmaintenanceTypeInputID"
+              icon="i-heroicons-briefcase"
               color="purple"
-              v-model="displayData"
-              readonly
+              v-model="selectedmaintenanceType"
+              :options="maintenanceTypes"
             />
           </div>
 
-          <div class="w-1/2 space-y-1" v-else-if="isLoading">
-            <label class="text-sm font-semibold"> Loading... </label>
-            <USkeleton class="h-4 w-full" />
-            <USkeleton class="h-4 w-full" />
-            <USkeleton class="h-4 w-full" />
+          <!-- wrapper: orderId -->
+          <div class="flex w-1/2 flex-col gap-1">
+            <label :for="orderIdInputID" class="text-sm font-semibold">
+              Order ID
+            </label>
+            <UTooltip
+              :text="`Submit ${selectedmaintenanceType}`"
+              :shortcuts="['ctrl', 'Enter']"
+              :popper="{ placement: 'top' }"
+            >
+              <UInput
+                :id="orderIdInputID"
+                class="w-full"
+                icon="i-heroicons-identification"
+                color="purple"
+                placeholder="Order ID"
+                v-model="storageOrderId"
+                @keyup.ctrl.enter="submitData"
+              />
+            </UTooltip>
           </div>
-        </div>
-      </form>
 
-      <!-- submit -->
-      <div>
-        <UButton
-          icon="i-heroicons-paper-airplane"
-          color="purple"
-          :loading="isLoading"
-          :label="`Submit ${selectedmaintenanceType}`"
-          @click="submitData"
-        />
+          <div class="flex gap-4">
+            <!-- wrapper: data parameters -->
+            <div class="flex w-1/2 flex-col gap-1">
+              <label :for="dataParametersInputID" class="text-sm font-semibold">
+                Data Parameters
+              </label>
+              <UTooltip
+                :text="`Submit ${selectedmaintenanceType}`"
+                :shortcuts="['ctrl', 'Enter']"
+                :popper="{ placement: 'top' }"
+              >
+                <UTextarea
+                  :id="dataParametersInputID"
+                  class="w-full font-mono"
+                  spellcheck="false"
+                  placeholder="Data parameters..."
+                  :rows="25"
+                  color="purple"
+                  v-model="dataParameters"
+                  @keyup.ctrl.enter="submitData"
+                />
+              </UTooltip>
+              <label :for="dataParametersInputID" class="text-xs opacity-70">
+                For a full list of parameters, check
+                <AppLink
+                  to="https://developer.norbr.io/#acd2a805-dab1-4d5c-8651-5a423bd8c7b9"
+                  label="here"
+                />.
+              </label>
+            </div>
+
+            <!-- wrapper: response -->
+            <div class="flex w-1/2 flex-col gap-1" v-if="data">
+              <label :for="displayDataInputID" class="text-sm font-semibold">
+                Response Data
+              </label>
+              <UTextarea
+                :id="displayDataInputID"
+                class="font-mono"
+                spellcheck="false"
+                :rows="25"
+                color="purple"
+                v-model="displayData"
+                readonly
+              />
+            </div>
+
+            <div class="w-1/2 space-y-1" v-else-if="isLoading">
+              <label class="text-sm font-semibold"> Loading... </label>
+              <USkeleton class="h-4 w-full" />
+              <USkeleton class="h-4 w-full" />
+              <USkeleton class="h-4 w-full" />
+            </div>
+          </div>
+        </form>
+
+        <!-- submit -->
+        <div>
+          <UButton
+            icon="i-heroicons-paper-airplane"
+            color="purple"
+            :loading="isLoading"
+            :label="`Submit ${selectedmaintenanceType}`"
+            @click="submitData"
+          />
+        </div>
       </div>
     </div>
   </div>

@@ -1,158 +1,160 @@
 <template>
-  <div class="container mx-auto flex flex-col gap-4">
-    <AppPageTitle> Order </AppPageTitle>
+  <div class="flex">
+    <div class="w-2/12">
+      <NavNorbr />
+    </div>
 
-    <!-- forms and parameters -->
-    <div class="flex flex-col gap-4">
-      <form class="flex flex-col gap-2">
-        <!-- wrapper: private key -->
-        <div class="flex w-1/2 flex-col gap-1">
-          <input
-            type="text"
-            autocomplete="username"
-            name="dummy_username"
-            class="hidden"
-          />
-          <label :for="privateKeyInputID" class="text-sm font-semibold">
-            Private Key
-          </label>
-          <UTooltip
-            text="Submit Order"
-            :shortcuts="['ctrl', 'Enter']"
-            :popper="{ placement: 'top' }"
-          >
-            <UInput
-              :id="privateKeyInputID"
-              class="w-full"
-              icon="i-heroicons-key"
-              type="password"
-              color="purple"
-              placeholder="Private Key"
-              v-model="privateKey"
-              autocomplete="new-password"
-              @keyup.ctrl.enter="submitData"
-            />
-          </UTooltip>
+    <div class="container mx-auto flex w-10/12 flex-col gap-4">
+      <AppPageTitle> Order </AppPageTitle>
 
-          <label :for="privateKeyInputID" class="text-xs opacity-70">
-            In general practice, the private key should not be exposed to the
-            frontend. This is only for testing purposes
-          </label>
-        </div>
-
-        <UFormGroup label="Use JSON Payload">
-          <UToggle color="purple" size="sm" v-model="isJsonPayload" />
-        </UFormGroup>
-
-        <div class="flex gap-4">
-          <!-- wrapper: data parameters and submit button -->
+      <!-- forms and parameters -->
+      <div class="flex flex-col gap-4">
+        <form class="flex flex-col gap-2">
+          <!-- wrapper: private key -->
           <div class="flex w-1/2 flex-col gap-1">
-            <label :for="dataParametersInputID" class="text-sm font-semibold">
-              Data Parameters
+            <input
+              type="text"
+              autocomplete="username"
+              name="dummy_username"
+              class="hidden"
+            />
+            <label :for="privateKeyInputID" class="text-sm font-semibold">
+              Private Key
             </label>
-
             <UTooltip
               text="Submit Order"
               :shortcuts="['ctrl', 'Enter']"
               :popper="{ placement: 'top' }"
             >
-              <UTextarea
-                :id="dataParametersInputID"
-                class="w-full font-mono"
-                spellcheck="false"
-                :rows="25"
+              <UInput
+                :id="privateKeyInputID"
+                class="w-full"
+                icon="i-heroicons-key"
+                type="password"
                 color="purple"
-                v-model="dataParameters"
+                placeholder="Private Key"
+                v-model="privateKey"
+                autocomplete="new-password"
                 @keyup.ctrl.enter="submitData"
-                v-if="!isJsonPayload"
-              />
-
-              <UTextarea
-                :id="dataParametersInputID"
-                class="w-full font-mono"
-                spellcheck="false"
-                :rows="25"
-                color="purple"
-                v-model="jsonParameters"
-                @keyup.ctrl.enter="submitData"
-                v-else
               />
             </UTooltip>
-            <label :for="dataParametersInputID" class="text-xs opacity-70">
-              For a full list of parameters, check
-              <a
-                href="https://developer.norbr.io/#08bfab4b-45a8-4734-87d8-b46df76eb4f8"
-                target="_blank"
-                class="underline"
-                rel="noopener noreferrer"
-              >
-                here
-              </a>
+
+            <label :for="privateKeyInputID" class="text-xs opacity-70">
+              In general practice, the private key should not be exposed to the
+              frontend. This is only for testing purposes
             </label>
-
-            <!-- submit -->
-            <div class="mt-2">
-              <UButton
-                icon="i-heroicons-paper-airplane"
-                color="purple"
-                label="Submit Order"
-                :loading="isLoading"
-                @click="submitData"
-              />
-            </div>
           </div>
 
-          <!-- wrapper: response -->
-          <div class="flex w-1/2 flex-col gap-2" v-if="data">
-            <div>
-              <label :for="displayDataInputID" class="text-sm font-semibold">
-                Response Data
+          <UFormGroup label="Use JSON Payload">
+            <UToggle color="purple" size="sm" v-model="isJsonPayload" />
+          </UFormGroup>
+
+          <div class="flex gap-4">
+            <!-- wrapper: data parameters and submit button -->
+            <div class="flex w-1/2 flex-col gap-1">
+              <label :for="dataParametersInputID" class="text-sm font-semibold">
+                Data Parameters
               </label>
-              <UTextarea
-                :id="displayDataInputID"
-                class="font-mono"
-                spellcheck="false"
-                :rows="25"
-                color="purple"
-                v-model="displayData"
-                readonly
-              />
+
+              <UTooltip
+                text="Submit Order"
+                :shortcuts="['ctrl', 'Enter']"
+                :popper="{ placement: 'top' }"
+              >
+                <UTextarea
+                  :id="dataParametersInputID"
+                  class="w-full font-mono"
+                  spellcheck="false"
+                  :rows="25"
+                  color="purple"
+                  v-model="dataParameters"
+                  @keyup.ctrl.enter="submitData"
+                  v-if="!isJsonPayload"
+                />
+
+                <UTextarea
+                  :id="dataParametersInputID"
+                  class="w-full font-mono"
+                  spellcheck="false"
+                  :rows="25"
+                  color="purple"
+                  v-model="jsonParameters"
+                  @keyup.ctrl.enter="submitData"
+                  v-else
+                />
+              </UTooltip>
+              <label :for="dataParametersInputID" class="text-xs opacity-70">
+                For a full list of parameters, check
+                <AppLink
+                  to="https://developer.norbr.io/#08bfab4b-45a8-4734-87d8-b46df76eb4f8"
+                  label="here"
+                />.
+              </label>
+
+              <!-- submit -->
+              <div class="mt-2">
+                <UButton
+                  icon="i-heroicons-paper-airplane"
+                  color="purple"
+                  label="Submit Order"
+                  :loading="isLoading"
+                  @click="submitData"
+                />
+              </div>
             </div>
 
-            <!-- show alert if 3ds url is returned from the response -->
-            <UAlert
-              title="Heads up!"
-              color="purple"
-              icon="i-heroicons-information-circle"
-              v-if="data.redirect_url"
-            >
-              <template #title="{ title }">
-                <!-- eslint-disable-next-line vue/no-v-html -->
-                <span v-html="title" />
-              </template>
+            <!-- wrapper: response -->
+            <div class="flex w-1/2 flex-col gap-2" v-if="data">
+              <div>
+                <label :for="displayDataInputID" class="text-sm font-semibold">
+                  Response Data
+                </label>
+                <UTextarea
+                  :id="displayDataInputID"
+                  class="font-mono"
+                  spellcheck="false"
+                  :rows="25"
+                  color="purple"
+                  v-model="displayData"
+                  readonly
+                />
+              </div>
 
-              <template #description>
-                A redirect URL is detected,
-                <a
-                  :href="data.redirect_url"
-                  rel="noopener noreferrer"
-                  class="underline"
-                >
-                  click here
-                </a>
-                to view the page.
-              </template>
-            </UAlert>
-          </div>
+              <!-- show alert if 3ds url is returned from the response -->
+              <UAlert
+                title="Heads up!"
+                color="purple"
+                icon="i-heroicons-information-circle"
+                v-if="data.redirect_url"
+              >
+                <template #title="{ title }">
+                  <!-- eslint-disable-next-line vue/no-v-html -->
+                  <span v-html="title" />
+                </template>
 
-          <div class="w-1/2 space-y-1" v-else-if="isLoading">
-            <label class="text-sm font-semibold"> Loading... </label>
-            <USkeleton class="h-4 w-full" />
-            <USkeleton class="h-4 w-full" />
-            <USkeleton class="h-4 w-full" />
+                <template #description>
+                  A redirect URL is detected,
+                  <a
+                    :href="data.redirect_url"
+                    rel="noopener noreferrer"
+                    class="underline"
+                  >
+                    click here
+                  </a>
+                  to view the page.
+                </template>
+              </UAlert>
+            </div>
+
+            <div class="w-1/2 space-y-1" v-else-if="isLoading">
+              <label class="text-sm font-semibold"> Loading... </label>
+              <USkeleton class="h-4 w-full" />
+              <USkeleton class="h-4 w-full" />
+              <USkeleton class="h-4 w-full" />
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </template>

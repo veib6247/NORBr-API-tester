@@ -20,9 +20,9 @@
             <span v-html="title" />
           </template>
           <template #description>
-            The system automatically loads the required JS files for both
-            systems (NORBr and Nethone) as soon as this app is loaded. In case a
-            feature integration does not work, you may need to reload the page.
+            The system automatically loads the required JS files for all
+            integrations as soon as this app is loaded. In case a feature
+            integration does not work, you may need to reload the page.
           </template>
         </UAlert>
       </div>

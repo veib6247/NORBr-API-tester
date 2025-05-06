@@ -1,69 +1,75 @@
 <template>
-  <div class="container mx-auto flex flex-col gap-4">
-    <AppPageTitle> Fraud API </AppPageTitle>
-    <p class="text-sm">
-      SEON's proprietary API combines our email, phone number, IP, and AML APIs
-      with device fingerprinting so that you can request and receive our
-      enriched data, rules, and scoring in a single API call.
-    </p>
+  <div class="flex">
+    <div class="w-2/12">
+      <NavSeon />
+    </div>
 
-    <div class="flex flex-row gap-4">
-      <!-- left -->
-      <div class="flex w-1/2 flex-col gap-2">
-        <UFormGroup
-          label="Customer Data"
-          help="These are the data that a merchant would submit to SEON. Our app automatically adds the session data here."
-        >
-          <div class="w-full space-y-1" v-if="isTextAreaLoading">
+    <div class="container mx-auto flex flex-col gap-4">
+      <AppPageTitle> Fraud API </AppPageTitle>
+      <p class="text-sm">
+        SEON's proprietary API combines our email, phone number, IP, and AML
+        APIs with device fingerprinting so that you can request and receive our
+        enriched data, rules, and scoring in a single API call.
+      </p>
+
+      <div class="flex flex-row gap-4">
+        <!-- left -->
+        <div class="flex w-1/2 flex-col gap-2">
+          <UFormGroup
+            label="Customer Data"
+            help="These are the data that a merchant would submit to SEON. Our app automatically adds the session data here."
+          >
+            <div class="w-full space-y-1" v-if="isTextAreaLoading">
+              <label class="text-sm font-semibold"> Loading... </label>
+              <USkeleton class="h-4 w-full" />
+              <USkeleton class="h-4 w-full" />
+              <USkeleton class="h-4 w-full" />
+            </div>
+
+            <UTextarea
+              :id="defaultParamsFormId"
+              class="font-mono"
+              spellcheck="false"
+              :rows="25"
+              color="purple"
+              v-model="defaultParams"
+              v-else
+            />
+          </UFormGroup>
+
+          <div v-if="!isTextAreaLoading">
+            <UButton
+              color="purple"
+              variant="solid"
+              @click="submitData"
+              :loading="isLoading"
+            >
+              Send Data
+            </UButton>
+          </div>
+        </div>
+
+        <!-- right -->
+        <div class="flex w-1/2 flex-col gap-2">
+          <div class="w-full space-y-1" v-if="isLoading">
             <label class="text-sm font-semibold"> Loading... </label>
             <USkeleton class="h-4 w-full" />
             <USkeleton class="h-4 w-full" />
             <USkeleton class="h-4 w-full" />
           </div>
 
-          <UTextarea
-            :id="defaultParamsFormId"
-            class="font-mono"
-            spellcheck="false"
-            :rows="25"
-            color="purple"
-            v-model="defaultParams"
-            v-else
-          />
-        </UFormGroup>
-
-        <div v-if="!isTextAreaLoading">
-          <UButton
-            color="purple"
-            variant="solid"
-            @click="submitData"
-            :loading="isLoading"
-          >
-            Send Data
-          </UButton>
+          <UFormGroup label="Response Data" v-else-if="responseData">
+            <UTextarea
+              :id="responseDataFormId"
+              class="font-mono"
+              spellcheck="false"
+              :rows="25"
+              color="purple"
+              v-model="responseData"
+              readonly
+            />
+          </UFormGroup>
         </div>
-      </div>
-
-      <!-- right -->
-      <div class="flex w-1/2 flex-col gap-2">
-        <div class="w-full space-y-1" v-if="isLoading">
-          <label class="text-sm font-semibold"> Loading... </label>
-          <USkeleton class="h-4 w-full" />
-          <USkeleton class="h-4 w-full" />
-          <USkeleton class="h-4 w-full" />
-        </div>
-
-        <UFormGroup label="Response Data" v-else-if="responseData">
-          <UTextarea
-            :id="responseDataFormId"
-            class="font-mono"
-            spellcheck="false"
-            :rows="25"
-            color="purple"
-            v-model="responseData"
-            readonly
-          />
-        </UFormGroup>
       </div>
     </div>
   </div>
