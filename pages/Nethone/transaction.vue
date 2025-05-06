@@ -1,87 +1,95 @@
 <template>
-  <div class="container mx-auto flex flex-col gap-4">
-    <div>
-      <AppPageTitle> Transaction </AppPageTitle>
-      <p class="text-sm">
-        Transactions API is designed to give you the possibility to inform our
-        system about the status of transactions (i.e money tranfser, card
-        charge, login or registration) so that we can tell which ones are good
-        and which are fradulent.
-      </p>
+  <div class="flex">
+    <div class="w-2/12">
+      <NavNethone />
     </div>
 
-    <UAlert
-      title="Run Inquiry First!"
-      color="yellow"
-      icon="i-heroicons-exclaimation-triangle"
-    >
-      <template #title="{ title }">
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-html="title" />
-      </template>
-      <template #description>
-        <p>
-          Before running this API, please ensure that you've ran an inquiry
-          first.
+    <div class="container mx-auto flex flex-col gap-4">
+      <div>
+        <AppPageTitle> Transaction </AppPageTitle>
+        <p class="text-sm">
+          Transactions API is designed to give you the possibility to inform our
+          system about the status of transactions (i.e money tranfser, card
+          charge, login or registration) so that we can tell which ones are good
+          and which are fradulent.
         </p>
-      </template>
-    </UAlert>
+      </div>
 
-    <!-- forms and parameters -->
-    <div class="flex flex-col gap-4">
-      <!-- content -->
-      <div class="flex flex-row gap-4">
-        <!-- left -->
-        <div class="flex w-1/2 flex-col gap-2">
-          <!-- customer data -->
-          <div class="flex flex-col gap-2">
-            <label :for="customerDataFormId" class="text-sm font-semibold">
-              Transaction Data
-            </label>
-            <UTextarea
-              :id="customerDataFormId"
-              class="font-mono"
-              spellcheck="false"
-              :rows="25"
-              color="purple"
-              v-model="customerData"
-            />
+      <UAlert
+        title="Run Inquiry First!"
+        color="yellow"
+        icon="i-heroicons-exclaimation-triangle"
+      >
+        <template #title="{ title }">
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <span v-html="title" />
+        </template>
+        <template #description>
+          <p>
+            Before running this API, please ensure that you've ran an inquiry
+            first.
+          </p>
+        </template>
+      </UAlert>
 
-            <div>
-              <UButton
+      <!-- forms and parameters -->
+      <div class="flex flex-col gap-4">
+        <!-- content -->
+        <div class="flex flex-row gap-4">
+          <!-- left -->
+          <div class="flex w-1/2 flex-col gap-2">
+            <!-- customer data -->
+            <div class="flex flex-col gap-2">
+              <label :for="customerDataFormId" class="text-sm font-semibold">
+                Transaction Data
+              </label>
+              <UTextarea
+                :id="customerDataFormId"
+                class="font-mono"
+                spellcheck="false"
+                :rows="25"
                 color="purple"
-                variant="solid"
-                @click="submitCustomerData"
-                :loading="isLoading"
-              >
-                Send Transaction to Nethone
-              </UButton>
+                v-model="customerData"
+              />
+
+              <div>
+                <UButton
+                  color="purple"
+                  variant="solid"
+                  @click="submitCustomerData"
+                  :loading="isLoading"
+                >
+                  Send Transaction to Nethone
+                </UButton>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- right -->
-        <div class="flex w-1/2 flex-col gap-2">
-          <div class="w-full space-y-1" v-if="isLoading">
-            <label class="text-sm font-semibold"> Fetching response... </label>
-            <USkeleton class="h-4 w-full" />
-            <USkeleton class="h-4 w-full" />
-            <USkeleton class="h-4 w-full" />
-          </div>
+          <!-- right -->
+          <div class="flex w-1/2 flex-col gap-2">
+            <div class="w-full space-y-1" v-if="isLoading">
+              <label class="text-sm font-semibold">
+                Fetching response...
+              </label>
+              <USkeleton class="h-4 w-full" />
+              <USkeleton class="h-4 w-full" />
+              <USkeleton class="h-4 w-full" />
+            </div>
 
-          <div class="flex flex-col gap-2" v-if="displayData && !isLoading">
-            <label :for="displayDataInputID" class="text-sm font-semibold">
-              Response Data
-            </label>
-            <UTextarea
-              :id="displayDataInputID"
-              class="font-mono"
-              spellcheck="false"
-              :rows="25"
-              color="purple"
-              v-model="displayData"
-              readonly
-            />
+            <div class="flex flex-col gap-2" v-if="displayData && !isLoading">
+              <label :for="displayDataInputID" class="text-sm font-semibold">
+                Response Data
+              </label>
+              <UTextarea
+                :id="displayDataInputID"
+                class="font-mono"
+                spellcheck="false"
+                :rows="25"
+                color="purple"
+                v-model="displayData"
+                readonly
+              />
+            </div>
           </div>
         </div>
       </div>

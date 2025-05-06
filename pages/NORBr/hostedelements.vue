@@ -1,268 +1,280 @@
 <template>
-  <div class="container mx-auto flex flex-col gap-4">
-    <AppPageTitle> Hosted Elements </AppPageTitle>
+  <div class="flex">
+    <div class="w-2/12">
+      <NavNorbr />
+    </div>
 
-    <div class="flex flex-col gap-4">
-      <div class="flex gap-4">
-        <!-- form -->
-        <form class="flex w-1/2 flex-col gap-2">
-          <!-- wrapper: private key -->
-          <div class="flex flex-col gap-1">
-            <input
-              type="text"
-              autocomplete="username"
-              name="dummy_username"
-              class="hidden"
-            />
-            <label :for="privateKeyInputID" class="text-sm font-semibold">
-              Private Key
-            </label>
-            <UTooltip
-              text="Submit - Initialize Payment Form"
-              :shortcuts="['ctrl', 'Enter']"
-              :popper="{ placement: 'top' }"
-            >
-              <UInput
-                :id="privateKeyInputID"
-                class="w-full"
-                icon="i-heroicons-key"
-                type="password"
-                color="purple"
-                placeholder="Private Key"
-                v-model="privateKey"
-                autocomplete="new-password"
-                @keyup.ctrl.enter="initNorbr"
+    <div class="container mx-auto flex w-10/12 flex-col gap-4">
+      <AppPageTitle> Hosted Elements </AppPageTitle>
+
+      <div class="flex flex-col gap-4">
+        <div class="flex gap-4">
+          <!-- form -->
+          <form class="flex w-1/2 flex-col gap-2">
+            <!-- wrapper: private key -->
+            <div class="flex flex-col gap-1">
+              <input
+                type="text"
+                autocomplete="username"
+                name="dummy_username"
+                class="hidden"
               />
-            </UTooltip>
+              <label :for="privateKeyInputID" class="text-sm font-semibold">
+                Private Key
+              </label>
+              <UTooltip
+                text="Submit - Initialize Payment Form"
+                :shortcuts="['ctrl', 'Enter']"
+                :popper="{ placement: 'top' }"
+              >
+                <UInput
+                  :id="privateKeyInputID"
+                  class="w-full"
+                  icon="i-heroicons-key"
+                  type="password"
+                  color="purple"
+                  placeholder="Private Key"
+                  v-model="privateKey"
+                  autocomplete="new-password"
+                  @keyup.ctrl.enter="initNorbr"
+                />
+              </UTooltip>
 
-            <label :for="privateKeyInputID" class="text-xs opacity-70">
-              In general practice, the private key should not be exposed to the
-              frontend. This is only for testing purposes
-            </label>
-          </div>
+              <label :for="privateKeyInputID" class="text-xs opacity-70">
+                In general practice, the private key should not be exposed to
+                the frontend. This is only for testing purposes
+              </label>
+            </div>
 
-          <!-- wrapper: public key -->
-          <div class="flex flex-col gap-1">
-            <label :for="publicKeyInputID" class="text-sm font-semibold">
-              Public Key
-            </label>
-            <UTooltip
-              text="Submit - Initialize Payment Form"
-              :shortcuts="['ctrl', 'Enter']"
-              :popper="{ placement: 'top' }"
-            >
-              <UInput
-                :id="publicKeyInputID"
-                class="w-full"
-                icon="i-heroicons-key"
+            <!-- wrapper: public key -->
+            <div class="flex flex-col gap-1">
+              <label :for="publicKeyInputID" class="text-sm font-semibold">
+                Public Key
+              </label>
+              <UTooltip
+                text="Submit - Initialize Payment Form"
+                :shortcuts="['ctrl', 'Enter']"
+                :popper="{ placement: 'top' }"
+              >
+                <UInput
+                  :id="publicKeyInputID"
+                  class="w-full"
+                  icon="i-heroicons-key"
+                  color="purple"
+                  placeholder="Public Key"
+                  v-model="publicKey"
+                  @keyup.ctrl.enter="initNorbr"
+                />
+              </UTooltip>
+              <label :for="publicKeyInputID" class="text-xs opacity-70">
+                This is used by NORBr's frontend Javascript lib to authorize the
+                use for their Hosted Solution
+              </label>
+            </div>
+
+            <!-- wrapper: checkout id -->
+            <div class="flex flex-col gap-1">
+              <label :for="checkoutIdInputID" class="text-sm font-semibold">
+                Checkout ID
+              </label>
+              <UTooltip
+                text="Submit - Initialize Payment Form"
+                :shortcuts="['ctrl', 'Enter']"
+                :popper="{ placement: 'top' }"
+              >
+                <UInput
+                  :id="checkoutIdInputID"
+                  class="w-full"
+                  icon="i-heroicons-identification"
+                  color="purple"
+                  placeholder="Checkout ID"
+                  v-model="checkoutId"
+                  @keyup.ctrl.enter="initNorbr"
+                />
+              </UTooltip>
+            </div>
+
+            <!-- wrapper: locale -->
+            <div class="flex flex-col gap-1">
+              <label :for="localeInputId" class="text-sm font-semibold">
+                Locale
+              </label>
+              <UTooltip
+                text="Submit - Initialize Payment Form"
+                :shortcuts="['ctrl', 'Enter']"
+                :popper="{ placement: 'top' }"
+              >
+                <UInput
+                  :id="localeInputId"
+                  class="w-full"
+                  icon="i-heroicons-language"
+                  color="purple"
+                  placeholder="Checkout ID"
+                  v-model="locale"
+                  @keyup.ctrl.enter="initNorbr"
+                />
+              </UTooltip>
+            </div>
+
+            <!-- wrapper: token type -->
+            <div class="flex flex-col gap-1">
+              <label :for="tokenTypesInputID" class="text-sm font-semibold">
+                Token type
+              </label>
+              <USelect
+                :id="tokenTypesInputID"
+                icon="i-heroicons-ticket"
                 color="purple"
-                placeholder="Public Key"
-                v-model="publicKey"
-                @keyup.ctrl.enter="initNorbr"
-              />
-            </UTooltip>
-            <label :for="publicKeyInputID" class="text-xs opacity-70">
-              This is used by NORBr's frontend Javascript lib to authorize the
-              use for their Hosted Solution
-            </label>
-          </div>
-
-          <!-- wrapper: checkout id -->
-          <div class="flex flex-col gap-1">
-            <label :for="checkoutIdInputID" class="text-sm font-semibold">
-              Checkout ID
-            </label>
-            <UTooltip
-              text="Submit - Initialize Payment Form"
-              :shortcuts="['ctrl', 'Enter']"
-              :popper="{ placement: 'top' }"
-            >
-              <UInput
-                :id="checkoutIdInputID"
-                class="w-full"
-                icon="i-heroicons-identification"
-                color="purple"
-                placeholder="Checkout ID"
-                v-model="checkoutId"
-                @keyup.ctrl.enter="initNorbr"
-              />
-            </UTooltip>
-          </div>
-
-          <!-- wrapper: locale -->
-          <div class="flex flex-col gap-1">
-            <label :for="localeInputId" class="text-sm font-semibold">
-              Locale
-            </label>
-            <UTooltip
-              text="Submit - Initialize Payment Form"
-              :shortcuts="['ctrl', 'Enter']"
-              :popper="{ placement: 'top' }"
-            >
-              <UInput
-                :id="localeInputId"
-                class="w-full"
-                icon="i-heroicons-language"
-                color="purple"
-                placeholder="Checkout ID"
-                v-model="locale"
-                @keyup.ctrl.enter="initNorbr"
-              />
-            </UTooltip>
-          </div>
-
-          <!-- wrapper: token type -->
-          <div class="flex flex-col gap-1">
-            <label :for="tokenTypesInputID" class="text-sm font-semibold">
-              Token type
-            </label>
-            <USelect
-              :id="tokenTypesInputID"
-              icon="i-heroicons-ticket"
-              color="purple"
-              v-model="selectedTokenType"
-              :options="tokenTypes"
-            />
-          </div>
-
-          <!-- wrapper: CardHolderValue -->
-          <div class="flex flex-col gap-1">
-            <label :for="cardHolderValueInputID" class="text-sm font-semibold">
-              Cardholder Value
-            </label>
-            <UTooltip
-              text="Submit - Initialize Payment Form"
-              :shortcuts="['ctrl', 'Enter']"
-              :popper="{ placement: 'top' }"
-            >
-              <UInput
-                :id="cardHolderValueInputID"
-                class="w-full"
-                icon="i-heroicons-user"
-                color="purple"
-                placeholder="Cardholder Value"
-                v-model="cardHolderValue"
-                @keyup.ctrl.enter="initNorbr"
-              />
-            </UTooltip>
-          </div>
-
-          <!-- wrapper for checkboxes -->
-          <div class="flex gap-8">
-            <!-- wrapper: displayButtons -->
-            <UCheckbox
-              color="purple"
-              name="displayButtons"
-              label="Display Buttons"
-              v-model="displayButtons"
-            />
-
-            <!-- wrapper: displayCardHolder -->
-            <UCheckbox
-              color="purple"
-              name="displayCardHolder"
-              label="Display Cardholder"
-              v-model="displayCardHolder"
-            />
-
-            <!-- wrapper: displaySave -->
-            <UCheckbox
-              color="purple"
-              name="displaySave"
-              label="Display Save"
-              v-model="displaySave"
-            />
-          </div>
-
-          <!-- submit -->
-          <div class="mt-10 flex gap-4">
-            <UButton
-              icon="i-heroicons-code-bracket-square"
-              color="purple"
-              label="Initialize Payment Form"
-              @click="initNorbr"
-            />
-
-            <div class="my-auto">
-              <UCheckbox
-                color="purple"
-                name="autoOrder"
-                label="Automatically submit order upon clicking 'Pay'"
-                v-model="autoOrder"
+                v-model="selectedTokenType"
+                :options="tokenTypes"
               />
             </div>
-          </div>
-        </form>
 
-        <!-- NORBr hosted solution -->
-        <div class="flex w-1/2 flex-col gap-2">
-          <!-- CSS disclaimer -->
-          <UAlert
-            title="Heads up!"
-            color="purple"
-            icon="i-heroicons-exclaimation-triangle"
-          >
-            <template #title="{ title }">
-              <!-- eslint-disable-next-line vue/no-v-html -->
-              <span v-html="title" />
-            </template>
-            <template #description>
-              The payment form below is intentionally left <b>unstyled</b> in
-              order to show the default look before a merchant applies their own
-              CSS. NORBr also prefers to closely work with them when styling the
-              form to prevent any unintended issues.
-            </template>
-          </UAlert>
-
-          <div
-            class="flex flex-col bg-white p-8"
-            v-if="!hostedElementsResponse"
-          >
-            <div id="norbr-payment-container" class="no-tailwind"></div>
-          </div>
-        </div>
-
-        <!-- wrapper: response -->
-        <div class="flex w-1/2 flex-col gap-1" v-if="hostedElementsResponse">
-          <label
-            :for="hostedElementsResponseInputID"
-            class="text-sm font-semibold"
-          >
-            Hosted Elements Response
-          </label>
-          <UTextarea
-            :id="hostedElementsResponseInputID"
-            class="font-mono"
-            spellcheck="false"
-            :rows="25"
-            color="purple"
-            v-model="hostedElementsResponse"
-            readonly
-          />
-
-          <UAlert
-            title="Heads up!"
-            color="purple"
-            icon="i-heroicons-information-circle"
-            v-if="redirectUrl"
-          >
-            <template #title="{ title }">
-              <!-- eslint-disable-next-line vue/no-v-html -->
-              <span v-html="title" />
-            </template>
-
-            <template #description>
-              A redirect URL is detected,
-              <a
-                :href="redirectUrl"
-                rel="noopener noreferrer"
-                class="underline"
+            <!-- wrapper: CardHolderValue -->
+            <div class="flex flex-col gap-1">
+              <label
+                :for="cardHolderValueInputID"
+                class="text-sm font-semibold"
               >
-                click here
-              </a>
-              to view the page.
-            </template>
-          </UAlert>
+                Cardholder Value
+              </label>
+              <UTooltip
+                text="Submit - Initialize Payment Form"
+                :shortcuts="['ctrl', 'Enter']"
+                :popper="{ placement: 'top' }"
+              >
+                <UInput
+                  :id="cardHolderValueInputID"
+                  class="w-full"
+                  icon="i-heroicons-user"
+                  color="purple"
+                  placeholder="Cardholder Value"
+                  v-model="cardHolderValue"
+                  @keyup.ctrl.enter="initNorbr"
+                />
+              </UTooltip>
+            </div>
+
+            <!-- wrapper for checkboxes -->
+            <div class="flex gap-8">
+              <!-- wrapper: displayButtons -->
+              <UCheckbox
+                color="purple"
+                name="displayButtons"
+                label="Display Buttons"
+                v-model="displayButtons"
+              />
+
+              <!-- wrapper: displayCardHolder -->
+              <UCheckbox
+                color="purple"
+                name="displayCardHolder"
+                label="Display Cardholder"
+                v-model="displayCardHolder"
+              />
+
+              <!-- wrapper: displaySave -->
+              <UCheckbox
+                color="purple"
+                name="displaySave"
+                label="Display Save"
+                v-model="displaySave"
+              />
+            </div>
+
+            <!-- submit -->
+            <div class="mt-10 flex gap-4">
+              <UButton
+                icon="i-heroicons-code-bracket-square"
+                color="purple"
+                label="Initialize Payment Form"
+                @click="initNorbr"
+              />
+
+              <div class="my-auto">
+                <UCheckbox
+                  color="purple"
+                  name="autoOrder"
+                  label="Automatically submit order upon clicking 'Pay'"
+                  v-model="autoOrder"
+                />
+              </div>
+            </div>
+          </form>
+
+          <!-- NORBr hosted solution -->
+          <div class="flex w-1/2 flex-col gap-2">
+            <!-- CSS disclaimer -->
+            <UAlert
+              title="Heads up!"
+              color="purple"
+              icon="i-heroicons-exclaimation-triangle"
+            >
+              <template #title="{ title }">
+                <!-- eslint-disable-next-line vue/no-v-html -->
+                <span v-html="title" />
+              </template>
+              <template #description>
+                The payment form below is intentionally left <b>unstyled</b> in
+                order to show the default look before a merchant applies their
+                own CSS. NORBr also prefers to closely work with them when
+                styling the form to prevent any unintended issues.
+              </template>
+            </UAlert>
+
+            <div
+              class="flex flex-col bg-white p-8"
+              v-if="!hostedElementsResponse"
+            >
+              <div id="norbr-payment-container" class="no-tailwind"></div>
+            </div>
+
+            <!-- wrapper: response -->
+            <div
+              class="flex w-full flex-col gap-1"
+              v-if="hostedElementsResponse"
+            >
+              <label
+                :for="hostedElementsResponseInputID"
+                class="text-sm font-semibold"
+              >
+                Hosted Elements Response
+              </label>
+              <UTextarea
+                :id="hostedElementsResponseInputID"
+                class="font-mono"
+                spellcheck="false"
+                :rows="25"
+                color="purple"
+                v-model="hostedElementsResponse"
+                readonly
+              />
+
+              <UAlert
+                title="Heads up!"
+                color="purple"
+                icon="i-heroicons-information-circle"
+                v-if="redirectUrl"
+              >
+                <template #title="{ title }">
+                  <!-- eslint-disable-next-line vue/no-v-html -->
+                  <span v-html="title" />
+                </template>
+
+                <template #description>
+                  A redirect URL is detected,
+                  <a
+                    :href="redirectUrl"
+                    rel="noopener noreferrer"
+                    class="underline"
+                  >
+                    click here
+                  </a>
+                  to view the page.
+                </template>
+              </UAlert>
+            </div>
+          </div>
         </div>
       </div>
     </div>
