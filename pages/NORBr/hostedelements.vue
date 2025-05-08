@@ -1,3 +1,99 @@
+<script lang="ts" setup>
+  // page setup
+  useUpdateTitle('Hosted Elements')
+
+  // states
+  const privateKey = useState<string>('privateKey')
+  const privateKeyInputID = useId()
+  const storageprivateKey = useState('storageprivateKey')
+  const checkoutId = useState<string>('checkoutId')
+  const checkoutIdInputID = useId()
+  const publicKey = ref('')
+  const publicKeyInputID = useId()
+  const locale = ref('en')
+  const localeInputId = useId()
+  const tokenTypes = ref(['oneshot', 'recurring'])
+  const selectedTokenType = ref(tokenTypes.value[0])
+  const tokenTypesInputID = useId()
+  const displayButtons = ref(true)
+  const displayCardHolder = ref(true)
+  const displaySave = ref(false)
+  const cardHolderValue = ref('')
+  const cardHolderValueInputID = useId()
+  const hostedElementsResponse = ref('')
+  const hostedElementsResponseInputID = useId()
+  const autoOrder = ref(false)
+  const paymentMethodsAvailable = useState('paymentMethodsAvailable')
+  const orderResponse = ref()
+  const redirectUrl = ref('')
+  const storageOrderId = useState('storageOrderId')
+  const isWidgetLoading = ref<boolean>(false)
+
+  /**
+   *
+   */
+  const initNorbr = () => {
+    storageprivateKey.value = privateKey.value
+    hostedElementsResponse.value = ''
+    let dataParameters = ''
+
+    const configuration = {
+      publicapikey: publicKey.value,
+      locale: locale.value,
+      environment: 'sandbox',
+      tokentype: selectedTokenType.value,
+      paymentmethods: JSON.stringify({
+        payment_methods_available: paymentMethodsAvailable.value,
+      }),
+      displayButtons: displayButtons.value,
+      displayCardHolder: displayCardHolder.value,
+      displaySave: displaySave.value,
+      CardHolderValue: cardHolderValue.value,
+      onSubmit: async () => {
+        // clear hostedElementsResponse before refill
+        hostedElementsResponse.value = ''
+
+        // if autoOrder is checked, build the data and submit the order
+        if (autoOrder.value) {
+          const token = norbr.token
+          dataParameters = `token=${token}\ncheckout_id=${checkoutId.value}`
+          const urls = [
+            `accept_url=${window.location.origin}/NORBr/redirect?status=accept`,
+            `decline_url=${window.location.origin}/NORBr/redirect?status=decline`,
+            `pending_url=${window.location.origin}/NORBr/redirect?status=pending`,
+            `exception_url=${window.location.origin}/NORBr/redirect?status=exception`,
+          ]
+          for (const url of urls) {
+            dataParameters += `\n${url}`
+          }
+
+          orderResponse.value = await $fetch('/api/order', {
+            method: 'POST',
+            body: JSON.stringify({
+              privateKey: privateKey.value,
+              dataParameters: dataParameters,
+            }),
+          })
+
+          storageOrderId.value = orderResponse.value.order_id || ''
+          redirectUrl.value = orderResponse.value.redirect_url || ''
+
+          hostedElementsResponse.value = JSON.stringify(
+            orderResponse.value,
+            undefined,
+            2
+          )
+        } else {
+          hostedElementsResponse.value = JSON.stringify(norbr, undefined, 2)
+        }
+      },
+    }
+
+    // @ts-ignore
+    const norbr = new Norbr(configuration)
+  }
+</script>
+
 <template>
   <div class="flex h-full">
     <div class="h-full max-h-full w-2/12">
@@ -280,101 +376,6 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-  // page setup
-  useUpdateTitle('Hosted Elements')
-
-  // states
-  const privateKey = useState<string>('privateKey')
-  const privateKeyInputID = useId()
-  const storageprivateKey = useState('storageprivateKey')
-  const checkoutId = useState<string>('checkoutId')
-  const checkoutIdInputID = useId()
-  const publicKey = ref('')
-  const publicKeyInputID = useId()
-  const locale = ref('en')
-  const localeInputId = useId()
-  const tokenTypes = ref(['oneshot', 'recurring'])
-  const selectedTokenType = ref(tokenTypes.value[0])
-  const tokenTypesInputID = useId()
-  const displayButtons = ref(true)
-  const displayCardHolder = ref(true)
-  const displaySave = ref(false)
-  const cardHolderValue = ref('')
-  const cardHolderValueInputID = useId()
-  const hostedElementsResponse = ref('')
-  const hostedElementsResponseInputID = useId()
-  const autoOrder = ref(false)
-  const paymentMethodsAvailable = useState('paymentMethodsAvailable')
-  const orderResponse = ref()
-  const redirectUrl = ref('')
-  const storageOrderId = useState('storageOrderId')
-
-  /**
-   *
-   */
-  const initNorbr = () => {
-    storageprivateKey.value = privateKey.value
-    hostedElementsResponse.value = ''
-    let dataParameters = ''
-
-    const configuration = {
-      publicapikey: publicKey.value,
-      locale: locale.value,
-      environment: 'sandbox',
-      tokentype: selectedTokenType.value,
-      paymentmethods: JSON.stringify({
-        payment_methods_available: paymentMethodsAvailable.value,
-      }),
-      displayButtons: displayButtons.value,
-      displayCardHolder: displayCardHolder.value,
-      displaySave: displaySave.value,
-      CardHolderValue: cardHolderValue.value,
-      onSubmit: async () => {
-        // clear hostedElementsResponse before refill
-        hostedElementsResponse.value = ''
-
-        if (autoOrder.value) {
-          // if autoOrder is checked, build the data and submit the order
-          const token = norbr.token
-          dataParameters = `token=${token}\ncheckout_id=${checkoutId.value}`
-          const urls = [
-            `accept_url=${window.location.origin}/NORBr/redirect?status=accept`,
-            `decline_url=${window.location.origin}/NORBr/redirect?status=decline`,
-            `pending_url=${window.location.origin}/NORBr/redirect?status=pending`,
-            `exception_url=${window.location.origin}/NORBr/redirect?status=exception`,
-          ]
-          for (const url of urls) {
-            dataParameters += `\n${url}`
-          }
-
-          orderResponse.value = await $fetch('/api/order', {
-            method: 'POST',
-            body: JSON.stringify({
-              privateKey: privateKey.value,
-              dataParameters: dataParameters,
-            }),
-          })
-
-          storageOrderId.value = orderResponse.value.order_id || ''
-          redirectUrl.value = orderResponse.value.redirect_url || ''
-
-          hostedElementsResponse.value = JSON.stringify(
-            orderResponse.value,
-            undefined,
-            2
-          )
-        } else {
-          hostedElementsResponse.value = JSON.stringify(norbr, undefined, 2)
-        }
-      },
-    }
-
-    // @ts-ignore
-    const norbr = new Norbr(configuration)
-  }
-</script>
 
 <style scoped>
   .no-tailwind {
