@@ -20,6 +20,11 @@
       icon: 'i-heroicons-lock-closed',
       to: '/Seon/fraud-api',
     },
+    {
+      label: 'BIP Webhook Decryptor',
+      icon: 'i-heroicons-command-line',
+      to: '/Paysourcing/webhook-decryptor',
+    },
   ]
 </script>
 
