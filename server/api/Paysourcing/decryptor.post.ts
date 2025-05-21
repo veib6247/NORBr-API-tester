@@ -30,6 +30,8 @@ export default defineEventHandler(async (event) => {
     ])
 
     return JSON.parse(decrypted.toString('utf8'))
+
+    //
   } catch (error) {
     console.error(error)
     return {
