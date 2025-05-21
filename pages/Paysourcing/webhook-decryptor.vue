@@ -173,6 +173,13 @@
 
       <!-- response -->
       <div class="w-1/2">
+        <div class="w-full space-y-1" v-if="isLoading">
+          <label class="text-sm font-semibold"> Loading... </label>
+          <USkeleton class="h-4 w-full" />
+          <USkeleton class="h-4 w-full" />
+          <USkeleton class="h-4 w-full" />
+        </div>
+
         <UTextarea
           :id="serverResponseId"
           class="font-mono"
