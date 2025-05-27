@@ -1,7 +1,7 @@
 type JsonPayload = { [key: string]: string }
 
 /**
- * make himay to conver to object as payload for Axios
+ * make himay to convert to object as payload for Axios
  * @param dataParameters
  */
 export default function (dataParameters: string) {
