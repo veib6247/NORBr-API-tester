@@ -146,7 +146,7 @@
               Version Number
             </label>
             <UTooltip
-              text="Submit - Create Checkout"
+              text="Submit Order"
               :shortcuts="['ctrl', 'Enter']"
               :popper="{ placement: 'top' }"
             >
