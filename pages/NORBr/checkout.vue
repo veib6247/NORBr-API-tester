@@ -53,8 +53,6 @@
       },
     ],
   }
-  jsonParametersData.order_merchant_id = nanoid()
-  jsonParameters.value = JSON.stringify(jsonParametersData, undefined, 2)
 
   const checkoutId = useState('checkoutId', () => '')
   const displayData = ref('')
@@ -112,6 +110,14 @@
       console.error(error)
     }
   }
+
+  /**
+   * On mounted, generate a new order_merchant_id
+   */
+  onMounted(() => {
+    jsonParametersData.order_merchant_id = nanoid()
+    jsonParameters.value = JSON.stringify(jsonParametersData, undefined, 2)
+  })
 </script>
 
 <template>
@@ -202,7 +208,7 @@
                   :popper="{ placement: 'top' }"
                 >
                   <UTextarea
-                    :id="jsonParamsId"
+                    :id="dataParamsID"
                     class="w-full font-mono"
                     spellcheck="false"
                     placeholder="Data parameters..."
