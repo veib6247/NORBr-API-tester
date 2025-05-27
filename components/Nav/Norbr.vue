@@ -21,7 +21,7 @@
       to: '/NORBr/maintenance',
     },
     {
-      label: 'Redirect',
+      label: 'Redirect (Order Retrieval)',
       icon: 'i-heroicons-arrow-uturn-left',
       to: '/NORBr/redirect?status=accept',
     },

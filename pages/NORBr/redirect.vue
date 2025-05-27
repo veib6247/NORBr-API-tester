@@ -3,7 +3,7 @@
   import { useAxios } from '@vueuse/integrations/useAxios'
 
   // page setups
-  useUpdateTitle('Redirect')
+  useUpdateTitle('Redirect (Order Retrieval)')
 
   // states
   const privateKey = useState<string>('privateKey')
@@ -23,6 +23,45 @@
     { immediate: false }
   )
   const route = useRoute()
+  const status = route.query.status
+
+  const alertTitle = computed(() => {
+    switch (status) {
+      case 'accept':
+        return 'Transaction Accepted!'
+
+      case 'decline':
+        return 'Transaction Declined!'
+
+      case 'pending':
+        return 'Transaction Is Pending.'
+
+      case 'exception':
+        return 'An Exception Occurred!'
+
+      default:
+        return 'Unknown Status'
+    }
+  })
+
+  const alertColor = computed(() => {
+    switch (status) {
+      case 'accept':
+        return 'purple'
+
+      case 'decline':
+        return 'red'
+
+      case 'pending':
+        return 'yellow'
+
+      case 'exception':
+        return 'orange'
+
+      default:
+        return 'red'
+    }
+  })
 
   /**
    *
@@ -59,13 +98,13 @@
       <div>
         <h1 class="text-xl font-semibold">
           Redirected with
-          <span class="font-bold">{{ route.query.status }}</span> status
+          <span class="font-bold">{{ status }}</span> status
         </h1>
       </div>
 
       <UAlert
-        title="Heads up!"
-        color="purple"
+        :title="alertTitle"
+        :color="alertColor"
         icon="i-heroicons-information-circle"
       >
         <template #title="{ title }">
@@ -74,13 +113,9 @@
         </template>
 
         <template #description>
-          <p>This is a generic redirect page.</p>
-
           <p>
-            If you already have the
-            <kbd class="font-bold">Order ID</kbd>, you can query the order
-            status below, otherwise, you can check the transaction details in
-            the gateway.
+            This is a generic redirect page. You may use the Order Details API
+            below to fetch the final details about the transaction.
           </p>
         </template>
       </UAlert>
@@ -88,6 +123,7 @@
       <div class="flex gap-4">
         <!-- forms and parameters -->
         <form class="flex w-1/2 flex-col gap-2">
+          <AppPageTitle> Order Details API </AppPageTitle>
           <!-- wrapper: private key -->
           <div class="flex flex-col gap-1">
             <input
