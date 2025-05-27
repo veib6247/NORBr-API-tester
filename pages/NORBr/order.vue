@@ -75,6 +75,7 @@
       `decline_url=${window.location.origin}/NORBr/redirect?status=decline`,
       `pending_url=${window.location.origin}/NORBr/redirect?status=pending`,
       `exception_url=${window.location.origin}/NORBr/redirect?status=exception`,
+      `cancel_url=${window.location.origin}/NORBr/redirect?status=cancel`,
     ]
 
     defaultParams.value = [...defaultParams.value, ...urls]
@@ -87,6 +88,7 @@
       decline_url: `${window.location.origin}/NORBr/redirect?status=decline`,
       pending_url: `${window.location.origin}/NORBr/redirect?status=pending`,
       exception_url: `${window.location.origin}/NORBr/redirect?status=exception`,
+      cancel_url: `${window.location.origin}/NORBr/redirect?status=cancel`,
     }
 
     jsonParameters.value = JSON.stringify(defaultJsonPayload, undefined, 2)

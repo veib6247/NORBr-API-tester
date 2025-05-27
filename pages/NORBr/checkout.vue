@@ -21,9 +21,7 @@
     'currency=EUR',
     'token_type=oneshot',
     'payment_channel=e-commerce',
-    'order_merchant_id=REPLACE_ME',
   ]
-  dataParameters.value = defaultParams.join('\n')
 
   // JSON Parameters
   const jsonParamsId = useId()
@@ -38,6 +36,7 @@
     token_type: 'oneshot',
     payment_channel: 'e-commerce',
     order_merchant_id: 'REPLACE_ME',
+    cancel_url: '',
     merchant_data: [
       {
         key: 'internal_reference_1',
@@ -115,7 +114,17 @@
    * On mounted, generate a new order_merchant_id
    */
   onMounted(() => {
-    jsonParametersData.order_merchant_id = nanoid()
+    const cancelUrl = `${window.location.origin}/NORBr/redirect?status=cancel`
+    const orderMerchantId = nanoid()
+
+    // update data parameters
+    defaultParams.push(`order_merchant_id=${orderMerchantId}`)
+    defaultParams.push(`cancel_url=${cancelUrl}`)
+    dataParameters.value = defaultParams.join('\n')
+
+    // update JSON parameters
+    jsonParametersData.order_merchant_id = orderMerchantId
+    jsonParametersData.cancel_url = cancelUrl
     jsonParameters.value = JSON.stringify(jsonParametersData, undefined, 2)
   })
 </script>
