@@ -218,7 +218,7 @@
                 :id="displayDataInputID"
                 class="font-mono"
                 spellcheck="false"
-                :rows="25"
+                :rows="16"
                 color="purple"
                 v-model="displayData"
                 readonly
