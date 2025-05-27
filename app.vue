@@ -18,8 +18,9 @@
   // states
   const appName = useState('appName', () => 'NORBr API Tester')
   const colorMode = useColorMode()
-  const privateKey = useState('privateKey', () => '')
   colorMode.value = 'dark'
+
+  const privateKey = useState('privateKey', () => '')
 
   useState<string>('nethoneAttemptReference', () => {
     return `bidhb-${nanoid()}`
@@ -52,6 +53,12 @@
    * run these once browser is ready to read stuff
    */
   onMounted(async () => {
+    const nuxtColorMode = useStorage('nuxt-color-mode', 'dark', localStorage, {
+      mergeDefaults: true,
+    })
+
+    nuxtColorMode.value = 'dark'
+
     /**
      * init storage for private key
      */
