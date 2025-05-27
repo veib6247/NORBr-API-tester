@@ -39,6 +39,9 @@
       case 'exception':
         return 'An Exception Occurred!'
 
+      case 'cancel':
+        return 'Transaction Cancelled!'
+
       default:
         return 'Unknown Status'
     }
@@ -57,6 +60,9 @@
 
       case 'exception':
         return 'orange'
+
+      case 'cancel':
+        return 'yellow'
 
       default:
         return 'red'
