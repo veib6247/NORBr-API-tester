@@ -21,9 +21,7 @@
     'currency=EUR',
     'token_type=oneshot',
     'payment_channel=e-commerce',
-    'order_merchant_id=REPLACE_ME',
   ]
-  dataParameters.value = defaultParams.join('\n')
 
   // JSON Parameters
   const jsonParamsId = useId()
@@ -38,6 +36,7 @@
     token_type: 'oneshot',
     payment_channel: 'e-commerce',
     order_merchant_id: 'REPLACE_ME',
+    cancel_url: '',
     merchant_data: [
       {
         key: 'internal_reference_1',
@@ -115,7 +114,17 @@
    * On mounted, generate a new order_merchant_id
    */
   onMounted(() => {
-    jsonParametersData.order_merchant_id = nanoid()
+    const cancelUrl = `${window.location.origin}/NORBr/redirect?status=cancel`
+    const orderMerchantId = nanoid()
+
+    // update data parameters
+    defaultParams.push(`order_merchant_id=${orderMerchantId}`)
+    defaultParams.push(`cancel_url=${cancelUrl}`)
+    dataParameters.value = defaultParams.join('\n')
+
+    // update JSON parameters
+    jsonParametersData.order_merchant_id = orderMerchantId
+    jsonParametersData.cancel_url = cancelUrl
     jsonParameters.value = JSON.stringify(jsonParametersData, undefined, 2)
   })
 </script>
@@ -199,24 +208,28 @@
             <div class="flex w-1/2 flex-col gap-3">
               <!-- wrapper: data parameters -->
               <div class="flex flex-col gap-1">
-                <label :for="dataParamsID" class="text-sm font-semibold">
-                  Data Parameters
+                <label
+                  :for="isJsonPayload ? jsonParamsId : dataParamsID"
+                  class="text-sm font-semibold"
+                >
+                  {{ isJsonPayload ? 'JSON' : 'Data' }} Parameters
                 </label>
+
                 <UTooltip
                   text="Submit - Create Checkout"
                   :shortcuts="['ctrl', 'Enter']"
                   :popper="{ placement: 'top' }"
                 >
                   <UTextarea
-                    :id="dataParamsID"
+                    :id="jsonParamsId"
                     class="w-full font-mono"
                     spellcheck="false"
                     placeholder="Data parameters..."
                     :rows="25"
                     color="purple"
                     v-model="jsonParameters"
-                    v-if="isJsonPayload"
                     @keyup.ctrl.enter="submitData"
+                    v-if="isJsonPayload"
                   />
 
                   <UTextarea
@@ -227,11 +240,15 @@
                     :rows="25"
                     color="purple"
                     v-model="dataParameters"
-                    v-else
                     @keyup.ctrl.enter="submitData"
+                    v-else
                   />
                 </UTooltip>
-                <label :for="dataParamsID" class="text-xs opacity-70">
+
+                <label
+                  :for="isJsonPayload ? jsonParamsId : dataParamsID"
+                  class="text-xs opacity-70"
+                >
                   The system generates a new value for the
                   <kbd class="font-bold">order_merchant_id</kbd> parameter on
                   every page load, you may replace it as needed. For a full list
