@@ -55,6 +55,7 @@
   }
   jsonParametersData.order_merchant_id = nanoid()
   jsonParameters.value = JSON.stringify(jsonParametersData, undefined, 2)
+
   const checkoutId = useState('checkoutId', () => '')
   const displayData = ref('')
   const displayDataInputID = useId()
@@ -162,12 +163,6 @@
 
           <!-- wrapper: version number -->
           <div class="flex w-1/2 flex-col gap-1">
-            <input
-              type="text"
-              autocomplete="username"
-              name="dummy_username"
-              class="hidden"
-            />
             <label :for="versionNumberID" class="text-sm font-semibold">
               Version Number
             </label>

@@ -125,12 +125,6 @@
 
           <!-- wrapper: version number -->
           <div class="flex flex-col gap-1">
-            <input
-              type="text"
-              autocomplete="username"
-              name="dummy_username"
-              class="hidden"
-            />
             <label :for="versionNumberID" class="text-sm font-semibold">
               Version Number
             </label>
