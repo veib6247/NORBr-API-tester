@@ -1,3 +1,67 @@
+<script lang="ts" setup>
+  import { useAxios } from '@vueuse/integrations/useAxios'
+
+  // page setups
+  useUpdateTitle('Maintenance')
+
+  // states
+  const privateKey = useState<string>('privateKey')
+  const privateKeyInputID = useId()
+  const versionNumberID = useId()
+  const versionNumber = useState<number>('versionNumber')
+  const storageprivateKey = useState('storageprivateKey')
+  const dataParameters = ref('')
+  const dataParametersInputID = useId()
+  const defaultParams = ['amount=11.30']
+  const displayData = ref('')
+  const displayDataInputID = useId()
+  const storageOrderId = useState<string>('storageOrderId')
+  const orderIdInputID = useId()
+  const maintenanceTypes = ref(['capture', 'refund', 'cancel'])
+  const selectedmaintenanceType = ref(maintenanceTypes.value[0])
+  const selectedmaintenanceTypeInputID = useId()
+  const { execute, data, isLoading } = useAxios(
+    '/api/maintenance',
+    {
+      method: 'POST',
+    },
+    { immediate: false }
+  )
+
+  /**
+   *
+   */
+  const submitData = async () => {
+    storageprivateKey.value = privateKey.value
+    data.value = ''
+
+    try {
+      await execute({
+        data: {
+          orderId: storageOrderId.value,
+          maintenanceType: selectedmaintenanceType.value,
+          privateKey: privateKey.value,
+          versionNumber: versionNumber.value,
+          dataParameters: dataParameters.value,
+        },
+      })
+
+      displayData.value = JSON.stringify(data.value, undefined, 2)
+
+      //
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  /**
+   *
+   */
+  onMounted(() => {
+    dataParameters.value = defaultParams.join('\n')
+  })
+</script>
+
 <template>
   <div class="flex h-full">
     <div class="h-full max-h-full w-2/12">
@@ -43,6 +107,36 @@
               In general practice, the private key should not be exposed to the
               frontend. This is only for testing purposes.
             </label>
+          </div>
+
+          <!-- wrapper: version number -->
+          <div class="flex w-1/2 flex-col gap-1">
+            <input
+              type="text"
+              autocomplete="username"
+              name="dummy_username"
+              class="hidden"
+            />
+            <label :for="versionNumberID" class="text-sm font-semibold">
+              Version Number
+            </label>
+            <UTooltip
+              text="Submit - Create Checkout"
+              :shortcuts="['ctrl', 'Enter']"
+              :popper="{ placement: 'top' }"
+            >
+              <UInput
+                :id="versionNumberID"
+                class="w-full"
+                icon="i-heroicons-hashtag"
+                type="number"
+                color="purple"
+                placeholder="1.9"
+                v-model="versionNumber"
+                autocomplete="one-time-code"
+                @keyup.ctrl.enter="submitData"
+              />
+            </UTooltip>
           </div>
 
           <!-- wrapper: Maintenance type -->
@@ -154,64 +248,3 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-  import { useAxios } from '@vueuse/integrations/useAxios'
-
-  // page setups
-  useUpdateTitle('Maintenance')
-
-  // states
-  const privateKey = useState<string>('privateKey')
-  const privateKeyInputID = useId()
-  const storageprivateKey = useState('storageprivateKey')
-  const dataParameters = ref('')
-  const dataParametersInputID = useId()
-  const defaultParams = ['amount=11.30']
-  const displayData = ref('')
-  const displayDataInputID = useId()
-  const storageOrderId = useState<string>('storageOrderId')
-  const orderIdInputID = useId()
-  const maintenanceTypes = ref(['capture', 'refund', 'cancel'])
-  const selectedmaintenanceType = ref(maintenanceTypes.value[0])
-  const selectedmaintenanceTypeInputID = useId()
-  const { execute, data, isLoading } = useAxios(
-    '/api/maintenance',
-    {
-      method: 'POST',
-    },
-    { immediate: false }
-  )
-
-  /**
-   *
-   */
-  const submitData = async () => {
-    storageprivateKey.value = privateKey.value
-    data.value = ''
-
-    try {
-      await execute({
-        data: {
-          orderId: storageOrderId.value,
-          maintenanceType: selectedmaintenanceType.value,
-          privateKey: privateKey.value,
-          dataParameters: dataParameters.value,
-        },
-      })
-
-      displayData.value = JSON.stringify(data.value, undefined, 2)
-
-      //
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  /**
-   *
-   */
-  onMounted(() => {
-    dataParameters.value = defaultParams.join('\n')
-  })
-</script>

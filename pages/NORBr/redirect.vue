@@ -1,3 +1,54 @@
+<script lang="ts" setup>
+  // libs
+  import { useAxios } from '@vueuse/integrations/useAxios'
+
+  // page setups
+  useUpdateTitle('Redirect')
+
+  // states
+  const privateKey = useState<string>('privateKey')
+  const privateKeyInputID = useId()
+  const versionNumberID = useId()
+  const versionNumber = useState<number>('versionNumber')
+  const storageprivateKey = useState('storageprivateKey')
+  const storageOrderId = useState<string>('storageOrderId')
+  const orderIdInputID = useId()
+  const displayData = ref('')
+  const displayDataInputID = useId()
+  const { execute, data, isLoading } = useAxios(
+    '/api/orderDetail',
+    {
+      method: 'POST',
+    },
+    { immediate: false }
+  )
+  const route = useRoute()
+
+  /**
+   *
+   */
+  const submitData = async () => {
+    storageprivateKey.value = privateKey.value
+    data.value = ''
+
+    try {
+      await execute({
+        data: {
+          orderId: storageOrderId.value,
+          privateKey: privateKey.value,
+          versionNumber: versionNumber.value,
+        },
+      })
+
+      displayData.value = JSON.stringify(data.value, undefined, 2)
+
+      //
+    } catch (error) {
+      console.error(error)
+    }
+  }
+</script>
+
 <template>
   <div class="flex h-full">
     <div class="h-full max-h-full w-2/12">
@@ -72,6 +123,36 @@
             </label>
           </div>
 
+          <!-- wrapper: version number -->
+          <div class="flex flex-col gap-1">
+            <input
+              type="text"
+              autocomplete="username"
+              name="dummy_username"
+              class="hidden"
+            />
+            <label :for="versionNumberID" class="text-sm font-semibold">
+              Version Number
+            </label>
+            <UTooltip
+              text="Submit - Create Checkout"
+              :shortcuts="['ctrl', 'Enter']"
+              :popper="{ placement: 'top' }"
+            >
+              <UInput
+                :id="versionNumberID"
+                class="w-full"
+                icon="i-heroicons-hashtag"
+                type="number"
+                color="purple"
+                placeholder="1.9"
+                v-model="versionNumber"
+                autocomplete="one-time-code"
+                @keyup.ctrl.enter="submitData"
+              />
+            </UTooltip>
+          </div>
+
           <!-- wrapper: orderId -->
           <div class="flex flex-col gap-1">
             <label :for="orderIdInputID" class="text-sm font-semibold">
@@ -133,51 +214,3 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-  // libs
-  import { useAxios } from '@vueuse/integrations/useAxios'
-
-  // page setups
-  useUpdateTitle('Redirect')
-
-  // states
-  const privateKey = useState<string>('privateKey')
-  const privateKeyInputID = useId()
-  const storageprivateKey = useState('storageprivateKey')
-  const storageOrderId = useState<string>('storageOrderId')
-  const orderIdInputID = useId()
-  const displayData = ref('')
-  const displayDataInputID = useId()
-  const { execute, data, isLoading } = useAxios(
-    '/api/orderDetail',
-    {
-      method: 'POST',
-    },
-    { immediate: false }
-  )
-  const route = useRoute()
-
-  /**
-   *
-   */
-  const submitData = async () => {
-    storageprivateKey.value = privateKey.value
-    data.value = ''
-
-    try {
-      await execute({
-        data: {
-          orderId: storageOrderId.value,
-          privateKey: privateKey.value,
-        },
-      })
-
-      displayData.value = JSON.stringify(data.value, undefined, 2)
-
-      //
-    } catch (error) {
-      console.error(error)
-    }
-  }
-</script>

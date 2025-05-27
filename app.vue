@@ -41,6 +41,8 @@
     return `bidhb-${nanoid()}`
   })
 
+  useState<number>('versionNumber', () => 1.9)
+
   // composables
   useHead({
     title: appName.value,

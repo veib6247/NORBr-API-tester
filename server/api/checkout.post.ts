@@ -4,6 +4,7 @@ import payloadBuilder from '../utils/payloadBuilder'
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   const isJsonPayload = body.isJsonPayload
+  const version = body.versionNumber
 
   const payload = isJsonPayload
     ? JSON.parse(body.jsonParameters)
@@ -14,7 +15,7 @@ export default defineEventHandler(async (event) => {
       method: 'POST',
       headers: {
         'x-api-key': body.privateKey,
-        version: '1.0.0',
+        version: version.toString(),
       },
       url: 'https://api-sandbox.norbr.io/payment/checkout',
       data: payload,
