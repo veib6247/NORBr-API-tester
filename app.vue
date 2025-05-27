@@ -17,9 +17,6 @@
 
   // states
   const appName = useState('appName', () => 'NORBr API Tester')
-  const colorMode = useColorMode()
-  colorMode.value = 'dark'
-
   const privateKey = useState('privateKey', () => '')
 
   useState<string>('nethoneAttemptReference', () => {
@@ -57,7 +54,8 @@
       mergeDefaults: true,
     })
 
-    nuxtColorMode.value = 'dark'
+    nuxtColorMode.value = useColorMode().value
+    console.info(`Using color mode: '${nuxtColorMode.value}'`)
 
     /**
      * init storage for private key
