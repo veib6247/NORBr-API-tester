@@ -4,13 +4,14 @@ import payloadBuilder from '../utils/payloadBuilder'
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   const payload = payloadBuilder(body.dataParameters)
+  const version = body.versionNumber
 
   try {
     const { data } = await axios({
       method: 'POST',
       headers: {
         'x-api-key': body.privateKey,
-        version: '1.0.0',
+        version: version.toString(),
       },
       url: `https://api-sandbox.norbr.io/payment/maintenance/${body.maintenanceType}/${body.orderId}`,
       data: payload,

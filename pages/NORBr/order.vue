@@ -1,3 +1,98 @@
+<script lang="ts" setup>
+  import { useAxios } from '@vueuse/integrations/useAxios'
+
+  // page setups
+  useUpdateTitle('Order')
+
+  // states
+  const privateKey = useState<string>('privateKey')
+  const privateKeyInputID = useId()
+  const versionNumberID = useId()
+  const versionNumber = useState<number>('versionNumber')
+  const storageprivateKey = useState('storageprivateKey')
+  const dataParameters = ref('')
+  const dataParametersInputID = useId()
+  const defaultParams = ref(['token=REPLACE_ME', 'checkout_id=REPLACE_ME'])
+  const displayData = ref('')
+  const displayDataInputID = useId()
+  const storateOrderId = useState('storageOrderId')
+  const isJsonPayload = ref(true)
+  const jsonParameters = ref('')
+  const { execute, data, isLoading } = useAxios(
+    '/api/order',
+    {
+      method: 'POST',
+    },
+    { immediate: false }
+  )
+
+  /**
+   *
+   */
+  const submitData = async (event: Event) => {
+    // validate JSON string
+    try {
+      JSON.parse(jsonParameters.value)
+    } catch (error) {
+      console.error(error)
+      alert('Invalid JSON string!')
+
+      return
+    }
+
+    storageprivateKey.value = privateKey.value
+    event.preventDefault()
+
+    data.value = ''
+
+    try {
+      await execute({
+        data: {
+          isJsonPayload: isJsonPayload.value,
+          jsonParameters: jsonParameters.value,
+          privateKey: privateKey.value,
+          versionNumber: versionNumber.value,
+          dataParameters: dataParameters.value,
+        },
+      })
+
+      // store the order Id in session storage
+      storateOrderId.value = data.value.order_id || ''
+      displayData.value = JSON.stringify(data.value, undefined, 2)
+
+      //
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  /**
+   * fetches windows location on mount to set the right redirect URLs
+   */
+  onMounted(() => {
+    const urls = [
+      `accept_url=${window.location.origin}/NORBr/redirect?status=accept`,
+      `decline_url=${window.location.origin}/NORBr/redirect?status=decline`,
+      `pending_url=${window.location.origin}/NORBr/redirect?status=pending`,
+      `exception_url=${window.location.origin}/NORBr/redirect?status=exception`,
+    ]
+
+    defaultParams.value = [...defaultParams.value, ...urls]
+    dataParameters.value = defaultParams.value.join('\n')
+
+    const defaultJsonPayload = {
+      token: 'REPLACE_ME',
+      checkout_id: 'REPLACE_ME',
+      accept_url: `${window.location.origin}/NORBr/redirect?status=accept`,
+      decline_url: `${window.location.origin}/NORBr/redirect?status=decline`,
+      pending_url: `${window.location.origin}/NORBr/redirect?status=pending`,
+      exception_url: `${window.location.origin}/NORBr/redirect?status=exception`,
+    }
+
+    jsonParameters.value = JSON.stringify(defaultJsonPayload, undefined, 2)
+  })
+</script>
+
 <template>
   <div class="flex h-full">
     <div class="h-full max-h-full w-2/12">
@@ -43,6 +138,30 @@
               In general practice, the private key should not be exposed to the
               frontend. This is only for testing purposes
             </label>
+          </div>
+
+          <!-- wrapper: version number -->
+          <div class="flex w-1/2 flex-col gap-1">
+            <label :for="versionNumberID" class="text-sm font-semibold">
+              Version Number
+            </label>
+            <UTooltip
+              text="Submit - Create Checkout"
+              :shortcuts="['ctrl', 'Enter']"
+              :popper="{ placement: 'top' }"
+            >
+              <UInput
+                :id="versionNumberID"
+                class="w-full"
+                icon="i-heroicons-hashtag"
+                type="number"
+                color="purple"
+                placeholder="1.9"
+                v-model="versionNumber"
+                autocomplete="one-time-code"
+                @keyup.ctrl.enter="submitData"
+              />
+            </UTooltip>
           </div>
 
           <UFormGroup label="Use JSON Payload">
@@ -158,95 +277,3 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-  import { useAxios } from '@vueuse/integrations/useAxios'
-
-  // page setups
-  useUpdateTitle('Order')
-
-  // states
-  const privateKey = useState<string>('privateKey')
-  const privateKeyInputID = useId()
-  const storageprivateKey = useState('storageprivateKey')
-  const dataParameters = ref('')
-  const dataParametersInputID = useId()
-  const defaultParams = ref(['token=REPLACE_ME', 'checkout_id=REPLACE_ME'])
-  const displayData = ref('')
-  const displayDataInputID = useId()
-  const storateOrderId = useState('storageOrderId')
-  const isJsonPayload = ref(true)
-  const jsonParameters = ref('')
-  const { execute, data, isLoading } = useAxios(
-    '/api/order',
-    {
-      method: 'POST',
-    },
-    { immediate: false }
-  )
-
-  /**
-   *
-   */
-  const submitData = async (event: Event) => {
-    // validate JSON string
-    try {
-      JSON.parse(jsonParameters.value)
-    } catch (error) {
-      console.error(error)
-      alert('Invalid JSON string!')
-
-      return
-    }
-
-    storageprivateKey.value = privateKey.value
-    event.preventDefault()
-
-    data.value = ''
-
-    try {
-      await execute({
-        data: {
-          isJsonPayload: isJsonPayload.value,
-          jsonParameters: jsonParameters.value,
-          privateKey: privateKey.value,
-          dataParameters: dataParameters.value,
-        },
-      })
-
-      // store the order Id in session storage
-      storateOrderId.value = data.value.order_id || ''
-      displayData.value = JSON.stringify(data.value, undefined, 2)
-
-      //
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  /**
-   * fetches windows location on mount to set the right redirect URLs
-   */
-  onMounted(() => {
-    const urls = [
-      `accept_url=${window.location.origin}/NORBr/redirect?status=accept`,
-      `decline_url=${window.location.origin}/NORBr/redirect?status=decline`,
-      `pending_url=${window.location.origin}/NORBr/redirect?status=pending`,
-      `exception_url=${window.location.origin}/NORBr/redirect?status=exception`,
-    ]
-
-    defaultParams.value = [...defaultParams.value, ...urls]
-    dataParameters.value = defaultParams.value.join('\n')
-
-    const defaultJsonPayload = {
-      token: 'REPLACE_ME',
-      checkout_id: 'REPLACE_ME',
-      accept_url: `${window.location.origin}/NORBr/redirect?status=accept`,
-      decline_url: `${window.location.origin}/NORBr/redirect?status=decline`,
-      pending_url: `${window.location.origin}/NORBr/redirect?status=pending`,
-      exception_url: `${window.location.origin}/NORBr/redirect?status=exception`,
-    }
-
-    jsonParameters.value = JSON.stringify(defaultJsonPayload, undefined, 2)
-  })
-</script>

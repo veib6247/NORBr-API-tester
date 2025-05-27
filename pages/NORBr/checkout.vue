@@ -1,3 +1,125 @@
+<script lang="ts" setup>
+  // libs
+  import { useAxios } from '@vueuse/integrations/useAxios'
+  import { nanoid } from 'nanoid'
+
+  // states
+  useUpdateTitle('Checkout')
+  const privateKeyInputID = useId()
+  const privateKey = useState<string>('privateKey')
+  const versionNumberID = useId()
+  const versionNumber = useState<number>('versionNumber')
+
+  // data parameters
+  const dataParamsID = useId()
+  const dataParameters = ref('')
+  const defaultParams = [
+    'type=api',
+    'locale=en_EN',
+    'operation_type=direct_capture',
+    'amount=11.30',
+    'currency=EUR',
+    'token_type=oneshot',
+    'payment_channel=e-commerce',
+    'order_merchant_id=REPLACE_ME',
+  ]
+  dataParameters.value = defaultParams.join('\n')
+
+  // JSON Parameters
+  const jsonParamsId = useId()
+  const isJsonPayload = ref(true)
+  const jsonParameters = ref('')
+  const jsonParametersData = {
+    type: 'api',
+    locale: 'en_EN',
+    operation_type: 'direct_capture',
+    amount: 11.3,
+    currency: 'EUR',
+    token_type: 'oneshot',
+    payment_channel: 'e-commerce',
+    order_merchant_id: 'REPLACE_ME',
+    merchant_data: [
+      {
+        key: 'internal_reference_1',
+        type: 'string',
+        value: '906530204612289666',
+        is_personal_data: false,
+      },
+      {
+        key: 'customer_rate',
+        type: 'number',
+        value: '3',
+        is_personal_data: false,
+      },
+    ],
+  }
+
+  const checkoutId = useState('checkoutId', () => '')
+  const displayData = ref('')
+  const displayDataInputID = useId()
+  const paymentMethodsAvailable = useState('paymentMethodsAvailable', () => '')
+  const { execute, data, isLoading } = useAxios(
+    '/api/checkout',
+    {
+      method: 'POST',
+    },
+    { immediate: false }
+  )
+  const storageprivateKey = useState('storageprivateKey')
+  const storageOrderId = useState('storageOrderId')
+
+  /**
+   *
+   */
+  const submitData = async () => {
+    // validate JSON string
+    try {
+      JSON.parse(jsonParameters.value)
+    } catch (error) {
+      console.error(error)
+      alert('Invalid JSON string!')
+
+      return
+    }
+
+    storageprivateKey.value = privateKey.value
+    storageOrderId.value = ''
+
+    try {
+      await execute({
+        data: {
+          isJsonPayload: isJsonPayload.value,
+          jsonParameters: jsonParameters.value,
+          privateKey: privateKey.value,
+          versionNumber: versionNumber.value,
+          dataParameters: dataParameters.value,
+        },
+      })
+
+      // get checkoutId, display to front
+      checkoutId.value = data.value?.checkout?.checkout_id || ''
+
+      // get payment_methods_available
+      paymentMethodsAvailable.value =
+        data.value?.payment_methods?.payment_methods_available || ''
+
+      displayData.value = JSON.stringify(data.value, undefined, 2)
+
+      //
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  /**
+   * On mounted, generate a new order_merchant_id
+   */
+  onMounted(() => {
+    jsonParametersData.order_merchant_id = nanoid()
+    jsonParameters.value = JSON.stringify(jsonParametersData, undefined, 2)
+  })
+</script>
+
 <template>
   <div class="flex h-full">
     <div class="h-full max-h-full w-2/12">
@@ -45,6 +167,30 @@
             </label>
           </div>
 
+          <!-- wrapper: version number -->
+          <div class="flex w-1/2 flex-col gap-1">
+            <label :for="versionNumberID" class="text-sm font-semibold">
+              Version Number
+            </label>
+            <UTooltip
+              text="Submit - Create Checkout"
+              :shortcuts="['ctrl', 'Enter']"
+              :popper="{ placement: 'top' }"
+            >
+              <UInput
+                :id="versionNumberID"
+                class="w-full"
+                icon="i-heroicons-hashtag"
+                type="number"
+                color="purple"
+                placeholder="1.9"
+                v-model="versionNumber"
+                autocomplete="one-time-code"
+                @keyup.ctrl.enter="submitData"
+              />
+            </UTooltip>
+          </div>
+
           <UFormGroup label="Use JSON Payload">
             <UToggle color="purple" size="sm" v-model="isJsonPayload" />
           </UFormGroup>
@@ -62,7 +208,7 @@
                   :popper="{ placement: 'top' }"
                 >
                   <UTextarea
-                    :id="jsonParamsId"
+                    :id="dataParamsID"
                     class="w-full font-mono"
                     spellcheck="false"
                     placeholder="Data parameters..."
@@ -204,115 +350,3 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-  // libs
-  import { useAxios } from '@vueuse/integrations/useAxios'
-  import { nanoid } from 'nanoid'
-
-  // states
-  useUpdateTitle('Checkout')
-  const privateKeyInputID = useId()
-  const privateKey = useState<string>('privateKey')
-
-  // data parameters
-  const dataParamsID = useId()
-  const dataParameters = ref('')
-  const defaultParams = [
-    'type=api',
-    'locale=en_EN',
-    'operation_type=direct_capture',
-    'amount=11.30',
-    'currency=EUR',
-    'token_type=oneshot',
-    'payment_channel=e-commerce',
-    'order_merchant_id=REPLACE_ME',
-  ]
-  dataParameters.value = defaultParams.join('\n')
-
-  // JSON Parameters
-  const jsonParamsId = useId()
-  const isJsonPayload = ref(true)
-  const jsonParameters = ref('')
-  const jsonParametersData = {
-    type: 'api',
-    locale: 'en_EN',
-    operation_type: 'direct_capture',
-    amount: 11.3,
-    currency: 'EUR',
-    token_type: 'oneshot',
-    payment_channel: 'e-commerce',
-    order_merchant_id: 'REPLACE_ME',
-    merchant_data: [
-      {
-        key: 'internal_reference_1',
-        type: 'string',
-        value: '906530204612289666',
-        is_personal_data: false,
-      },
-      {
-        key: 'customer_rate',
-        type: 'number',
-        value: '3',
-        is_personal_data: false,
-      },
-    ],
-  }
-  jsonParametersData.order_merchant_id = nanoid()
-  jsonParameters.value = JSON.stringify(jsonParametersData, undefined, 2)
-  const checkoutId = useState('checkoutId', () => '')
-  const displayData = ref('')
-  const displayDataInputID = useId()
-  const paymentMethodsAvailable = useState('paymentMethodsAvailable', () => '')
-  const { execute, data, isLoading } = useAxios(
-    '/api/checkout',
-    {
-      method: 'POST',
-    },
-    { immediate: false }
-  )
-  const storageprivateKey = useState('storageprivateKey')
-  const storageOrderId = useState('storageOrderId')
-
-  /**
-   *
-   */
-  const submitData = async () => {
-    // validate JSON string
-    try {
-      JSON.parse(jsonParameters.value)
-    } catch (error) {
-      console.error(error)
-      alert('Invalid JSON string!')
-
-      return
-    }
-
-    storageprivateKey.value = privateKey.value
-    storageOrderId.value = ''
-
-    try {
-      await execute({
-        data: {
-          isJsonPayload: isJsonPayload.value,
-          jsonParameters: jsonParameters.value,
-          privateKey: privateKey.value,
-          dataParameters: dataParameters.value,
-        },
-      })
-
-      // get checkoutId, display to front
-      checkoutId.value = data.value?.checkout?.checkout_id || ''
-
-      // get payment_methods_available
-      paymentMethodsAvailable.value =
-        data.value?.payment_methods?.payment_methods_available || ''
-
-      displayData.value = JSON.stringify(data.value, undefined, 2)
-
-      //
-    } catch (error) {
-      console.error(error)
-    }
-  }
-</script>
