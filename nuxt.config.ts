@@ -15,13 +15,13 @@ export default defineNuxtConfig({
         // NORBr CSS
         {
           rel: 'stylesheet',
-          href: 'https://secure-assets-sandbox.norbr.io/stylesheet/1.9/norbr-client.min.css',
+          href: 'https://secure-assets-sandbox.norbr.io/stylesheet/2.3/norbr-client.min.css',
         },
       ],
       script: [
         // NORBr JS
         {
-          src: 'https://secure-assets-sandbox.norbr.io/javascript/1.9/norbr-client.min.js',
+          src: 'https://secure-assets-sandbox.norbr.io/javascript/2.3/norbr-client.min.js',
         },
 
         // Nethone JS
