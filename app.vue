@@ -39,7 +39,7 @@
     return `bidhb-${nanoid()}`
   })
 
-  useState<number>('versionNumber', () => 1.9)
+  useState<number>('versionNumber', () => 2.3)
 
   // composables
   useHead({

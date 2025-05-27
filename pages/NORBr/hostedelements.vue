@@ -180,7 +180,7 @@
                 icon="i-heroicons-swatch"
                 type="text"
                 color="purple"
-                value="https://secure-assets-sandbox.norbr.io/stylesheet/1.9/norbr-client.min.css"
+                value="https://secure-assets-sandbox.norbr.io/stylesheet/2.3/norbr-client.min.css"
                 disabled
               />
             </div>
@@ -196,7 +196,7 @@
                 icon="i-heroicons-code-bracket"
                 type="text"
                 color="purple"
-                value="https://secure-assets-sandbox.norbr.io/javascript/1.9/norbr-client.min.js"
+                value="https://secure-assets-sandbox.norbr.io/javascript/2.3/norbr-client.min.js"
                 disabled
               />
             </div>
