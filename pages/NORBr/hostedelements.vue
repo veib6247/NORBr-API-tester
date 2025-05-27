@@ -27,7 +27,6 @@
   const orderResponse = ref()
   const redirectUrl = ref('')
   const storageOrderId = useState('storageOrderId')
-  const isWidgetLoading = ref<boolean>(false)
 
   /**
    *
