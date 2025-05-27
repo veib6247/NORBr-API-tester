@@ -208,24 +208,28 @@
             <div class="flex w-1/2 flex-col gap-3">
               <!-- wrapper: data parameters -->
               <div class="flex flex-col gap-1">
-                <label :for="dataParamsID" class="text-sm font-semibold">
-                  Data Parameters
+                <label
+                  :for="isJsonPayload ? jsonParamsId : dataParamsID"
+                  class="text-sm font-semibold"
+                >
+                  {{ isJsonPayload ? 'JSON' : 'Data' }} Parameters
                 </label>
+
                 <UTooltip
                   text="Submit - Create Checkout"
                   :shortcuts="['ctrl', 'Enter']"
                   :popper="{ placement: 'top' }"
                 >
                   <UTextarea
-                    :id="dataParamsID"
+                    :id="jsonParamsId"
                     class="w-full font-mono"
                     spellcheck="false"
                     placeholder="Data parameters..."
                     :rows="25"
                     color="purple"
                     v-model="jsonParameters"
-                    v-if="isJsonPayload"
                     @keyup.ctrl.enter="submitData"
+                    v-if="isJsonPayload"
                   />
 
                   <UTextarea
@@ -236,11 +240,15 @@
                     :rows="25"
                     color="purple"
                     v-model="dataParameters"
-                    v-else
                     @keyup.ctrl.enter="submitData"
+                    v-else
                   />
                 </UTooltip>
-                <label :for="dataParamsID" class="text-xs opacity-70">
+
+                <label
+                  :for="isJsonPayload ? jsonParamsId : dataParamsID"
+                  class="text-xs opacity-70"
+                >
                   The system generates a new value for the
                   <kbd class="font-bold">order_merchant_id</kbd> parameter on
                   every page load, you may replace it as needed. For a full list
