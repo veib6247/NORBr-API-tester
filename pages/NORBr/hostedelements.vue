@@ -10,6 +10,8 @@
   const checkoutIdInputID = useId()
   const publicKey = ref('')
   const publicKeyInputID = useId()
+  const cssId = useId()
+  const jsId = useId()
   const locale = ref('en')
   const localeInputId = useId()
   const tokenTypes = ref(['oneshot', 'recurring'])
@@ -165,6 +167,38 @@
                 This is used by NORBr's frontend Javascript lib to authorize the
                 use for their Hosted Solution
               </label>
+            </div>
+
+            <!-- wrapper: CSS -->
+            <div class="flex flex-col gap-1">
+              <label :for="cssId" class="text-sm font-semibold">
+                NORBr CSS Ref
+              </label>
+              <UInput
+                :id="cssId"
+                class="w-full text-white/5"
+                icon="i-heroicons-swatch"
+                type="text"
+                color="purple"
+                value="https://secure-assets-sandbox.norbr.io/stylesheet/1.9/norbr-client.min.css"
+                disabled
+              />
+            </div>
+
+            <!-- wrapper: JS -->
+            <div class="flex flex-col gap-1">
+              <label :for="jsId" class="text-sm font-semibold">
+                NORBr JS Ref
+              </label>
+              <UInput
+                :id="jsId"
+                class="w-full text-white/5"
+                icon="i-heroicons-code-bracket"
+                type="text"
+                color="purple"
+                value="https://secure-assets-sandbox.norbr.io/javascript/1.9/norbr-client.min.js"
+                disabled
+              />
             </div>
 
             <!-- wrapper: checkout id -->
