@@ -31,9 +31,9 @@
   const storageOrderId = useState('storageOrderId')
 
   /**
-   *
+   * Initializes the NORBr hosted elements with the provided configuration.
    */
-  const initNorbr = () => {
+  function initNorbr() {
     storageprivateKey.value = privateKey.value
     hostedElementsResponse.value = ''
     let dataParameters = ''

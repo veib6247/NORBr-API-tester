@@ -28,8 +28,9 @@
 
   /**
    *
+   * @param event the event triggered by the form submission
    */
-  const submitData = async (event: Event) => {
+  async function submitData(event: Event) {
     // validate JSON string
     try {
       JSON.parse(jsonParameters.value)

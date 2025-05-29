@@ -68,9 +68,9 @@
   const storageOrderId = useState('storageOrderId')
 
   /**
-   *
+   * Submit data to the API to create a checkout.
    */
-  const submitData = async () => {
+  async function submitData() {
     // validate JSON string
     try {
       JSON.parse(jsonParameters.value)
