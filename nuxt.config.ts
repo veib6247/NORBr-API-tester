@@ -54,4 +54,9 @@ export default defineNuxtConfig({
   colorMode: {
     preference: 'dark',
   },
+
+  // auto-import types
+  imports: {
+    dirs: ['types/**'],
+  },
 })

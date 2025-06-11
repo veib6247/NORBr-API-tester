@@ -3,7 +3,7 @@ import type { FetchError } from 'ofetch'
 import payloadBuilder from '../utils/payloadBuilder'
 
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event)
+  const body: RequestBody = await readBody(event)
   const isJsonPayload = body.isJsonPayload
   const version = body.versionNumber
 
