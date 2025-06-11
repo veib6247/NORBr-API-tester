@@ -84,15 +84,17 @@
     storageprivateKey.value = privateKey.value
     storageOrderId.value = ''
 
+    const payload: RequestBody = {
+      isJsonPayload: isJsonPayload.value,
+      jsonParameters: jsonParameters.value,
+      privateKey: privateKey.value,
+      versionNumber: versionNumber.value,
+      dataParameters: dataParameters.value,
+    }
+
     try {
       await execute({
-        data: {
-          isJsonPayload: isJsonPayload.value,
-          jsonParameters: jsonParameters.value,
-          privateKey: privateKey.value,
-          versionNumber: versionNumber.value,
-          dataParameters: dataParameters.value,
-        },
+        data: payload,
       })
 
       // get checkoutId, display to front
