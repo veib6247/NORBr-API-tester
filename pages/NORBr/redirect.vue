@@ -72,7 +72,7 @@
   /**
    *
    */
-  const submitData = async () => {
+  async function submitData() {
     storageprivateKey.value = privateKey.value
     data.value = ''
 

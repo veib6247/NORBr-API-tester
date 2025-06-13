@@ -2,7 +2,7 @@ import axios from 'axios'
 import payloadBuilder from '../utils/payloadBuilder'
 
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event)
+  const body = await readBody<RequestBody>(event)
   const payload = payloadBuilder(body.dataParameters)
   const version = body.versionNumber
 

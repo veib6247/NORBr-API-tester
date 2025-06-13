@@ -28,8 +28,9 @@
 
   /**
    *
+   * @param event the event triggered by the form submission
    */
-  const submitData = async (event: Event) => {
+  async function submitData(event: Event) {
     // validate JSON string
     try {
       JSON.parse(jsonParameters.value)
@@ -45,15 +46,17 @@
 
     data.value = ''
 
+    const payload: RequestBody = {
+      isJsonPayload: isJsonPayload.value,
+      jsonParameters: jsonParameters.value,
+      privateKey: privateKey.value,
+      versionNumber: versionNumber.value,
+      dataParameters: dataParameters.value,
+    }
+
     try {
       await execute({
-        data: {
-          isJsonPayload: isJsonPayload.value,
-          jsonParameters: jsonParameters.value,
-          privateKey: privateKey.value,
-          versionNumber: versionNumber.value,
-          dataParameters: dataParameters.value,
-        },
+        data: payload,
       })
 
       // store the order Id in session storage

@@ -31,19 +31,22 @@
   /**
    *
    */
-  const submitData = async () => {
+  async function submitData() {
     storageprivateKey.value = privateKey.value
     data.value = ''
 
+    const payload: RequestBody = {
+      orderId: storageOrderId.value,
+      maintenanceType: selectedmaintenanceType.value,
+      privateKey: privateKey.value,
+      versionNumber: versionNumber.value,
+      isJsonPayload: false,
+      dataParameters: dataParameters.value,
+    }
+
     try {
       await execute({
-        data: {
-          orderId: storageOrderId.value,
-          maintenanceType: selectedmaintenanceType.value,
-          privateKey: privateKey.value,
-          versionNumber: versionNumber.value,
-          dataParameters: dataParameters.value,
-        },
+        data: payload,
       })
 
       displayData.value = JSON.stringify(data.value, undefined, 2)
