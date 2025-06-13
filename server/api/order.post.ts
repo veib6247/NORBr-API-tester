@@ -6,18 +6,19 @@ export default defineEventHandler(async (event) => {
   const body = await readBody<RequestBody>(event)
   const isJsonPayload = body.isJsonPayload
   const version = body.versionNumber
-
+  const headers = {
+    'x-api-key': body.privateKey,
+    version: version.toString(),
+  }
+  const url = 'https://api-sandbox.norbr.io/payment/order'
   const payload = isJsonPayload
-    ? JSON.parse(body.jsonParameters)
+    ? JSON.parse(body.jsonParameters || '{}')
     : payloadBuilder(body.dataParameters)
 
   try {
-    const res = await $fetch('https://api-sandbox.norbr.io/payment/order', {
+    const res = await $fetch(url, {
       method: 'POST',
-      headers: {
-        'x-api-key': body.privateKey,
-        version: version.toString(),
-      },
+      headers: headers,
       body: payload,
     })
 
