@@ -4,8 +4,6 @@ import payloadBuilder from '../utils/payloadBuilder'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<RequestBody>(event)
-  console.info('Received body:', body)
-
   const isJsonPayload = body.isJsonPayload
   const headers = headerBuilder(body)
   const url = 'https://api-sandbox.norbr.io/payment/order'
