@@ -10,6 +10,8 @@
   const checkoutIdInputID = useId()
   const publicKey = ref('')
   const publicKeyInputID = useId()
+  const versionNumber = ref(2.3)
+  const versionNumberID = useId()
   const cssId = useId()
   const jsId = useId()
   const locale = ref('en')
@@ -68,12 +70,16 @@
             dataParameters += `\n${url}`
           }
 
+          const payload: RequestBody = {
+            privateKey: privateKey.value,
+            dataParameters: dataParameters,
+            isJsonPayload: false,
+            versionNumber: versionNumber.value,
+          }
+
           orderResponse.value = await $fetch('/api/order', {
             method: 'POST',
-            body: JSON.stringify({
-              privateKey: privateKey.value,
-              dataParameters: dataParameters,
-            }),
+            body: JSON.stringify(payload),
           })
 
           storageOrderId.value = orderResponse.value.order_id || ''
@@ -167,6 +173,30 @@
                 This is used by NORBr's frontend Javascript lib to authorize the
                 use for their Hosted Solution
               </label>
+            </div>
+
+            <!-- wrapper: version number -->
+            <div class="flex w-full flex-col gap-1">
+              <label :for="versionNumberID" class="text-sm font-semibold">
+                API Version Number
+              </label>
+              <UTooltip
+                text="Submit - Create Checkout"
+                :shortcuts="['ctrl', 'Enter']"
+                :popper="{ placement: 'top' }"
+              >
+                <UInput
+                  :id="versionNumberID"
+                  class="w-full"
+                  icon="i-heroicons-hashtag"
+                  type="number"
+                  color="purple"
+                  placeholder="1.9"
+                  v-model="versionNumber"
+                  autocomplete="one-time-code"
+                  @keyup.ctrl.enter="initNorbr"
+                />
+              </UTooltip>
             </div>
 
             <!-- wrapper: CSS -->
