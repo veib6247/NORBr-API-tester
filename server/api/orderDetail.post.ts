@@ -2,11 +2,7 @@ import axios from 'axios'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<RequestBody>(event)
-  const version = body.versionNumber
-  const headers = {
-    'x-api-key': body.privateKey,
-    version: version.toString(),
-  }
+  const headers = headerBuilder(body)
   const url = `https://api-sandbox.norbr.io/payment/order/${body.orderId}`
 
   try {

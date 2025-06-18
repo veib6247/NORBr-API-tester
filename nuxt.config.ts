@@ -1,14 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@vueuse/nuxt', '@nuxt/ui'],
+  modules: ['@vueuse/nuxt', '@nuxt/ui', '@sentry/nuxt/module'],
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
+
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
   },
+
   app: {
     head: {
       link: [
@@ -51,6 +53,7 @@ export default defineNuxtConfig({
 
     keepalive: true,
   },
+
   colorMode: {
     preference: 'dark',
   },
@@ -58,5 +61,18 @@ export default defineNuxtConfig({
   // auto-import types
   imports: {
     dirs: ['types/**'],
+  },
+
+  sentry: {
+    sourceMapsUploadOptions: {
+      org: 'cognito-inc',
+      project: 'norbr-api-tester',
+    },
+
+    autoInjectServerSentry: 'top-level-import',
+  },
+
+  sourcemap: {
+    client: 'hidden',
   },
 })
