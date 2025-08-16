@@ -21,6 +21,13 @@ export default defineNuxtConfig({
         },
       ],
       script: [
+        // Umami for tracking
+        {
+          defer: true,
+          src: 'https://umami.bryisdoinghisbest.com/script.js',
+          'data-website-id': '069485b7-64d8-4621-9060-29083b094903',
+        },
+
         // NORBr JS
         {
           src: 'https://secure-assets-sandbox.norbr.io/javascript/2.3/norbr-client.min.js',
