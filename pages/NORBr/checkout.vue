@@ -231,6 +231,7 @@
                     color="purple"
                     v-model="jsonParameters"
                     @keyup.ctrl.enter="submitData"
+                    v-bind="{ wrap: 'off' }"
                     v-if="isJsonPayload"
                   />
 
@@ -286,6 +287,7 @@
                   spellcheck="false"
                   :rows="25"
                   color="purple"
+                  v-bind="{ wrap: 'off' }"
                   v-model="displayData"
                   readonly
                 />

@@ -189,6 +189,7 @@
                   spellcheck="false"
                   :rows="25"
                   color="purple"
+                  v-bind="{ wrap: 'off' }"
                   v-model="dataParameters"
                   @keyup.ctrl.enter="submitData"
                   v-if="!isJsonPayload"
@@ -200,6 +201,7 @@
                   spellcheck="false"
                   :rows="25"
                   color="purple"
+                  v-bind="{ wrap: 'off' }"
                   v-model="jsonParameters"
                   @keyup.ctrl.enter="submitData"
                   v-else
@@ -237,6 +239,7 @@
                   spellcheck="false"
                   :rows="25"
                   color="purple"
+                  v-bind="{ wrap: 'off' }"
                   v-model="displayData"
                   readonly
                 />

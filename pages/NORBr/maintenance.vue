@@ -193,6 +193,7 @@
                   placeholder="Data parameters..."
                   :rows="16"
                   color="purple"
+                  v-bind="{ wrap: 'off' }"
                   v-model="dataParameters"
                   @keyup.ctrl.enter="submitData"
                 />
