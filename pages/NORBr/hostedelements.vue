@@ -405,6 +405,7 @@
                 spellcheck="false"
                 :rows="25"
                 color="purple"
+                v-bind="{ wrap: 'off' }"
                 v-model="hostedElementsResponse"
                 readonly
               />
